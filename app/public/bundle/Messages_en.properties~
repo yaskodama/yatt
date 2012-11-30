@@ -1,0 +1,62 @@
+# This line is ignored by the plugin
+welcome_i18n=Welcome to YaTT
+timetable_i18n=Time Table
+log_title_i18n=Log
+timetable_edit_i18n=Time Table
+library_i18n=Library
+lectures_i18n=Lectures
+eportfolio_i18n=ePortfolio
+requirements_i18n=Requirements
+ranking_i18n=Ranking
+username_i18n=Username:
+password_i18n=Password:
+login_name_i18n=<input class='"btn btn-success"' type=submit name=submit value='"Login"'>
+logout_name_i18n=<input class='"btn btn-success"' type=submit name=submit value='"Logout"'>
+edit_name_i18n=<input type=submit name=submit value=Edit(ON)>
+edit_name_2_i18n=Edit(ON)
+edit2_name_i18n=<input type=submit name=submit value=Edit(OFF)>
+edit2_name_2_i18n=Edit(OFF)
+return_name_i18n=<input type=submit name=submit value=Return>
+update_name_i18n=<input type=submit name=submit value=Update>
+language_i18n=Language:
+event_meeting_i18n=Events or Meetings
+monday_i18n=Mon
+tuesday_i18n=Tue
+wednesday_i18n=Wed
+thursday_i18n=Thu
+friday_i18n=Fri
+saturday_i18n=Sat
+first_lec_i18n=1st
+second_lec_i18n=2nd
+third_lec_i18n=3rd
+fourth_lec_i18n=4th
+fifth_lec_i18n=5th
+fromthrough_i18n=-
+objective_i18n=Objective
+textbooks_i18n=Textbooks
+references_i18n=References
+advreferences_i18n=Advanced<br>References
+signin_i18n=Sign In
+confirm_i18n=Confirm
+update_and_edit_i18n=Update/Edit(OFF)
+modal_title_i18n=Title
+modal_textbooks_i18n=Textbooks
+modal_objectives_i18n=Objectives
+modal_references_i18n=References
+modal_advreferences_i18n=Advanced<br>References
+update_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"Update"'>
+cancel_and_edit_off_i18n=<input class='"btn btn-success"' type='"submit"' name='"submit"' value='"CANCEL/Edit(OFF)"'>
+signout_i18n=Sign Out
+#
+#
+#
+msg_hello=Hello
+msg_world=World
+msg_complex=Good morning {0}! \ 
+Are you OK? \
+This is a multi-line property :)
+
+msg_url=http://localhost/webapp/servletName?solution={0}
+
+msg_multi_placeholder=It\'s a {0} day... let\'s go {1}?
+msg_multi_placeholder_corrected=It''s a {0} day... let''s go {1}?

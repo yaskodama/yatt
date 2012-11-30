@@ -1,0 +1,63 @@
+# This line is ignored by the plugin
+matterhorn_head_title=オープンキャスト•マッターホルン - リリース 1.3: 成長し続けます!
+matterhorn_title=リリース 1.3: 成長し続けます!
+matterhorn_tool1=管理ツール
+matterhorn_tool2=連結ツール
+matterhorn_tool3=キャプキャツール
+matterhorn_tool4=モニタリング
+matterhorn_tool5=書類
+matterhorn_tool6=リリースノート
+matterhorn_tool7=資料
+matterhorn_tool8=リンク
+matterhorn_promotext=このサイトは、児玉研究室により運営されています。<br />Last Updated: Monday, September 24th, 2012, 14:06 PDT by Yasushi Kodama.</p>
+matterhorn_admintool=これらツールは、講義収録、取り込み、講義配信をする機能があります:
+matterhorn_engagetool=研究室に関する写真集です:
+matterhorn_capturetool=これらツールはキャプチャをすぐに実施したり、キャプチャの設定を変更することができます:
+matterhorn_monitoring=これらツールは、キャプチャデバイスの設定を閲覧することができます:
+matterhorn_license=このサイトは、児玉研究室により運営されています。<br />Last Updated: Monday, September 24th, 2012, 14:06 PDT by Yasushi Kodama.</p>
+matterhorn_admintool_ul=<li>自動収録1のためのスケジューリングをします。</li><li>収録した講義を処理し、配信するためのメディアファイルをアップロードします。</li><li>メディアパイプラインを通してモニタすることができます。</li>
+matterhorn_engagetool_ul=<li>カスタム RSS フィードを作成します。</li><li>キーワードによりビデオを検索します。</li><li>メディアプレーヤへのアクセス</li>
+matterhorn_capturetool_ul=<li>キャプチャの開始と停止</li><li>新しい設定のテスト</li>
+matterhorn_monitoring_ul=<li>ビデオとVGAのイメージを概観します。</li><li>音声のVUメータ</li>
+matterhorn_adminlink=講義
+matterhorn_engagelink=写真集(1)
+photoslink=写真集(2)
+kodama_title_i18n=<img src="img/logo1311.gif">
+kodama_zemi_i18n=<a href="http://yk.i.hosei.ac.jp/pukiwiki/">児玉ゼミ</a></div><br>
+kodama_studio_i18n=<a href="http://kodamay.org/">児玉工房</a></div>
+matterhorn_promotext=<p>児玉研究室は、教員が2年間「サバティカル」のため休講です。<a href="http://berkeley.edu">UC Berkeley</a>に滞在中で2012年4月〜2014年3月の予定です。このサイトの他に、<a href="http://yk.i.hosei.ac.jp/pukiwiki/">児玉ゼミ</a>、<a href="http://kodamay.org/">児玉工房</a>もありますので、合わせてご覧下さい。サバティカル中は、教育工学、コンピュータサイエンスの研究の他に、ソーシャルマーケティングの研究も始めました。シリコンバレーで非常に刺激のある研究生活を送っています。
+lectures_i18n=講義
+lecture_notes_i18n=教員の講義資料です:
+photos_i18n=[<a href=http://yk.i.hosei.ac.jp/photo/index.html>2</a>][<a href=http://yk.i.hosei.ac.jp/Photo/index-y.html>3</a>]
+research_objectives_i18n=ゼミナールにおける研究目標を示します:
+videos_i18n=研究に関係したビデオを集めました:
+researchlink_i18n=ゼミナールにおける研究
+infobasiclink_i18n=情報学基礎
+videolink_i18n=ビデオ集
+ictprojectlink_i18n=ICT 教育プロジェクト
+ictedu_i18n=情報学基礎の講義資料です:
+bookmarklink_i18n=ブックマーク
+eportfoliolink_i18n=eポートフォリオ
+secondlifelink_i18n=セカンドライフプロジェクト
+cglink_i18n=学生によるCG
+rsslink_i18n=RSS
+reversilink_i18n=リバーシ
+twitter_i18n=ツイッタ
+students_thesis_i18n=卒業文集
+topics_i18n=トピックス
+reversi_i18n=プロトタイプとして作ったリバーシプログラムです:
+rss_i18n=RSSです:
+scg_i18n=コンピュータグラフィックスプロジェクトです:
+secondlife_i18n=セカンドライフプロジェクトです:
+eportfolio_i18n=eポートフォリオです:
+bookmark_i18n=ブックマークです:
+ictproject_i18n=ICT 教育プロジェクトです:
+sthesis_i18n=過去の卒業文集です。
+msg_hello=こんにちは
+msg_world=みなさん
+msg_complex=おはようございます {0}! \
+よろしいですか? \
+これは、複数行にわたる属性です :)
+
+msg_url = http://localhost/webapp/servletName?solution={0}
+

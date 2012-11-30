@@ -1,0 +1,30 @@
+
+function updateExamples() {
+	jQuery('#welcome_i18n').empty().append(jQuery.i18n.prop('welcome_i18n'));
+	jQuery('#timetable_i18n').empty().append(jQuery.i18n.prop('timetable_i18n'));
+	jQuery('#library_i18n').empty().append(jQuery.i18n.prop('library_i18n'));
+	jQuery('#lectures_i18n').empty().append(jQuery.i18n.prop('lectures_i18n'));
+	jQuery('#eportfolio_i18n').empty().append(jQuery.i18n.prop('eportfolio_i18n'));
+	jQuery('#ranking_i18n').empty().append(jQuery.i18n.prop('ranking_i18n'));
+	jQuery('#requirements_i18n').empty().append(jQuery.i18n.prop('requirements_i18n'));
+	jQuery('#username_i18n').empty().append(jQuery.i18n.prop('username_i18n'));
+	jQuery('#password_i18n').empty().append(jQuery.i18n.prop('password_i18n'));
+	jQuery('#login_name_i18n').empty().append(jQuery.i18n.prop('login_name_i18n'));
+	jQuery('#logout_name_i18n').empty().append(jQuery.i18n.prop('logout_name_i18n'));
+	jQuery('#edit_name_i18n').empty().append(jQuery.i18n.prop('edit_name_i18n'));
+	jQuery('#edit_name_2_i18n').empty().append(jQuery.i18n.prop('edit_name_2_i18n'));
+	jQuery('#language_i18n').empty().append(jQuery.i18n.prop('language_i18n'));
+	jQuery('#event_meeting_i18n').empty().append(jQuery.i18n.prop('event_meeting_i18n'));
+	jQuery('#monday_i18n').empty().append(jQuery.i18n.prop('monday_i18n'));
+	jQuery('#tuesday_i18n').empty().append(jQuery.i18n.prop('tuesday_i18n'));
+	jQuery('#wednesday_i18n').empty().append(jQuery.i18n.prop('wednesday_i18n'));
+	jQuery('#thursday_i18n').empty().append(jQuery.i18n.prop('thursday_i18n'));
+	jQuery('#friday_i18n').empty().append(jQuery.i18n.prop('friday_i18n'));
+	jQuery('#saturday_i18n').empty().append(jQuery.i18n.prop('saturday_i18n'));
+	jQuery('#first_lec_i18n').empty().append(jQuery.i18n.prop('first_lec_i18n'));
+	jQuery('#second_lec_i18n').empty().append(jQuery.i18n.prop('second_lec_i18n'));
+	jQuery('#third_lec_i18n').empty().append(jQuery.i18n.prop('third_lec_i18n'));
+	jQuery('#fourth_lec_i18n').empty().append(jQuery.i18n.prop('fourth_lec_i18n'));
+	jQuery('#fifth_lec_i18n').empty().append(jQuery.i18n.prop('fifth_lec_i18n'));
+	jQuery('#fromthrough_i18n').empty().append(jQuery.i18n.prop('fromthrough_i18n'));
+    }

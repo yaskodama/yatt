@@ -1,0 +1,61 @@
+/* jKodama */
+(function($) {
+$.kodama = {};
+
+$.kodama.map = {};
+
+$.kodama.properties = function(settings) {
+    var defaults = {
+        name:           'Messages',
+        language:       '',
+        path:           '',  
+        mode:           'vars',
+        cache:		false,
+        encoding:       'UTF-8',
+        callback:       null
+    };
+    settings = $.extend(defaults, settings);
+    if(settings.language === null || settings.language == '') {
+	settings.language = $.kodama.browserLang();
+    }	
+    if(settings.language === null) {settings.language='';}
+    loadAndParseFile();
+};
+
+$.kodama.prop = function(key) {
+    var value = $.kodama.map[key];
+window.alert(value);
+    return value;
+};
+
+$.kodama.browserLang = function() {
+	return normaliseLanguageCode(navigator.language /* Mozilla */ || navigator.userLanguage /* IE */);
+}
+
+function loadAndParseFile() {
+    $.ajax({
+	    url: "bundle/Messages_kodama.properties",
+	    async: false,
+   	    cache: false,
+	    contentType: 'text/plain;charset='+'ja',
+	    dataType: 'text',
+	    success: function(data,status) {
+		parseData(data) }
+	})
+}
+
+function parseData(data) {
+    var parsed = '';
+    var parameters = data.split( /\n/ );
+    window.alert(parameters.length);
+    for(var i=0; i<parameters.length; i++) {
+        var pair = parameters[i].split('=');
+	if(pair.length > 0) {
+	    var name = pair[0];
+	    var value = pair[1];
+	    $.kodama.map[name] = value;
+	}
+    }
+}
+})(jQuery);
+

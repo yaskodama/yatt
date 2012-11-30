@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #[Node-Login](http://node-login.braitsch.io)
 
 ####A basic login & account management system built in Node.js with the following features :
@@ -41,3 +42,9 @@ For testing purposes, I've provided a [database dump of all accounts here.](http
 Please note this list and the entire database automatically resets every 24 hours.
 
 Questions and suggestions for improvement are welcome.
+=======
+yatt
+====
+
+Yet Another Time Table
+>>>>>>> 0280c307b50805c0b3bc1d16fda331b411850b26
