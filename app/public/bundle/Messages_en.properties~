@@ -47,6 +47,7 @@ modal_advreferences_i18n=Advanced<br>References
 update_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"Update"'>
 cancel_and_edit_off_i18n=<input class='"btn btn-success"' type='"submit"' name='"submit"' value='"CANCEL/Edit(OFF)"'>
 signout_i18n=Sign Out
+signin_name_i18n=Sign In
 #
 #
 #

@@ -28,7 +28,7 @@ module.exports = function(app) {
 		}
 	    });
 	}
-    });
+        });
     app.post('/', function(req, res){
         console.log(req.body);
         console.log(req.param('user'));
@@ -36,7 +36,6 @@ module.exports = function(app) {
         console.log(req.param('remember-me'));
         AM.manualLogin(req.param('user'), req.param('pass'), function(e, o){
 	    if (!o){
-		console.log('invalid!');
 		res.send(e, 400);
 	    } else {
 		req.session.user = o;
@@ -78,11 +77,15 @@ console.log(req.session.user);
 	}
         });
     app.get('/cls', function(req, res) {    /* /lecture + "GET" */
-	    var Classes = REC.getClasses(mongoose);
-	    Classes.find({lecCode:req.query.submit}, function(err,docs) {
-		res.render('cls', { message: 'Lecture mode!',
-			    id: req.session.id, cls: docs[0], title: "Welcome to YaSiEE" });
-		});
+	var Classes = REC.getClasses(mongoose);
+	Classes.find({lecCode:req.query.submit}, function(err,docs) {
+	    if(docs[0]==undefined) {
+		res.render('404', {title: 'Page Not Found'});
+	    } else {
+	        res.render('cls', { message: 'Lecture mode!',
+		    id: req.session.id, cls: docs[0], title: "Welcome to YaTT" });
+	    }
+            });
 	});
     app.get('/lecture', function(req, res) {
 console.log(req.query);
@@ -107,11 +110,15 @@ console.log(req.query.Code);
 	    }
 	    if(req.query.lecCode != 'New') {
 console.log(req.query.lecCode);
-	    //	    Classes.find({lecCode:req.query.lecCode}, function(err,docs) {
 	        Classes.find({lecCode:req.query.lecCode}, function(err,docs) {
 console.log(docs[0]);
-		    res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
-		    id: req.session.id, cls: docs[0], title: "Welcome to YaTT by "+ req.session.user.user });
+		    if(docs[0]==undefined) {
+			res.render('404', {title: 'Page Not Found'});
+		    } else {
+		        res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
+			    id: req.session.id, cls: docs[0],
+			    title: "Welcome to YaTT by "+ req.session.user.user });
+		    }
 		    });
 	    } else {
 		var cls = { title: "New", lecCode: "New", lang: "en", objective: "New", reference: "Selecting...",
@@ -179,10 +186,14 @@ console.log(req.session.user);
 	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    var Lectures = REC.getLectures(mongoose);
 	    Lectures.find({name:req.session.user.user}, function(err,docs) {
-	        var lecs = [];
-		REC.setLecCode(docs,lecs);
-		res.render('home', { message: 'New User:'+req.session.user.user, name: req.session.user.user,
-			    id: req.session.id, lecs: lecs, title: "Welcome to YaTT by "+ req.session.user.user });
+		if(docs[0]==undefined) {
+		    res.render('404', {title: 'Page Not Found'});
+		} else {
+		    var lecs = [];
+		    REC.setLecCode(docs,lecs);
+		    res.render('home', { message: 'New User:'+req.session.user.user, name: req.session.user.user,
+			id: req.session.id, lecs: lecs, title: "Welcome to YaTT by "+ req.session.user.user });
+		}
 	        });
         }
         });

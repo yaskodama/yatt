@@ -1,58 +1,59 @@
 
 $(document).ready(function(){
-	var lv = new LoginValidator();
-	var lc = new LoginController();
+    var lv = new LoginValidator();
+    var lc = new LoginController();
 	/* add by yass */
-        var hc = new HomeController();
+    var hc = new HomeController();
+	/* add by yas */
 
-// main login form //
-
-	$("#login-form").ajaxForm({
-		beforeSubmit : function(formData, jqForm, options){
-			if (lv.validateForm() == false){
-				return false;
-			} else {
+    $("#login-form").ajaxForm({
+	beforeSubmit : function(formData, jqForm, options) {
+	    if (lv.validateForm() == false) {
+		return false;
+	    } else {
 console.log($("input:checkbox:checked"));
-			// append 'remember-me' option to formData to write local cookie //
-				formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
-				return true;
-			}
-		},
-		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/home';
-		},
-		error : function(e){
-		    	lv.showLoginError('Login Failure', 'Please check your username and/or password');
-		}
-	}); 
-	$('#user-tf').focus();
+	// append 'remember-me' option to formData to write local cookie //
+		formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
+		return true;
+	    }
+	},
+	success	: function(responseText, status, xhr, $form){
+	    if (status == 'success') window.location.href = '/home';
+	},
+	error : function(e){
+console.log('error');
+console.log(e);
+	    	lv.showLoginError('Login Failure', 'Please check your username and/or password');
+	}
+    }); 
+    $('#user-tf').focus();
 	
 // login retrieval form via email //
 	
-	var ev = new EmailValidator();
-	
-	$('#get-credentials-form').ajaxForm({
-		url: '/lost-password',
-		beforeSubmit : function(formData, jqForm, options){
-			if (ev.validateEmail($('#email-tf').val())){
-				ev.hideEmailAlert();
-				return true;
-			}	else{
-				ev.showEmailAlert("<b> Error!</b> Please enter a valid email address");
-				return false;
-			}
-		},
-		success	: function(responseText, status, xhr, $form){
-			ev.showEmailSuccess("Check your email on how to reset your password.");
-		},
-		error : function(){
-			ev.showEmailAlert("Sorry. There was a problem, please try again later.");
-		}
-	});
-      loadBundles(null);
-      jQuery('.open-UpdateAndEnd').click(function() {
+    var ev = new EmailValidator();
+    $('#get-credentials-form').ajaxForm({
+	url: '/lost-password',
+	beforeSubmit : function(formData, jqForm, options){
+	    if (ev.validateEmail($('#email-tf').val())) {
+	    	ev.hideEmailAlert();
+		return true;
+	    } else {
+		ev.showEmailAlert("<b> Error!</b> Please enter a valid email address");
+		return false;
+	    }
+	},
+	success	: function(responseText, status, xhr, $form) {
+	    ev.showEmailSuccess("Check your email on how to reset your password.");
+	},
+	error : function() {
+	    ev.showEmailAlert("Sorry. There was a problem, please try again later.");
+	}
+    });
+
+    loadBundles(null);
+    jQuery('.open-UpdateAndEnd').click(function() {
 	if(jQuery('#Code').is('*')) jQuery('#input-leccode').attr({value: jQuery('#Code')[0].value });
- 	if(jQuery('#title').is('*')) jQuery('#input-title').attr({ value: jQuery('#title')[0].value });
+	if(jQuery('#title').is('*')) jQuery('#input-title').attr({ value: jQuery('#title')[0].value });
 	if(jQuery('#objective').is('*')) jQuery('#input-objective').attr({ value: jQuery('#objective')[0].value });
 	if(jQuery('#textbook').is('*')) jQuery('#input-textbook').attr({ value: jQuery('#textbook')[0].value });
 	if(jQuery('#reference').is('*')) jQuery('#input-reference').attr({ value: jQuery('#reference')[0].value });
@@ -63,7 +64,7 @@ console.log($("input:checkbox:checked"));
 	jQuery('#modal-reference').empty().append(jQuery('#reference')[0].value);
         jQuery('#modal-advreference').empty().append(jQuery('#advreference')[0].value);
         });
-      jQuery('select#lang').empty().append('<option value="browser">Indicated by the browser</option><option value="en">en</option><option value="ja">ja</option>');
+        jQuery('select#lang').empty().append('<option value="browser">Indicated by the browser</option><option value="en">en</option><option value="ja">ja</option>');
         jQuery('#langbrowser').text('('+jQuery.i18n.browserLang()+')');                                      
         jQuery('#lang').change(function() {
             var selection = jQuery('#lang option:selected').val();
@@ -75,7 +76,7 @@ console.log($("input:checkbox:checked"));
             }                                                                                                
         }); 
     });
-function loadBundles(lang) {
+    function loadBundles(lang) {
         jQuery.i18n.properties({
 	    name:'Messages', 
             path:'/bundle/', 
@@ -86,7 +87,7 @@ function loadBundles(lang) {
 	    }
         });
     }
-function updateExamples() {
+    function updateExamples() {
 	jQuery('#welcome_i18n').empty().append(jQuery.i18n.prop('welcome_i18n'));
 	jQuery('#timetable_i18n').empty().append(jQuery.i18n.prop('timetable_i18n'));
 	jQuery('#library_i18n').empty().append(jQuery.i18n.prop('library_i18n'));
@@ -133,4 +134,6 @@ function updateExamples() {
 	jQuery('#cancel_and_edit_off_i18n').empty().append(jQuery.i18n.prop('cancel_and_edit_off_i18n'));
 	jQuery('#signout_i18n').empty().append(jQuery.i18n.prop('signout_i18n'));
 	jQuery('#signin_name_i18n').empty().append(jQuery.i18n.prop('signin_name_i18n'));
+	jQuery('#message_title_i18n').empty().append(jQuery.i18n.prop('message_title_i18n'));
+	jQuery('#page_not_found_i18n').empty().append(jQuery.i18n.prop('page_not_found_i18n'));
     }

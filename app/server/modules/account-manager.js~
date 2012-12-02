@@ -25,8 +25,7 @@ module.exports = AM;
 
 // logging in //
 
-AM.autoLogin = function(user, pass, callback)
-{
+AM.autoLogin = function(user, pass, callback) {
 	AM.accounts.findOne({user:user}, function(e, o) {
 		if (o){
 			o.pass == pass ? callback(o) : callback(null);
@@ -43,8 +42,10 @@ AM.manualLogin = function(user, pass, callback) {
 	} else {
 	    bcrypt.compare(pass, o.pass, function(err, res) {
 		if (res){
+console.log('OK!');
 		    callback(null, o);
 		} else {
+console.log('invalid!');
 		    callback('invalid-password');
 		}
 		});

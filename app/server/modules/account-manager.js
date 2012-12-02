@@ -38,8 +38,8 @@ AM.autoLogin = function(user, pass, callback) {
 AM.manualLogin = function(user, pass, callback) {
     AM.accounts.findOne({user:user}, function(e, o) {
 	if (o == null){
-console.log('user-not-found');
-	    callback('user-not-found');
+	    console.log('user-not-found');
+callback('user-not-found');
 	} else {
 	    bcrypt.compare(pass, o.pass, function(err, res) {
 		if (res){

@@ -47,6 +47,7 @@ modal_advreferences_i18n=発展的参照
 update_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"更新"'>
 cancel_and_edit_off_i18n=<input class='"btn btn-success"' type='"submit"' name='"submit"' value='"キャンセル/編集(OFF)"'>
 signout_i18n=サインアウト
+signin_name_i18n=サインイン
 #
 #
 #
