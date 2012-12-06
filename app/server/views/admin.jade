@@ -1,0 +1,74 @@
+extends layout2
+
+block content
+    table
+        tr
+            td(width='600',align='left')
+                #langbox
+                    span#language_i18n Language:
+                    select#lang
+                    span#langbrowser
+    #wrapper.ui-widget-content.ui-corner-all
+        p
+            #welcome_i18n(align='center',style='font-family:Century,Lucida Sans Unicode,sans-serif;font-size:4.4em;line-height:1.1em;color:#47FFFC;') Welcome to YaTT
+        #accounts_name_i18n.subtitle Accounts
+        p
+            .contents
+                table#lecture_list.table(align='center')
+                    thead
+                          tr
+                              th(style='width:30px') #
+                              th(style='width:200px') Name
+                              th(style='width:80px') Location
+                              th(style='width:100px') Username
+                              th Account Created
+                    tbody
+                        - for(var i=0; i<accts.length; i++) {
+                            tr
+                              td #{i+1}
+                              td #{accts[i].name}
+                              td #{accts[i].country}
+                              td #{accts[i].user}
+                              td #{accts[i].date}
+                        - };
+
+        #log_title_i18n.subtitle Log
+        p
+            .contents
+                table#lecture_list.table(align='center')
+                    thead
+                          tr
+                              th(style='width:30px') #
+                              th(style='width:200px') Name
+                              th(style='width:80px') Location
+                              th(style='width:100px') Username
+                              th Account Created
+                    tbody
+                        - for(var i=0; i<accts.length; i++) {
+                            tr
+                              td #{i+1}
+                              td #{accts[i].name}
+                              td #{accts[i].country}
+                              td #{accts[i].user}
+                              td #{accts[i].date}
+                        - };
+        hr
+        p
+            div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
+                span(style='vertical-align:3pt;')
+                    img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
+
+    include modals/alert
+    include modals/lost-password
+
+block scripts
+    script(src='/vendor/jquery/jquery-1.8.1.min.js')
+    script(src='/vendor/jquery/jquery.i18n.properties-1.0.9.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/js/views/login.js')
+    script(src='/js/controllers/loginController.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/loginValidator.js')
+    script(src='/js/form-validators/emailValidator.js')

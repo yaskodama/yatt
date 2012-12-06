@@ -15,7 +15,6 @@ REC.saveRecord = function(mongoose,name,login_flag,callback) {
     access.save(callback);
     return Access;
   };
-
 REC.saveRecord2 = function(mongoose,name,login_flag,save_flag,callback) {
     var db = mongoose.createConnection('localhost', 'yatt');
     var Schema = mongoose.Schema;
@@ -29,7 +28,6 @@ REC.saveRecord2 = function(mongoose,name,login_flag,save_flag,callback) {
     if(save_flag) access.save(callback);
     return Access;
   };
-
 REC.findRecord = function(mongoose,Access,name) {
 	Access.find({name:name}, function(err,docs) {
 	    for(var i=0, size=docs.length; i<size; ++i) {
@@ -37,21 +35,20 @@ REC.findRecord = function(mongoose,Access,name) {
 	    }
 	});
   };
-
 REC.saveLectures = function(mongoose,name,callback) {
     var db = mongoose.createConnection('localhost', 'yatt');
     var Schema = mongoose.Schema;    
-    var fixlecSchema = new Schema( { week: { type: Number, required: true }, time: { type: Number, required: true },
+    var fixlecSchema = new Schema( { week:{type:Number,required:true}, time:{ type:Number, required: true },
                                      lecCode: { type: String, required: true } } );
     var lecturesSchema = new Schema( 
-			    { name: { type: String, required: true }, lecs: [fixlecSchema], events: [fixlecSchema],
+			    { name: { type:String,required:true}, lecs:[fixlecSchema], events:[fixlecSchema],
 				       date: { type: Date, default: Date.now } } );
     var lecs = [ {week: 0, time: 1, lecCode: "HOSE0001"}, {week: 1, time: 0, lecCode: "CHIT0002"},
 		 {week: 1, time: 1, lecCode: "CHIT0002"}, {week: 1, time: 2, lecCode: "CHIT0002"},
 		 {week: 1, time: 1, lecCode: "CHIT0002"}, {week: 2, time: 1, lecCode: "HOIE0003"} ];
     var Lectures = db.model('Lectures', lecturesSchema);
     var lectures = new Lectures();
-    lectures.name = "Guest";
+    lectures.name = name;
     lectures.lecs = lecs;
     lectures.events = [];
     lectures.save(callback);
@@ -67,6 +64,7 @@ REC.saveClasses = function(mongoose,name,callback) {
     var fixgroupSchema = new Schema( { name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new Schema( { lecCode: { type: String, required: true },title: { type: String,required:true },
                                     lang: { type: String, required: true },
+				    author: { type: String, required: true },
 				    group: [fixgroupSchema], objective: { type: String, required: true },
 				    textbook: { type: String, required: true },
 				    reference: { type: String, required: true },
@@ -98,12 +96,15 @@ REC.saveClasses = function(mongoose,name,callback) {
 REC.saveClasses = function(mongoose,name,callback) {
     var db = mongoose.createConnection('localhost', 'yatt');
     var Schema = mongoose.Schema;    
-    var fixcontentSchema = new Schema({ name:{ type:String,required:true }, date:{ type:Date, default:Date.now} } );
-    var fixgroupSchema = new Schema( { name: { type: String, required: true }, classes: [fixcontentSchema] } );
-    var classSchema = new Schema( { lecCode: { type: String, required: true },title: {type: String,required: true },
+    var fixcontentSchema = new Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
+    var fixgroupSchema = new Schema( {name:{type: String,required: true}, classes:[fixcontentSchema]});
+    var classSchema = new Schema( { lecCode: { type: String, required: true },
+				    title: { type: String,required: true },
                                     lang: { type: String, required: true },
+				    author: { type: String, required: true },
 				    group: [fixgroupSchema], objective: { type: String, required: true },
-				    textbook:{ type:String,required:true }, reference:{type: String,required:true },
+				    textbook:{ type:String,required:true },
+				    reference:{type: String,required:true },
 				    advreference: { type: String, required: true },
 				    date: { type: Date, default: Date.now } } );
     var Classes = db.model('Classes', classSchema);
@@ -120,6 +121,7 @@ REC.saveClasses = function(mongoose,name,callback) {
 				{ name: "(6)エクセル"}, { name: "(7)エクセル"} ] } ];
     classes.title = "情報学基礎";
     classes.lang = "ja";
+    classes.author = name;
     classes.objective = "この講義では簡単な<br>PCの使い方を説明する。";
     classes.reference = "検討中";
     classes.advreference = "検討中";
@@ -128,13 +130,14 @@ REC.saveClasses = function(mongoose,name,callback) {
     return Classes;
   };
 
-REC.newClasses = function(mongoose,lecCode,callback) {
+REC.newClasses = function(mongoose,lecCode,name,callback) {
     var db = mongoose.createConnection('localhost', 'yatt');
     var Schema = mongoose.Schema;    
-    var fixcontentSchema = new Schema({ name:{ type:String,required:true }, date:{ type:Date, default:Date.now} } );
+    var fixcontentSchema = new Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
     var fixgroupSchema = new Schema( { name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new Schema( { lecCode: { type: String, required: true },title: {type: String,required:true },
                                     lang: { type: String, required: true },
+				    author: { type: String, required: true },
 				    group: [fixgroupSchema], objective: { type: String, required: true },
 				    textbook:{ type:String,required:true }, reference:{ type:String,required:true },
 				    advreference: { type: String, required: true },
@@ -142,6 +145,7 @@ REC.newClasses = function(mongoose,lecCode,callback) {
     var Classes = db.model('Classes', classSchema);
     var classes = new Classes();
     classes.lecCode = lecCode;
+    classes.author = name;
     classes.group = [ { name: "はじめに", classes: [ { name: "はじめに" } ] },
 		      { name: "メールの使い方", classes: [ { name: "メールの使い方"} ] },
                       { name: "文書処理について", classes: [ { name: "文書処理" },{ name: "(1)文書処理" }, 
@@ -182,10 +186,11 @@ REC.getLectures = function(mongoose) {
 REC.getClasses = function(mongoose) {
     var db = mongoose.createConnection('localhost', 'yatt');
     var Schema = mongoose.Schema;    
-    var fixcontentSchema = new Schema( { name: {type:String,required:true}, date: {type:Date, default: Date.now}});
-    var fixgroupSchema = new Schema( { name: { type: String, required: true }, classes: [fixcontentSchema] } );
+    var fixcontentSchema = new Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
+    var fixgroupSchema = new Schema({ name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new Schema({lecCode: { type: String, required: true },title:{ type: String, required: true },
                                     lang: { type: String, required: true },
+				    author: { type: String, required: true },
 				    group: [fixgroupSchema], objective: { type: String, required: true },
 			   textbook: { type: String, required: true }, reference: { type: String, required: true },
 				    advreference: { type: String, required: true },
@@ -207,3 +212,4 @@ REC.setLecCode = function(docs,lecs) {
 	    lecs[f.week*5+f.time] = f.lecCode;
 	});
 };
+

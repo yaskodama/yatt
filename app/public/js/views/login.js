@@ -136,4 +136,7 @@ console.log(e);
 	jQuery('#signin_name_i18n').empty().append(jQuery.i18n.prop('signin_name_i18n'));
 	jQuery('#message_title_i18n').empty().append(jQuery.i18n.prop('message_title_i18n'));
 	jQuery('#page_not_found_i18n').empty().append(jQuery.i18n.prop('page_not_found_i18n'));
+	jQuery('#author_name_i18n').empty().append(jQuery.i18n.prop('author_name_i18n'));
+	jQuery('#accounts_name_i18n').empty().append(jQuery.i18n.prop('accounts_name_i18n'));
+	jQuery('#log_title_i18n').empty().append(jQuery.i18n.prop('log_title_i18n'));
     }

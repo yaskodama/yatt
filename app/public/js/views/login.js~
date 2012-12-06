@@ -134,4 +134,7 @@ console.log(e);
 	jQuery('#cancel_and_edit_off_i18n').empty().append(jQuery.i18n.prop('cancel_and_edit_off_i18n'));
 	jQuery('#signout_i18n').empty().append(jQuery.i18n.prop('signout_i18n'));
 	jQuery('#signin_name_i18n').empty().append(jQuery.i18n.prop('signin_name_i18n'));
+	jQuery('#message_title_i18n').empty().append(jQuery.i18n.prop('message_title_i18n'));
+	jQuery('#page_not_found_i18n').empty().append(jQuery.i18n.prop('page_not_found_i18n'));
+	jQuery('#author_name_i18n').empty().append(jQuery.i18n.prop('author_name_i18n'));
     }
