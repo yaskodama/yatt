@@ -1,5 +1,6 @@
 
 var bcrypt = require('bcrypt')
+var mongo = require('mongodb');
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 
