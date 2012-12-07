@@ -20,8 +20,10 @@ var AM = {};
 /*	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {})); */
 /* for heroku */
 	AM.db = mongo.connect(mongoUri, function(err,db){
-		db.collection('accounts',function(er,collection) {
-			collection.insert({'mykey':'myvalue'},{safe:true},if(err,rs){console.log(err);})})});
+	    AM.accounts = db.collection('accounts',function(er,collection) {
+		    collection.insert({'mykey':'myvalue'},{safe:true},function(err,rs){if(err){console.log(err);}})
+		});
+	    });
 /*	AM.db.open(function(e, d){
 		if (e) {
 			console.log(e);
@@ -31,9 +33,6 @@ var AM = {};
 		}); */
 /* for heroku */
 /*	AM.accounts = AM.db.collection('accounts'); */
-	AM.accounts =     
-
-
 
 module.exports = AM;
 
