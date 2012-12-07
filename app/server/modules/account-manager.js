@@ -20,14 +20,14 @@ var AM = {};
 /*	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {})); */
 /* for heroku */
 	AM.db = mongo.connect(mongoUri, {},function(err,db){if(err){console.log(err);}});
-/* for heroku */
-	AM.db.open(function(e, d){
+/*	AM.db.open(function(e, d){
 		if (e) {
 			console.log(e);
 		}	else{
 			console.log('connected to database :: ' + dbName);
 		}
-	});
+		}); */
+/* for heroku */
 	AM.accounts = AM.db.collection('accounts');
 
 module.exports = AM;
