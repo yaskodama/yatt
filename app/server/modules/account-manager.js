@@ -28,7 +28,8 @@ var AM = {};
 		}
 		}); */
 /* for heroku */
-	AM.accounts = AM.db.collection('accounts');
+/*	AM.accounts = AM.db.collection('accounts'); */
+	AM.accounts = AM.db.collection('accounts',function(err,collection){if(err){console.log(err);}});
 
 module.exports = AM;
 
