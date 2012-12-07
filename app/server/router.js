@@ -16,8 +16,8 @@ module.exports = function(app) {
 	    //		var lecs = [];
 	    //		REC.setLecCode(docs,lecs);
 		res.render('login', { message: 'New User:'+name, name: 'tyass',
-		    id: req.session.id, title:"Welcome to YaTT - Please Login To Your Account" });
-		});
+			    id: req.session.id, title:"Welcome to YaTT - Please Login To Your Account" });
+		//		});
         } else {
     	    AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 	        if (o != null){
