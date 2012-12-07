@@ -1,8 +1,8 @@
 
 var bcrypt = require('bcrypt')
 var mongo = require('mongodb');
-var Db = require('mongodb').Db;
-var Server = require('mongodb').Server;
+/* var Db = require('mongodb').Db; */
+/* var Server = require('mongodb').Server; */
 
 // var dbPort = 10034;
 var dbPort = 27017;
@@ -19,7 +19,9 @@ var AM = {};
 	    'mongodb://localhost/login';
 /*	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {})); */
 /* for heroku */
-	AM.db = mongo.connect(mongoUri, {},function(err,db){if(err){console.log(err);}});
+	AM.db = mongo.connect(mongoUri, function(err,db){
+		db.collection('accounts',function(er,collection) {
+			collection.insert({'mykey':'myvalue'},{safe:true},if(err,rs){console.log(err);})})});
 /*	AM.db.open(function(e, d){
 		if (e) {
 			console.log(e);
@@ -29,7 +31,9 @@ var AM = {};
 		}); */
 /* for heroku */
 /*	AM.accounts = AM.db.collection('accounts'); */
-	AM.accounts = AM.db.collection('accounts',function(err,collection){if(err){console.log(err);}});
+	AM.accounts =     
+
+
 
 module.exports = AM;
 
