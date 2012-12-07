@@ -19,7 +19,7 @@ var AM = {};
 	    'mongodb://localhost/login';
 /*	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {})); */
 /* for heroku */
-	AM.db = mongo.connect(mongoUri, {}, {});
+	AM.db = mongo.connect(mongoUri, {},function(err){if(err){console.log(err);}});
 /* for heroku */
 	AM.db.open(function(e, d){
 		if (e) {
