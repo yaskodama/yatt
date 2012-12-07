@@ -19,6 +19,7 @@ var AM = {};
 	    'mongodb://localhost/login';
 /*	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {})); */
 /* for heroku */
+var i=1;
 	mongo.connect(mongoUri, function(err,db){
 	    AM.accounts = db.collection('accounts',function(er,collection) {
 		    collection.insert({'mykey':'myvalue'},{safe:true},function(err,rs){if(err){console.log(err);}})
