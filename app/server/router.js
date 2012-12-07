@@ -9,7 +9,7 @@ module.exports = function(app) {
         console.log(req.cookies.user);
         console.log(req.cookies.pass);
         if (req.cookies.user == undefined || req.cookies.pass == undefined) {
-	    //	    var name = 'Guest';
+	        var name = 'Guest';
 	    //	    var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
 	    //	    var Lectures = REC.getLectures(mongoose);
 	    //	    Lectures.find({name:"tyass"}, function(err,docs) {
