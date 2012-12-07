@@ -1,0 +1,157 @@
+extends layout2
+
+block content
+    table
+    tr
+        td(width='600',align='left')
+            #langbox
+                span#language_i18n Language:
+                select#lang
+                span#langbrowser
+
+    #wrapper.ui-widget-content.ui-corner-all
+        p
+            #welcome_i18n(align='center',style='font-family:Century,Lucida Sans Unicode,sans-serif;font-size:4.4em;line-height:1.1em;color:#47FFFC;') Welcome to YaTT
+        #signin_i18n.subtitle Sign in
+        div(style='padding:30px 50px 320px 300px;')
+            #login-container2
+                form( method="post")#login-form.well.span4
+                    label
+                        span#username_i18n Username:
+                    input(type="text", name="user", id='user-tf').span4.required
+                    label
+                        span#password_i18n Password:
+                    input(type="password", name="pass", id='pass-tf').span4.required
+                    button(type="submit")#btn-login.btn.btn-primary
+                        span#signin_name_i18n Sign In
+                    label#remember-me.checkbox Remember Me
+                        input(type="checkbox", checked='checked')
+                    div.clear-fix
+                    hr
+                    div.btm-links
+                        a(href='#')#forgot-password Forgot Your Password? 
+                        a(href='/signup')#create-account Create An Account
+        #timetable_i18n.subtitle Time Table
+        div(style='padding:30px 50px 30px 30px;')
+            table.table#lecture_table(align='center')
+                thead
+                    tr
+                        td
+                            img(src='img/sched00.gif',height='40')
+                        td(style='background-color:#CCFFFF;',width='90',height='40',border='0')
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#monday_i18n(style='font-size:20pt;') Mon
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#tuesday_i18n(style='font-size:20pt;') Tue
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#wednesday_i18n(style='font-size:20pt;') Wed
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#thursday_i18n(style='font-size:20pt;') Thu
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#friday_i18n(style='font-size:20pt;') Fri
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#saturday_i18n(style='font-size:20pt;') Sat
+                        td
+                            img(src='img/sched04.gif',height='40')
+                tbody
+                    - for(var j=0; j<5; j++) {
+                    tr
+                        - if(j==4) {
+                            td
+                                img(src='img/sched13.gif',height='40')
+                        - } else {
+                            td
+                                img(src='img/sched05.gif',height='40')
+                        - }
+                        td(style='background-color:#CCFFFF;font-size:9pt;text-align:center;vertical-align:middle;line-height:1.3em',width='90',height='40',border='0')
+                            - switch(j) { case 0:
+                                i
+                                    span#first_lec_i18n 1st
+                                    br
+                                    span 9:30-11:00
+                            - break; case 1:
+                                i
+                                    span#second_lec_i18n 2nd
+                                    br
+                                    span 11:10-12:40
+                            - break; case 2:
+                                i
+                                    span#third_lec_i18n 3rd
+                                    br
+                                    span 13:30-15:00
+                            - break; case 3:
+                                i
+                                    span#fourth_lec_i18n 4th
+                                    br
+                                    span 15:10-16:40
+                            - break; case 4:
+                                i
+                                    span#fifth_lec_i18n 5th
+                                    br
+                                    span 16:50-18:20
+                            - break; case 5:
+                                i
+                                    span#six_lec_i18n 6th
+                                    br
+                                    span 18:30-20:00
+                            - break; case 6:
+                                i
+                                    span#seventh_lec_i18n 7th
+                                    br
+                                    span 20:10-21:40
+                            - }
+                        td
+                            img(src='img/sched07.gif',width='20',height='40')
+                        - for(var i=0; i<5; i++) {
+                            td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
+                                - var l=lecs[i*5+j];if(l!="") {
+                                    a(href="/cls?submit=#{l}")
+                                        span(style='font-size:11pt;line-height:1.3em;') #{l}
+                                - }
+                            td
+                                img(src='img/sched07.gif',width='20',height='40')
+                        - }
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
+                            - var l=lecs[25+j]; if(l!="") {
+                                a(href='#')
+                                    span(style='font-size:11pt;line-height:1.3em;') #{l}
+                            - }
+                        - if(j==4) {
+                            td
+                                img(src='img/sched16.gif',width='40',height='40')
+                        - } else {
+                            td
+                                img(src='img/sched08.gif',width='40',height='40')
+                        - }
+                    - }
+            hr
+            div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
+                span(style='vertical-align:3pt;')
+                    img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
+
+    include modals/alert
+    include modals/lost-password
+
+block scripts
+    script(src='/vendor/jquery/jquery-1.8.1.min.js')
+    script(src='/vendor/jquery/jquery.i18n.properties-1.0.9.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/js/views/login.js')
+    script(src='/js/controllers/loginController.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/loginValidator.js')
+    script(src='/js/form-validators/emailValidator.js')
