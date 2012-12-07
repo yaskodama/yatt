@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt')
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 
+// var dbPort = 10034;
 var dbPort = 27017;
 var dbHost = global.host;
 var dbName = 'login-testing';
@@ -11,7 +12,14 @@ var dbName = 'login-testing';
 var moment = require('moment');
 
 var AM = {}; 
-	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
+/* for heroku */
+	var mongoUri = process.env.MONGOLAB_URI ||
+		process.env.MONGOHQ_URL ||
+	    'mongodb://localhost/login';
+/*	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {})); */
+/* for heroku */
+	AM.db = mongo.connect(mongoUri, {}, {});
+/* for heroku */
 	AM.db.open(function(e, d){
 		if (e) {
 			console.log(e);

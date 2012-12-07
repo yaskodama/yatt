@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt')
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 
+// var dbPort = 10034;
 var dbPort = 27017;
 var dbHost = global.host;
 var dbName = 'login-testing';
@@ -38,7 +39,8 @@ AM.autoLogin = function(user, pass, callback) {
 AM.manualLogin = function(user, pass, callback) {
     AM.accounts.findOne({user:user}, function(e, o) {
 	if (o == null){
-	    callback('user-not-found');
+	    console.log('user-not-found');
+callback('user-not-found');
 	} else {
 	    bcrypt.compare(pass, o.pass, function(err, res) {
 		if (res){
