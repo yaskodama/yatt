@@ -67,7 +67,7 @@ console.log(req.session.user);
 	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    var Lectures = REC.getLectures(mongoose);
 	    if(req.query.delete === "true") {
-		Lectures.update({name:req.session.user.user}, { $pull: { lecs: {week: req.query.i, time: req.query.j} } },
+		Lectures.update({name:req.session.user.user}, { $pull: { lecs: {week: req.query.i, time: req.query.j}}},
 				{ upsert:false,multi:true}, function(err){if(err){console.log(err);}});
 	    } else if(req.query.delete === "list"&&req.query.Del === "OK") {
 		var Classes = REC.getClasses(mongoose);
