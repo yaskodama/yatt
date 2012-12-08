@@ -1,4 +1,5 @@
 var REC = {};
+var mongoose = require('mongoose');
 var db = mongoose.createConnection('localhost', 'yatt');
 var Schema = mongoose.Schema;
 

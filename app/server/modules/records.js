@@ -1,8 +1,11 @@
 var REC = {};
 var mongoose = require('mongoose');
-var db = mongoose.createConnection('localhost', 'yatt');
+var mongoUri = process.env.MONGOLAB_URI ||
+		process.env.MONGOHQ_URL ||
+	    'mongodb://localhost/yatt';
+// var db = mongoose.Connection('localhost', 'yatt');
+var db = mongoose.connect(mongooseUri);
 var Schema = mongoose.Schema;
-
 module.exports = REC;
 
 REC.saveRecord = function(mongoose,name,login_flag,callback) {
