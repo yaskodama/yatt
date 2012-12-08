@@ -8,7 +8,12 @@ var bcrypt = require('bcrypt')
     //var dbName = 'login-testing';
 
 var mongoose = require('mongoose');
-var db = mongoose.createConnection('localhost', 'login-testing');
+
+var mongoUri = process.env.MONGOLAB_URI ||
+		process.env.MONGOHQ_URL ||
+	    'mongodb://localhost/login';
+var db = mongoose.connect(mongooseUri);
+// var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 
 // use moment.js for pretty date-stamping //

@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-var db = mongoose.connect(mongooseUri);
+var db = mongoose.connect(mongoUri);
 // var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 
