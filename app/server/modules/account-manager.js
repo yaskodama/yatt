@@ -49,7 +49,7 @@ AM.autoLogin = function(user, pass, callback) {
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -80,7 +80,7 @@ AM.manualLogin = function(user, pass, callback) {
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -130,7 +130,7 @@ AM.signup = function(newData, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -190,7 +190,7 @@ AM.update = function(newData, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -234,7 +234,7 @@ AM.setPassword = function(email, newPass, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -264,7 +264,7 @@ AM.validateLink = function(email, passHash, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -297,7 +297,7 @@ AM.delete = function(id, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -318,7 +318,7 @@ AM.getEmail = function(email, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -342,7 +342,7 @@ AM.getAllRecords = function(callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -370,7 +370,7 @@ AM.delAllRecords = function(id, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -391,7 +391,7 @@ AM.findById = function(id, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
@@ -422,7 +422,7 @@ AM.findByMultipleFields = function(a, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-// var db = mongoose.createConnection('localhost', 'login-testing');
+    var db = mongoose.connect(mongoUri);
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
