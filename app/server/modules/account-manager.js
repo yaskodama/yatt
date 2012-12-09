@@ -398,7 +398,6 @@ AM.getAllRecords = function(callback)
 	    process.exit(1);
 	}
 	});
-
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },

@@ -10,7 +10,7 @@ var app = exp.createServer();
 app.root = __dirname;
 global.host = 'localhost';
 
-process.on('SIGINT', function() { mongoose.disconnect(); });
+
 
 require('./app/config')(app, exp);
 require('./app/server/router')(app);
