@@ -273,8 +273,7 @@ AM.delete = function(id, callback)
     var Accounts = db.model('Accounts',accountsSchema);
 
     var accounts = new Accounts();
-    Accounts.remove({}, callback);
-    //    Accounts.remove({_id: this.getObjectId(id)}, callback);
+    Accounts.remove({_id: this.getObjectId(id)}, callback);
     //    AM.accounts.remove({_id: this.getObjectId(id)}, callback);
 }
 
