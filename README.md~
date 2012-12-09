@@ -1,10 +1,4 @@
 <<<<<<< HEAD
-#[yatt](http://limitless-retreat-4631.herokuapp.com/)
-
-This software includes node-login as the following descriptions. Originally yatt is based on
-'Yet Another Time Table' which means a web service on which anyone can create lecture-notes by themselves or
-can learn by one of those lecture notes.
-
 #[Node-Login](http://node-login.braitsch.io)
 
 ####A basic login & account management system built in Node.js with the following features :
