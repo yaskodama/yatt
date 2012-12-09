@@ -51,7 +51,7 @@ AM.autoLogin = function(user, pass, callback) {
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -87,7 +87,7 @@ AM.manualLogin = function(user, pass, callback) {
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -143,7 +143,7 @@ AM.signup = function(newData, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err) {
 	    console.error(err);
 	    process.exit(1);
@@ -208,7 +208,7 @@ AM.update = function(newData, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -258,7 +258,7 @@ AM.setPassword = function(email, newPass, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -294,7 +294,7 @@ AM.validateLink = function(email, passHash, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -333,7 +333,7 @@ AM.delete = function(id, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -361,7 +361,7 @@ AM.getEmail = function(email, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -391,7 +391,7 @@ AM.getAllRecords = function(callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -425,7 +425,7 @@ AM.delAllRecords = function(id, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -451,7 +451,7 @@ AM.findById = function(id, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
@@ -489,7 +489,7 @@ AM.findByMultipleFields = function(a, callback)
     var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-    var db = mongoose.connect(mongoUri,function(err){
+    var db = mongoose.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
