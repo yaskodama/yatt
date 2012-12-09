@@ -335,6 +335,17 @@ console.log(req.session.user.user);
 	    }
 	});
 	});
+    app.get('/delete', function(req, res){
+        AM.delete(req.query.id, function(e, obj){
+	    if (!e){
+	    	res.clearCookie('user');
+	    	res.clearCookie('pass');
+	    	req.session.destroy(function(e){ res.send('ok', 200); });
+	    } else {
+		res.send('record not found', 400);
+	    }
+	});
+	});
     app.get('/reset', function(req, res) {
 	AM.delAllRecords( );
 	res.redirect('/print');

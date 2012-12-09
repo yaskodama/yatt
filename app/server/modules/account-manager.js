@@ -9,20 +9,19 @@ var bcrypt = require('bcrypt')
 
 var mongoose = require('mongoose');
 var db = mongoose.createConnection();
+// var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
+/* heroku */
 db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
     });
-
-//var db = mongoose.connect(mongoUri);
-//var Schema = mongoose.Schema;
-// var db = mongoose.createConnection('localhost', 'login-testing');
+/* heroku */
 
 // use moment.js for pretty date-stamping //
 var moment = require('moment');
@@ -32,9 +31,6 @@ var AM = {};
 process.on('SIGINT', function() { mongoose.disconnect(); });
 
 /* for heroku */
-	var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
 //	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
 /* for heroku */
 //	AM.db.open(function(e, d){
@@ -277,7 +273,8 @@ AM.delete = function(id, callback)
     var Accounts = db.model('Accounts',accountsSchema);
 
     var accounts = new Accounts();
-    Accounts.remove({_id: this.getObjectId(id)}, callback);
+    Accounts.remove({}, callback);
+    //    Accounts.remove({_id: this.getObjectId(id)}, callback);
     //    AM.accounts.remove({_id: this.getObjectId(id)}, callback);
 }
 

@@ -9,14 +9,19 @@ var bcrypt = require('bcrypt')
 
 var mongoose = require('mongoose');
 var db = mongoose.createConnection();
+// var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
-
-//var db = mongoose.connect(mongoUri);
-//var Schema = mongoose.Schema;
-// var db = mongoose.createConnection('localhost', 'login-testing');
+/* heroku */
+db.open(mongoUri,function(err){
+	if(err){
+	    console.error(err);
+	    process.exit(1);
+	}
+    });
+/* heroku */
 
 // use moment.js for pretty date-stamping //
 var moment = require('moment');
@@ -26,17 +31,8 @@ var AM = {};
 process.on('SIGINT', function() { mongoose.disconnect(); });
 
 /* for heroku */
-	var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
 //	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
 /* for heroku */
-/* var i=1;
-	mongo.connect(mongoUri, function(err,db){
-	    AM.accounts = db.collection('accounts',function(er,collection) {
-		    collection.insert({'mykey':'myvalue'},{safe:true},function(err,rs){if(err){console.log(err);}})
-		});
-		}); */
 //	AM.db.open(function(e, d){
 //		if (e) {
 //			console.log(e);
@@ -50,12 +46,6 @@ process.on('SIGINT', function() { mongoose.disconnect(); });
 module.exports = AM;
 
 AM.autoLogin = function(user, pass, callback) {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -82,12 +72,6 @@ AM.autoLogin = function(user, pass, callback) {
 }
 
 AM.manualLogin = function(user, pass, callback) {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -133,12 +117,6 @@ callback('invalid-password');
 // record insertion, update & deletion methods //
 AM.signup = function(newData, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err) {
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -194,12 +172,6 @@ AM.signup = function(newData, callback)
 
 AM.update = function(newData, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -239,12 +211,6 @@ AM.update = function(newData, callback)
 
 AM.setPassword = function(email, newPass, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -270,12 +236,6 @@ AM.setPassword = function(email, newPass, callback)
 
 AM.validateLink = function(email, passHash, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -304,12 +264,6 @@ AM.saltAndHash = function(pass, callback)
 
 AM.delete = function(id, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -327,12 +281,6 @@ AM.delete = function(id, callback)
 
 AM.getEmail = function(email, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -352,12 +300,6 @@ AM.getObjectId = function(id)
 
 AM.getAllRecords = function(callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -381,12 +323,6 @@ AM.getAllRecords = function(callback)
 
 AM.delAllRecords = function(id, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -403,12 +339,6 @@ AM.delAllRecords = function(id, callback)
 
 AM.findById = function(id, callback)
 {
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -435,12 +365,6 @@ AM.findById = function(id, callback)
 AM.findByMultipleFields = function(a, callback)
 {
 // this takes an array of name/val pairs to search against {fieldName : 'value'} //
-    db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-	});
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
