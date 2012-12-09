@@ -21,6 +21,8 @@ var moment = require('moment');
 
 var AM = {}; 
 
+process.on('SIGINT', function() { mongoose.disconnect(); });
+
 /* for heroku */
 	var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
@@ -142,12 +144,11 @@ AM.signup = function(newData, callback)
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
     var db = mongoose.connect(mongoUri,function(err){
-	if(err){
+	if(err) {
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
     var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
