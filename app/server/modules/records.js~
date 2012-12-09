@@ -4,7 +4,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/yatt';
 // var db = mongoose.Connection('localhost', 'yatt');
-var db = mongoose.connect(mongooseUri);
+var db = mongoose.connect(mongoUri);
 var Schema = mongoose.Schema;
 module.exports = REC;
 

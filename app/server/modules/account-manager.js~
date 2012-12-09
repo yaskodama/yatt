@@ -9,10 +9,11 @@ var bcrypt = require('bcrypt')
 
 var mongoose = require('mongoose');
 var db = mongoose.createConnection();
+var Schema = mongoose.Schema;
+var mongoUri = process.env.MONGOLAB_URI ||
+		process.env.MONGOHQ_URL ||
+	    'mongodb://localhost/login';
 
-//var mongoUri = process.env.MONGOLAB_URI ||
-//		process.env.MONGOHQ_URL ||
-//	    'mongodb://localhost/login';
 //var db = mongoose.connect(mongoUri);
 //var Schema = mongoose.Schema;
 // var db = mongoose.createConnection('localhost', 'login-testing');
@@ -49,16 +50,12 @@ process.on('SIGINT', function() { mongoose.disconnect(); });
 module.exports = AM;
 
 AM.autoLogin = function(user, pass, callback) {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -85,17 +82,12 @@ AM.autoLogin = function(user, pass, callback) {
 }
 
 AM.manualLogin = function(user, pass, callback) {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -141,16 +133,12 @@ callback('invalid-password');
 // record insertion, update & deletion methods //
 AM.signup = function(newData, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err) {
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -206,17 +194,12 @@ AM.signup = function(newData, callback)
 
 AM.update = function(newData, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -256,17 +239,12 @@ AM.update = function(newData, callback)
 
 AM.setPassword = function(email, newPass, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -292,17 +270,12 @@ AM.setPassword = function(email, newPass, callback)
 
 AM.validateLink = function(email, passHash, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -331,17 +304,12 @@ AM.saltAndHash = function(pass, callback)
 
 AM.delete = function(id, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -359,17 +327,12 @@ AM.delete = function(id, callback)
 
 AM.getEmail = function(email, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -389,16 +352,12 @@ AM.getObjectId = function(id)
 
 AM.getAllRecords = function(callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -422,16 +381,12 @@ AM.getAllRecords = function(callback)
 
 AM.delAllRecords = function(id, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -448,18 +403,12 @@ AM.delAllRecords = function(id, callback)
 
 AM.findById = function(id, callback)
 {
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -486,17 +435,12 @@ AM.findById = function(id, callback)
 AM.findByMultipleFields = function(a, callback)
 {
 // this takes an array of name/val pairs to search against {fieldName : 'value'} //
-    var mongoUri = process.env.MONGOLAB_URI ||
-		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/login';
     db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
 	});
-
-    var Schema = mongoose.Schema;
     var accountsSchema = new Schema({ name: { type: String, required: true },
 				      email: { type: String, required: true },
 				      user: { type: String, required: true },
@@ -505,7 +449,6 @@ AM.findByMultipleFields = function(a, callback)
 				      date: { type: String, required: true } });
     var Accounts = db.model('Accounts',accountsSchema);
     var accounts = new Accounts();
-
     Accounts.find( { $or : a } ).toArray(
     		function(e, results) {
     		if (e) callback(e)

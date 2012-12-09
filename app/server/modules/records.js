@@ -2,9 +2,17 @@ var REC = {};
 var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
-	    'mongodb://localhost/yatt';
+	    'mongodb://localhost/login';
+
 // var db = mongoose.Connection('localhost', 'yatt');
-var db = mongoose.connect(mongoUri);
+var db = mongoose.createConnection();
+db.open(mongoUri,function(err){
+	if(err){
+	    console.error(err);
+	    process.exit(1);
+	}
+    });
+//var db = mongoose.connect(mongoUri);
 var Schema = mongoose.Schema;
 module.exports = REC;
 
