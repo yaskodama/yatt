@@ -146,3 +146,4 @@ block scripts
     script(src='/vendor/bootstrap-modal.js')
     script(src='/js/views/login.js')
     script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/loginValidator.js')
