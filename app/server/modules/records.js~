@@ -4,6 +4,8 @@ var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
 //var db = mongoose.createConnection();
+var db = mongoose.createConnection('localhost', 'yatt');
+var Schema = mongoose.Schema;
 //db.open(mongoUri,function(err){
 //	if(err){
 //	    console.error(err);
@@ -14,7 +16,6 @@ var mongoUri = process.env.MONGOLAB_URI ||
 module.exports = REC;
 
 REC.saveRecord = function(mongoose,name,login_flag,callback) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var accessSchema = new mongoose.Schema({ name: { type: String, required: true },
 				    login:{ type: Boolean, required: true },
 				    date: { type: Date, default: Date.now } });
@@ -26,7 +27,6 @@ REC.saveRecord = function(mongoose,name,login_flag,callback) {
     return Access;
   };
 REC.saveRecord2 = function(mongoose,name,login_flag,save_flag,callback) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var accessSchema = new mongoose.Schema({ name: { type: String, required: true },
 				    login:{ type: Boolean, required: true },
 				    date: { type: Date, default: Date.now } });
@@ -45,7 +45,6 @@ REC.findRecord = function(mongoose,Access,name) {
 	});
   };
 REC.saveLectures = function(mongoose,name,callback) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var fixlecSchema = new mongoose.Schema( { week:{type:Number,required:true}, time:{ type:Number, required: true },
                                      lecCode: { type: String, required: true } } );
     var lecturesSchema = new mongoose.Schema( 
@@ -100,7 +99,6 @@ REC.saveClasses = function(mongoose,name,callback) {
  */
 
 REC.saveClasses = function(mongoose,name,callback) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var fixcontentSchema = new mongoose.Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
     var fixgroupSchema = new mongoose.Schema( {name:{type: String,required: true}, classes:[fixcontentSchema]});
     var classSchema = new mongoose.Schema( { lecCode: { type: String, required: true },
@@ -136,7 +134,6 @@ REC.saveClasses = function(mongoose,name,callback) {
   };
 
 REC.newClasses = function(mongoose,lecCode,name,callback) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var fixcontentSchema = new mongoose.Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
     var fixgroupSchema = new mongoose.Schema( { name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new mongoose.Schema( { lecCode: { type: String, required: true },title: {type: String,required:true },
@@ -174,7 +171,6 @@ REC.updateClasses = function(Classes,req,callback) {
 */
 
 REC.getLectures = function(mongoose) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var fixlecSchema = new mongoose.Schema( { week: { type: Number, required: true },
 				     time: { type: Number, required: true },
                                      lecCode: { type: String, required: true } } );
@@ -187,7 +183,6 @@ REC.getLectures = function(mongoose) {
 };
 
 REC.getClasses = function(mongoose) {
-    var db = mongoose.Connection('localhost', 'yatt');
     var fixcontentSchema = new mongoose.Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
     var fixgroupSchema = new mongoose.Schema({ name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new mongoose.Schema({lecCode: { type: String, required: true },title:{ type: String, required: true },
