@@ -2,33 +2,31 @@ var bcrypt = require('bcrypt')
     //var mongo = require('mongodb');
     //var Db = require('mongodb').Db;
     //var Server = require('mongodb').Server;
-
     //var dbPort = 27017;
     //var dbHost = global.host;
     //var dbName = 'login-testing';
 
 var mongoose = require('mongoose');
-var db = mongoose.createConnection();
-// var db = mongoose.createConnection('localhost', 'login-testing');
+//var db = mongoose.createConnection();
+var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
 /* heroku */
-db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-    });
+//db.open(mongoUri,function(err){
+//	if(err){
+//	    console.error(err);
+//	    process.exit(1);
+//	}
+//    });
 /* heroku */
 
 // use moment.js for pretty date-stamping //
 var moment = require('moment');
-
 var AM = {}; 
 
-process.on('SIGINT', function() { mongoose.disconnect(); });
+//process.on('SIGINT', function() { mongoose.disconnect(); });
 
 /* for heroku */
 //	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));

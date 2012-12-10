@@ -10,7 +10,7 @@ module.exports = function(app) {
         console.log(req.cookies.pass);
         if (req.cookies.user == undefined || req.cookies.pass == undefined) {
 	        var name = 'Guest';
-	        var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
+		var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
 	        var Lectures = REC.getLectures(mongoose);
 	        Lectures.find({name:"tyass"}, function(err,docs) {
 	    	var lecs = [];
@@ -320,10 +320,12 @@ console.log(req.session.user.user);
 	})
         });
     app.get('/admin', function(req, res) {
-	AM.getAllRecords( function(e, accounts){
-	    res.render('admin', { title : 'Administration', accts : accounts } );
-	})
-        });
+	var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
+	Access.find({}, function(err,docs) {
+	    AM.getAllRecords( function(e, accounts) {
+		res.render('admin', { title : 'Administration', accts:accounts, logs: docs } );
+		})
+		})});
     app.post('/delete', function(req, res){
         AM.delete(req.body.id, function(e, obj){
 	    if (!e){

@@ -10,14 +10,14 @@ module.exports = function(app) {
         console.log(req.cookies.pass);
         if (req.cookies.user == undefined || req.cookies.pass == undefined) {
 	        var name = 'Guest';
-	    //	    var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
-	    //	    var Lectures = REC.getLectures(mongoose);
-	    //	    Lectures.find({name:"tyass"}, function(err,docs) {
-	    //		var lecs = [];
-	    //		REC.setLecCode(docs,lecs);
+		var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
+	        var Lectures = REC.getLectures(mongoose);
+	        Lectures.find({name:"tyass"}, function(err,docs) {
+	    	var lecs = [];
+	    	REC.setLecCode(docs,lecs);
 		res.render('login', { message: 'New User:'+name, name: 'tyass',
-			    id: req.session.id, title:"Welcome to YaTT - Please Login To Your Account" });
-		//		});
+			    id: req.session.id, lecs:lecs, title:"Welcome to YaTT - Please Login To Your Account" });
+			});
         } else {
     	    AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 	        if (o != null){

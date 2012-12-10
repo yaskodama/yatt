@@ -44,17 +44,17 @@ block content
                               th(style='width:100px') Username
                               th Account Created
                     tbody
-                        - for(var i=0; i<accts.length; i++) {
+                        - for(var i=0; i<logs.length; i++) {
                             tr
                               td #{i+1}
-                              td #{accts[i].name}
-                              td #{accts[i].country}
-                              td #{accts[i].user}
-                              td #{accts[i].date}
+                              td #{logs[i].name}
+                              td #{logs[i].country}
+                              td #{logs[i].user}
+                              td #{logs[i].date}
                         - };
         hr
         p
-            div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
+            div(align='center') Last update: Sun Dec  9 11:44:59 PST 2012 by
                 span(style='vertical-align:3pt;')
                     img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
 
