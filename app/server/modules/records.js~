@@ -26,6 +26,13 @@ REC.saveRecord = function(mongoose,name,login_flag,callback) {
     access.save(callback);
     return Access;
   };
+REC.getAccess = function() {
+    var accessSchema = new mongoose.Schema({ name: { type: String, required: true },
+				    login:{ type: Boolean, required: true },
+					     date: { type: Date, default: Date.now }});
+    var Access = db.model('Access', accessSchema);
+    return Access;
+  };
 REC.saveRecord2 = function(mongoose,name,login_flag,save_flag,callback) {
     var accessSchema = new mongoose.Schema({ name: { type: String, required: true },
 				    login:{ type: Boolean, required: true },
@@ -197,7 +204,7 @@ REC.getClasses = function(mongoose) {
 REC.setLecList = function(docs,leclist) {
     var i=0;
     docs.forEach(function(f) {
-	    leclist[i++] = { lecCode: f.lecCode, title: f.title, lang: f.lang, date: f.date };
+	    leclist[i++] = { lecCode: f.lecCode, title: f.title, author: f.author, lang: f.lang, date: f.date };
 	});
 };
 

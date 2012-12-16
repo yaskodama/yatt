@@ -3,15 +3,19 @@ var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
+/* heroku */
 var db = mongoose.createConnection();
+/* heroku */
 //var db = mongoose.createConnection('localhost', 'yatt');
 var Schema = mongoose.Schema;
+/* heroku */
 db.open(mongoUri,function(err){
 	if(err){
 	    console.error(err);
 	    process.exit(1);
 	}
     });
+/* heroku */
 
 module.exports = REC;
 
@@ -24,6 +28,13 @@ REC.saveRecord = function(mongoose,name,login_flag,callback) {
     access.name = name;
     access.login = login_flag;
     access.save(callback);
+    return Access;
+  };
+REC.getAccess = function() {
+    var accessSchema = new mongoose.Schema({ name: { type: String, required: true },
+				    login:{ type: Boolean, required: true },
+					     date: { type: Date, default: Date.now }});
+    var Access = db.model('Access', accessSchema);
     return Access;
   };
 REC.saveRecord2 = function(mongoose,name,login_flag,save_flag,callback) {
@@ -197,7 +208,7 @@ REC.getClasses = function(mongoose) {
 REC.setLecList = function(docs,leclist) {
     var i=0;
     docs.forEach(function(f) {
-	    leclist[i++] = { lecCode: f.lecCode, title: f.title, lang: f.lang, date: f.date };
+	    leclist[i++] = { lecCode: f.lecCode, title: f.title, author: f.author, lang: f.lang, date: f.date };
 	});
 };
 

@@ -7,8 +7,10 @@ var bcrypt = require('bcrypt')
     //var dbName = 'login-testing';
 
 var mongoose = require('mongoose');
+/* heroku */
 var db = mongoose.createConnection();
-// var db = mongoose.createConnection('localhost', 'login-testing');
+/* heroku */
+//var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
@@ -294,6 +296,17 @@ AM.getEmail = function(email, callback)
 AM.getObjectId = function(id)
 {
 	return AM.accounts.db.bson_serializer.ObjectID.createFromHexString(id)
+}
+
+AM.getAccounts = function() {
+    var accountsSchema = new Schema({ name: { type: String, required: true },
+				      email: { type: String, required: true },
+				      user: { type: String, required: true },
+				      pass: { type: String, required: true },
+				      country: { type: String, required: true },
+				      date: { type: String, required: true } });
+    var Accounts = db.model('Accounts',accountsSchema);
+    return Accounts;
 }
 
 AM.getAllRecords = function(callback)

@@ -17,7 +17,7 @@ block content
             td(align='right')
                 button#btn-logout2.btn.btn-primary
                     i.icon-lock.icon-white
-                    | Sign Out
+                    span#signout_i18n Sign Out
     #wrapper.ui-widget-content.ui-corner-all
         p
             #welcome_i18n(align='center',style='font-family:Century,Lucida Sans Unicode,sans-serif;font-size:4.4em;line-height:1.1em;color:#47FFFC;') Welcome to YaTT

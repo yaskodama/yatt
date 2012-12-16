@@ -21,11 +21,9 @@ module.exports = function(app) {
         } else {
     	    AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 	        if (o != null){
-console.log('auto1');
 		    req.session.user = o;
 		    res.redirect('/home');
 		} else {
-console.log('auto2');
 		    var name = 'tyass';
 		    var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
 		    var Lectures = REC.getLectures(mongoose);
@@ -35,7 +33,6 @@ console.log('auto2');
 		        res.render('login', { message: 'New User:'+name, name: 'tyass', id: req.session.id,
 				lecs: lecs, title: "Welcome to YaTT - Please Login To Your Account" });
 			});
-	    /*		    res.render('login', { title: 'Welcome to YaTT - Please Login To Your Account' });    */
 		}
 	    });
 	}
@@ -80,7 +77,7 @@ console.log(req.session.user);
 		Classes.find({}, function(err,docs) {
 		    var leclist = [];
 		    REC.setLecList(docs,leclist);
-		    	res.render('edit', { message: 'Edit mode!', name: req.session.user.user,
+		    res.render('edit', { message: 'Edit mode!', name: req.session.user.user,
 			id: req.session.id, lecs: lecs, leclist: leclist,
 			title: "Welcome to YaTT by "+ req.session.user.user });
 		    });
@@ -189,8 +186,6 @@ console.log(cls);
     }
     });
     app.get('/home', function(req, res) {
-console.log(req.query);
-console.log(req.session.user);
         if (req.session.user == null){
 	    // if user is not logged-in redirect back to login page //
 	    res.redirect('/');
@@ -221,9 +216,6 @@ console.log('section1');
         }
         });
     app.post('/home', function(req, res){
-console.log(req.body);
-console.log(req.session.user);
-console.log(req.session.user.user);
         if (req.param('user') != undefined) {
     	    AM.update({
 	        user 		: req.param('user'),
@@ -320,12 +312,68 @@ console.log(req.session.user.user);
 	})
         });
     app.get('/admin', function(req, res) {
-	var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
-	Access.find({}, function(err,docs) {
-	    AM.getAllRecords( function(e, accounts) {
-		res.render('admin', { title : 'Administration', accts:accounts, logs: docs } );
-		})
-		})});
+	var Access = REC.getAccess();
+        var Lectures = REC.getLectures(mongoose);
+	Lectures.find({}, function(err,lecs) {
+	    var Classes = REC.getClasses(mongoose);
+	    Classes.find({}, function(err,docs) {
+		var leclist = [];
+		REC.setLecList(docs,leclist);
+		Access.find({}, function(err,docs) {
+	    	    AM.getAllRecords( function(e, accounts) {
+		    	res.render('admin', { title : 'Administration', accts:accounts,
+			    logs: docs, lecs: lecs, leclist: leclist } );
+			})
+		    })
+	        })
+	    })
+	});
+    app.post('/admin', function(req, res) {
+	var Accounts = AM.getAccounts();
+	var Access = REC.getAccess();
+        var Lectures = REC.getLectures(mongoose);
+	var Classes = REC.getClasses(mongoose);
+        console.log(req.body.submit);
+        console.log(req.body.delete);
+        if(req.body.delete === "true" && req.body.submit === "OK") {
+            console.log(req.body.submit);
+            console.log(req.body.delete);
+            console.log(req.body.date);
+            console.log(req.body.id);
+            Access.remove({_id:req.body.id}, {safe:true}, function(err){if(err){console.log(err);}});
+        } else if(req.body.delete === "lecs" && req.body.submit === "OK") {
+            console.log(req.body.submit);
+            console.log(req.body.delete);
+            console.log(req.body.user);
+            Lectures.remove({name:req.body.user}, {safe:true}, function(err){if(err){console.log(err);}});
+        } else if(req.body.delete === "list" && req.body.submit === "OK") {
+            console.log(req.body.submit);
+            console.log(req.body.delete);
+            console.log(req.body.Code);
+            Classes.remove({lecCode:req.body.Code}, {safe:true}, function(err){if(err){cosole.log(err);}});
+        } else if(req.body.delete === "accts" && req.body.submit === "OK") {
+            console.log(req.body.submit);
+            console.log(req.body.delete);
+            console.log(req.body.Code);
+            Accounts.remove({user:req.body.user}, {safe:true}, function(err){if(err){cosole.log(err);}});
+	}
+	Lectures.find({}, function(err,lecs) {
+	    Classes.find({}, function(err,docs) {
+		var leclist = [];
+		REC.setLecList(docs,leclist);
+		Access.find({}, function(err,docs) {
+		    AM.getAllRecords( function(e, accounts) {
+			if(!e) {
+			    res.render('admin', { title : 'Administration', accts:accounts,
+			        logs: docs, lecs: lecs, leclist: leclist } );
+			} else {
+			    res.send('accounts not found', 400);
+			}
+			})
+			})
+		    })
+		});
+        });
     app.post('/delete', function(req, res){
         AM.delete(req.body.id, function(e, obj){
 	    if (!e){

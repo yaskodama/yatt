@@ -16,7 +16,7 @@ block content
             .contents
                 table#lecture_list.table(align='center')
                     thead
-                          tr
+                        tr
                               th(style='width:30px') #
                               th(style='width:200px') Name
                               th(style='width:80px') Location
@@ -25,13 +25,83 @@ block content
                     tbody
                         - for(var i=0; i<accts.length; i++) {
                             tr
-                              td #{i+1}
-                              td #{accts[i].name}
-                              td #{accts[i].country}
-                              td #{accts[i].user}
-                              td #{accts[i].date}
+                                td #{i+1}
+                                td #{accts[i].name}
+                                td #{accts[i].country}
+                                td #{accts[i].user}
+                                td #{accts[i].date}
                         - };
-
+        #timetable_i18n.subtitle Time Table
+        p
+            .contents
+                table#lecture_list.table(align='center')
+                    thead
+                        tr
+                            th(style='width:30px') #
+                            th(style='width:30px') Icon
+                            th(style='width:70px') Author
+                            th Lectures List
+                    tbody
+                        - for(var i=0; i<lecs.length; i++) {
+                            tr
+                                td #{i+1}
+                                td
+                                    a.btn(href='#tt#{i}',role='button',data-toggle='modal')
+                                        i.icon-trash
+                                    div.modal.hide.fade(id='tt#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                        div.modal-header
+                                            button.close(data-dismiss='modal') x
+                                            | Delete
+                                        div.modal-body(style='line-height:1.5em;')
+                                            span #{lecs[i].name}
+                                            form.input-append(mothod='POST')
+                                                input(type='hidden',name='delete',value='lecs')
+                                                input(type='hidden',name='user',value='#{lecs[i].name')
+                                                input.btn(type='submit',name='submit',value='CANCEL')
+                                                input.btn.btn-success(type='submit',name='submit',value='OK')
+                                        div.modal-footer
+                                td #{lecs[i].name}
+                                - for(var j=0; j<lecs[i].lecs.length; j++) {
+                                - var l = lecs[i].lecs[j];
+                                    td(style='font-size:9pt') (#{l.week},#{l.time},#{l.lecCode})
+                                - }
+                        - };
+        #lectures_i18n.subtitle Lectures
+        p
+            .contents
+                table#lecture_list.table(align='center')
+                    thead
+                        tr
+                            th(style='width:30px') Icon
+                            th(style='width:100px') Code
+                            th(style='width:170px') Title
+                            th(style='width:70px') Author
+                            th(style='width:50px') Lang
+                            th Lecture Created
+                    tbody
+                        - leclist.forEach(function(f) {
+                            tr
+                              td
+                                 a.btn(href='##{f.lecCode}',role='button',data-toggle='modal')
+                                     i.icon-trash
+                                 div.modal.hide.fade(id='#{f.lecCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                     div.modal-header
+                                         button.close(data-dismiss='modal') x
+                                         | Delete
+                                     div.modal-body(style='line-height:1.5em;')
+                                         span #{f.lecCode}
+                                             form.input-append(mothod='POST')
+                                                 input(type='hidden',name='delete',value='list')
+                                                 input(type='hidden',name='Code',value='#{f.lecCode}')
+                                                 input.btn(type='submit',name='submit',value='CANCEL')
+                                                 input.btn.btn-success(type='submit',name='submit',value='OK')
+                                     div.modal-footer
+                              td #{f.lecCode}
+                              td #{f.title}
+                              td #{f.author}
+                              td #{f.lang}
+                              td #{f.date}
+                        - });
         #log_title_i18n.subtitle Log
         p
             .contents
@@ -39,18 +109,33 @@ block content
                     thead
                           tr
                               th(style='width:30px') #
-                              th(style='width:200px') Name
-                              th(style='width:80px') Location
-                              th(style='width:100px') Username
-                              th Account Created
+                              th(style='width:30px') Icon
+                              th(style='width:150px') Name
+                              th(style='width:80px') SignIn/SignOut
+                              th Access Date
                     tbody
-                        - for(var i=0; i<accts.length; i++) {
+                        - for(var i=0; i<logs.length; i++) {
                             tr
-                              td #{i+1}
-                              td #{accts[i].name}
-                              td #{accts[i].country}
-                              td #{accts[i].user}
-                              td #{accts[i].date}
+                                td #{i+1}
+                                td
+                                    a.btn(href='#log#{i}',role='button',data-toggle='modal')
+                                        i.icon-trash
+                                    div.modal.hide.fade(id='log#{i}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                        div.modal-header(style='line-height:1.5em;')
+                                            button.close(data-dismiss='modal') x
+                                            | Delete
+                                        div.modal-body(style='line-height:1.5em;')
+                                            span #{logs[i].date}
+                                            form.input-append(method='POST',action='/admin')
+                                                input(type='hidden',name='delete',value='true')
+                                                input(type='hidden',name='id',value='#{logs[i]._id}')
+                                                input(type='hidden',name='date',value='#{logs[i].date}')
+                                                input.btn(type='submit',name='submit',value='CANCEL')
+                                                input.btn.btn-success(type='submit',name='submit',value='OK')
+                                        div.modal-footer
+                                td #{logs[i].name}
+                                td #{logs[i].login}
+                                td #{logs[i].date}
                         - };
         hr
         p
