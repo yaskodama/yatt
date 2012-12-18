@@ -4,17 +4,17 @@ var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
 /* heroku */
-// var db = mongoose.createConnection();
+var db = mongoose.createConnection();
 /* heroku */
-var db = mongoose.createConnection('localhost', 'yatt');
+//var db = mongoose.createConnection('localhost', 'yatt');
 var Schema = mongoose.Schema;
 /* heroku */
-//db.open(mongoUri,function(err){
-//	if(err){
-//	    console.error(err);
-//	    process.exit(1);
-//	}
-//    });
+db.open(mongoUri,function(err){
+	if(err){
+	    console.error(err);
+	    process.exit(1);
+	}
+    });
 /* heroku */
 
 module.exports = REC;
