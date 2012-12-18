@@ -4,17 +4,17 @@ var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
 /* heroku */
-var db = mongoose.createConnection();
+// var db = mongoose.createConnection();
 /* heroku */
-//var db = mongoose.createConnection('localhost', 'yatt');
+var db = mongoose.createConnection('localhost', 'yatt');
 var Schema = mongoose.Schema;
 /* heroku */
-db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-    });
+//db.open(mongoUri,function(err){
+//	if(err){
+//	    console.error(err);
+//	    process.exit(1);
+//	}
+//    });
 /* heroku */
 
 module.exports = REC;
@@ -198,7 +198,7 @@ REC.getClasses = function(mongoose) {
     var fixgroupSchema = new mongoose.Schema({ name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new mongoose.Schema({lecCode: { type: String, required: true },title:{ type: String, required: true },
                            lang: { type: String, required: true }, author: { type: String, required: true },
-			    group: [fixgroupSchema], objective: { type: String, required: true },
+			   group: [fixgroupSchema], objective: { type: String, required: true },
 			   textbook: { type: String, required: true }, reference: { type: String, required: true },
 			  advreference: { type: String, required: true }, date: { type: Date, default: Date.now } } );
     var Classes = db.model('Classes', classSchema);

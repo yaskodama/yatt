@@ -16,7 +16,7 @@ module.exports = function(app) {
 	    	var lecs = [];
 	    	REC.setLecCode(docs,lecs);
 		res.render('login', { message: 'New User:'+name, name: 'tyass',
-			    id: req.session.id, lecs:lecs, title:"Welcome to YaTT - Please Login To Your Account" });
+			    id: req.session.id, lecs:lecs, title: "Welcome to YaTT - Please Login To Your Account" });
 			});
         } else {
     	    AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
@@ -84,7 +84,7 @@ console.log(req.session.user);
 	    });
 	}
         });
-    app.get('/cls', function(req, res) {    /* /lecture + "GET" */
+    app.get('/cls', function(req, res) {    /* /cls + "GET" */
 	var Classes = REC.getClasses(mongoose);
 	Classes.find({lecCode:req.query.submit}, function(err,docs) {
 	    if(docs[0]==undefined) {
@@ -99,27 +99,13 @@ console.log(req.session.user);
 console.log(req.query);
 console.log(req.session.user);
         if (req.session.user == null){
-	// if user is not logged-in redirect back to login page //
             res.redirect('/');
         } else {
 	    var Classes = REC.getClasses(mongoose);
 	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    var Lectures = REC.getLectures(mongoose);
-            if(req.query.update === "create") {
-console.log(req.query.Code);
-		if(req.query.Code!='New') {
-		    var Lectures = REC.getLectures(mongoose);
-		    Lectures.update({name:req.session.user.user},
-			{ $push: { lecs: {week: req.query.i, time: req.query.j, lecCode: req.query.Code} } },
-			{ upsert:false,multi:true}, function(err){if(err){console.log(err);}});
-		    var Classes = REC.newClasses(mongoose,req.query.Code,req.session.user.user,function(err){if(err){console.log(err);}});
-		    req.query.lecCode = req.query.Code;
-		}
-	    }
 	    if(req.query.lecCode != 'New') {
-console.log(req.query.lecCode);
 	        Classes.find({lecCode:req.query.lecCode}, function(err,docs) {
-console.log(docs[0]);
 		    if(docs[0]==undefined) {
 			res.render('404', {title: 'Page Not Found'});
 		    } else {
@@ -130,10 +116,8 @@ console.log(docs[0]);
 		    });
 	    } else {
 		var cls = { title: "New", lecCode: "New", lang: "en", objective: "New", reference: "Selecting...",
-			    advreference: "Selecting...", textbook: "Selecting...",
-			    group: [], date: Date.Now };
-console.log(cls);
-			    res.render('lecture',  { message: 'Lecture mode!', name: req.session.user.user,
+			    advreference: "Selecting...", textbook: "Selecting...", group: [], date: Date.Now };
+		res.render('lecture',  { message: 'Lecture mode!', name: req.session.user.user,
 			    id: req.session.id, cls: cls, i: req.query.i, j: req.query.j,
 			    title: "Welcome to YaTT by "+ req.session.user.user });
 	    }
@@ -153,35 +137,42 @@ console.log(req.session.user);
 		Classes.update({lecCode:req.body.lecCode},
 		    { $set: { title:req.body.title,objective:req.body.objective,
 			reference:req.body.reference,advreference:req.body.advreference,
-		    	textbook: req.body.textbook } }, {upsert:false,multi:true}, function(err){if(err){console.log(err);}});
+		    	textbook: req.body.textbook }}, {upsert:false,multi:true}, function(err){if(err){console.log(err);}});
             } else if(req.body.update === "create") {
-console.log(req.body.Code);
 		if(req.body.Code!='New') {
 		    var Lectures = REC.getLectures(mongoose);
 		    Lectures.update({name:req.session.user.user},
 			{ $push: { lecs: {week: req.body.i, time: req.body.j, lecCode: req.body.Code} } },
-			{ upsert:false,multi:true}, function(err){if(err){console.log(err);}});
-		    var Classes = REC.newClasses(mongoose,req.body.Code,req.session.user.user,
-			function(err){if(err){console.log(err);}});
-		    req.body.lecCode = req.body.Code;
+			{ upsert:false,multi:true}, function(err) {
+			if(err) {
+			    console.log(err);
+			    res.send(err,400);
+			} else {
+			    var Classes = REC.newClasses(mongoose,req.body.Code,req.session.user.user,function(e){
+				if(e){
+			            console.log(e);
+				    res.send(e,400);
+			    	} else {
+				    Classes.find({lecCode:req.body.Code}, function(e,docs) {
+				    	if(docs[0]==undefined) {
+					    res.render('404',{title:'Page Not Found'});
+				    	} else {
+					    res.render('lecture', { message: 'Lecture mode!', name:req.session.user.user,
+					        id:req.session.id, cls:docs[0],
+								title: "Welcome to YaTT by "+ req.session.user.user });
+				    	}
+					});
+				}
+				});
+			}});
+		   		    req.bodylecCode = req.body.Code;
 		}
 	    }
 	    if(req.body.lecCode != 'New') {
-console.log(req.body.lecCode);
-	    //	    Classes.find({lecCode:req.body.lecCode}, function(err,docs) {
 	        Classes.find({lecCode:req.body.lecCode}, function(err,docs) {
-console.log(docs[0]);
-res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
-		    id: req.session.id, cls: docs[0], title: "Welcome to YaTT by "+ req.session.user.user });
+		    res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
+		    	id: req.session.id, cls: docs[0], title: "Welcome to YaTT by "+ req.session.user.user });
 		    });
-	    } else {
-		var cls = { title: "New", lecCode: "New", lang: "en", objective: "New", reference: "Selecting...",
-			    advreference: "Selecting...", textbook: "Selecting...",
-			    group: [], date: Date.Now };
-console.log(cls);
-		res.render('lecture',  { message: 'Lecture mode!', name: req.session.user.user,
-			    id: req.session.id, cls: cls, i: req.body.i, j: req.body.j,
-			    title: "Welcome to YaTT by "+ req.session.user.user });
 	    }
     }
     });
@@ -194,17 +185,23 @@ console.log(cls);
 	    var Lectures = REC.getLectures(mongoose);
 	    Lectures.find({name:req.session.user.user}, function(err,docs) {
 		if(docs[0]==undefined) {
-		    var Lectures = REC.saveLectures(mongoose,req.session.user.user,function(err){if(err){console.log(err);}});
-		    Lectures.find({name:req.session.user.user}, function(err,docs) {
-		    var lecs = [];
-		    REC.setLecCode(docs,lecs);
-		    if(docs[0]==undefined) {
-		        res.render('404', {title: 'Page Not Found'});
-		    } else {
-			res.render('home', { message: 'New User:'+req.session.user.user, name: req.session.user.user,
-				    id: req.session.id, lecs: lecs, title: "Welcome to YaTT by "+ req.session.user.user });
-		    }
-		    });
+		    var Lectures = REC.saveLectures(mongoose,req.session.user.user,function(err){
+			if(err) {
+			    res.send(err,400);
+			} else {
+			    Lectures.find({name:req.session.user.user}, function(err,docs) {
+				var lecs = [];
+				REC.setLecCode(docs,lecs);
+				if(docs[0]==undefined) {
+				    res.render('404', {title: 'Page Not Found'});
+				} else {
+				    res.render('home', { message: 'New User:'+req.session.user.user,
+					name: req.session.user.user, id: req.session.id, lecs: lecs, 
+							 title: "Welcome to YaTT by "+ req.session.user.user });
+			   	}
+				});
+			}
+			});
 		} else {
 console.log('section1');
 		    var lecs = [];

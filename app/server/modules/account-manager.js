@@ -8,20 +8,20 @@ var bcrypt = require('bcrypt')
 
 var mongoose = require('mongoose');
 /* heroku */
-var db = mongoose.createConnection();
+//var db = mongoose.createConnection();
 /* heroku */
-//var db = mongoose.createConnection('localhost', 'login-testing');
+var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;
 var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
 /* heroku */
-db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-    });
+//db.open(mongoUri,function(err){
+//	if(err){
+//	    console.error(err);
+//	    process.exit(1);
+//	}
+//    });
 /* heroku */
 
 // use moment.js for pretty date-stamping //
@@ -82,7 +82,6 @@ AM.manualLogin = function(user, pass, callback) {
     var accounts = new Accounts();
     Accounts.findOne({user:user}, function(e, o) {
         if (o == null){
-console.log('user-not-found');
             callback('user-not-found');
 	} else {
 	    bcrypt.compare(pass, o.pass, function(err, res) {

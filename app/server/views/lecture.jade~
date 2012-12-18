@@ -152,7 +152,7 @@ block content
         p
             div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
                 span(style='vertical-align:3pt;')
-                    img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
+                    img(src="/img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
                             
     include modals/alert
     include modals/lost-password
