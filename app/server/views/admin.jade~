@@ -18,6 +18,7 @@ block content
                     thead
                         tr
                               th(style='width:30px') #
+                              th(style='width:30px') Icon
                               th(style='width:200px') Name
                               th(style='width:80px') Location
                               th(style='width:100px') Username
@@ -26,6 +27,22 @@ block content
                         - for(var i=0; i<accts.length; i++) {
                             tr
                                 td #{i+1}
+                                td
+                                    a.btn(href='#acc#{i}',role='button',data-toggle='modal')
+                                        i.icon-trash
+                                    div.modal.hide.fade(id='acc#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                        div.modal-header
+                                            button.close(data-dismiss='modal') x
+                                            | Delete
+                                        div.modal-body(style='line-height:1.5em;')
+                                            span #{accts[i].user}
+                                            form.input-append(method='POST')
+                                                input(type='hidden',name='delete',value='accts')
+                                                input(type='hidden',name='user',value='#{accts[i].user}')
+                                                input.btn(type='submit',name='submit',value='CANCEL')
+                                                input.btn.btn-success(type='submit',name='submit',value='OK')
+                                        div.modal-footer
+
                                 td #{accts[i].name}
                                 td #{accts[i].country}
                                 td #{accts[i].user}
@@ -54,9 +71,9 @@ block content
                                             | Delete
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{lecs[i].name}
-                                            form.input-append(mothod='POST')
+                                            form.input-append(method='POST')
                                                 input(type='hidden',name='delete',value='lecs')
-                                                input(type='hidden',name='user',value='#{lecs[i].name')
+                                                input(type='hidden',name='user',value='#{lecs[i].name}')
                                                 input.btn(type='submit',name='submit',value='CANCEL')
                                                 input.btn.btn-success(type='submit',name='submit',value='OK')
                                         div.modal-footer
@@ -90,7 +107,7 @@ block content
                                          | Delete
                                      div.modal-body(style='line-height:1.5em;')
                                          span #{f.lecCode}
-                                             form.input-append(mothod='POST')
+                                             form.input-append(method='POST')
                                                  input(type='hidden',name='delete',value='list')
                                                  input(type='hidden',name='Code',value='#{f.lecCode}')
                                                  input.btn(type='submit',name='submit',value='CANCEL')
@@ -126,7 +143,7 @@ block content
                                             | Delete
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{logs[i].date}
-                                            form.input-append(method='POST',action='/admin')
+                                            form.input-append(method='POST')
                                                 input(type='hidden',name='delete',value='true')
                                                 input(type='hidden',name='id',value='#{logs[i]._id}')
                                                 input(type='hidden',name='date',value='#{logs[i].date}')

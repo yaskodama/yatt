@@ -51,6 +51,8 @@ signin_name_i18n=サインイン
 message_title_i18n=メッセージ
 page_not_found_i18n=お探しのページが見つかりません。
 author_name_i18n=著者:
+accounts_name_i18n=アカウント
+clayout_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"更新/レイアウト"'>
 #
 #
 #

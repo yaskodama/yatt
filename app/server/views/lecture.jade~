@@ -35,7 +35,7 @@ block content
                                 button.close(data-dismiss='modal') x
                                 span#confirm_i18n(style='font-size:12pt;') Confirm
                             div.modal-body(style='line-height:1.3em;')
-                                - if(cls.lecCode!="New") {
+                                - if(cls.lecCode!='New') {
                                     h4
                                         span#modal_title_i18n Title
                                     p
@@ -56,13 +56,25 @@ block content
                                         span#modal_advreferences_i18n Advanced Reference
                                     p
                                         #modal-advreference
+                                    form.form-inline(method='POST')
+                                        #clayout_button_i18n
+                                            input.btn.btn-success(type='submit',value='Update')
+                                        input(type='hidden',name='lecCode',value='#{cls.lecCode}')
+                                        input(type='hidden',name='update',value='true')
+                                        input(type='hidden',name='layout',value='true')
+                                        input#input-title2(type='hidden',name='title')
+                                        input#input-objective2(type='hidden',name='objective')
+                                        input#input-textbook2(type='hidden',name='textbook')
+                                        input#input-reference2(type='hidden',name='reference')
+                                        input#input-advreference2(type='hidden',name='advreference')
                                 - }
                                 form.form-inline(method='POST')
                                     #update_button_i18n
                                         input.btn.btn-success(type='submit',value='Update')
                                     input(type='hidden',name='lecCode',value='#{cls.lecCode}')
-                                    - if(cls.lecCode!="New") {
+                                    - if(cls.lecCode!='New') {
                                         input(type='hidden',name='update',value='true')
+                                        input(type='hidden',name='layout',value='false')
                                         input#input-title(type='hidden',name='title')
                                         input#input-objective(type='hidden',name='objective')
                                         input#input-textbook(type='hidden',name='textbook')
@@ -71,21 +83,20 @@ block content
                                     - } else {
                                         input(type='hidden',name='update',value='create')
                                         input(type='hidden',name='title',value='#{cls.title}')
-                                        input(type='hidden',name='objective',value='#{cls.objective')
-                                        input(type='hidden',name='textbook',value='#{cls.textbook')
-                                        input(type='hidden',name='reference',value='#{cls.reference')
+                                        input(type='hidden',name='objective',value='#{cls.objective}')
+                                        input(type='hidden',name='textbook',value='#{cls.textbook}')
+                                        input(type='hidden',name='reference',value='#{cls.reference}')
                                         input(type='hidden',name='advreference',value='#{cls.advreference}')
                                         input#input-leccode(type='hidden',name='Code')
                                         input(type='hidden',name='i',value='#{i}')
                                         input(type='hidden',name='j',value='#{j}')
                                     - }
-                                    input(type='hidden',name='cls',value='#{cls}')
                                 form.form-inline(method='GET',action='/home')
                                     input(type='hidden',name='start',value='true')
                                     #cancel_and_edit_off_i18n
                                         input.btn.btn-success(type='submit',name='submit',value='CANCEL/Edit(OFF)')
                             div.modal-footer
-        - if(cls.lecCode!="New") {
+        - if(cls.lecCode!='New') {
             div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
                 textarea#title(name='title',height='30',cols='50') #{cls.title}
                 span (#{cls.lecCode})
@@ -147,7 +158,10 @@ block content
                     td
                         #author_name_i18n(style='font-size:2em;color:#0B3382;')
                     td
-                        span(style='font-size:2em;color:#0B3382;') #{cls.author}
+                        span(style='font-size:2em;color:#0B3382;') #{name}
+                    td
+                        span(style='font-size:2em;color:#0B3382;') [#{cls.lang}]
+
         hr
         p
             div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by

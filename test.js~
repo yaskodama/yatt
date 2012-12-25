@@ -1,0 +1,49 @@
+function f() {
+    return 1;
+}
+console.log(f(2));
+var js = { v: 0, i:"test", _id: { v: "aaa", t: 234} };
+var sMyData = JSON.stringify(js);
+console.log(sMyData);
+var ss = '[ { "name": "はじめに", "_id": "50cfbc2501cf7af224000035", "classes": [ { "name": "はじめに", "_id": "50cfbc2501cf7af224000036", "date": "Mon Dec 17 2012 16:43:17 GMT-0800 (PST)" } ] },{ "name": "メールの使い方",  "_id": "50cfbc2501cf7af224000033", "classes": [ { "name": "メールの使い方", "_id": "50cfbc2501cf7af224000034","date": "Mon Dec 17 2012 16:43:17 GMT-0800 (PST)" } ] },{ "name": "文書処理について", "_id": "50cfbc2501cf7af22400002f", "classes": [ { "name": "文書処理","_id": "50cfbc2501cf7af224000032","date": "Mon Dec 17 2012 16:43:17 GMT-0800 (PST)" },{ "name": "(1)文書処理", "_id": "50cfbc2501cf7af224000031","date": "Mon Dec 17 2012 16:43:17 GMT-0800 (PST)" }, { "name": "(2)文書処理", "_id": "50cfbc2501cf7af224000030", "date": "Mon Dec 17 2012 16:43:17 GMT-0800 (PST)" } ] } ]';
+
+var sss = '{ "name": "はじめに", "_id": "50cfbc2501cf7af224000035", "classes": [ { "name": "はじめに", "_id": "50cfbc2501cf7af224000036", "date": "Mon Dec 17 2012 16:43:17 GMT-0800 (PST)" } ] }'
+var ttt = [ 1,2,3,4]
+var tt = JSON.stringify(ttt);
+console.log(tt);
+var jjs = JSON.parse(ss);
+console.log(jjs);
+console.log(jjs[1].name);
+console.log(jjs[2].classes);
+var group = [ { name: "はじめに", classes: [ { name: "はじめに" } ] },
+		      { name: "メールの使い方", classes: [ { name: "メールの使い方"} ] },
+                      { name: "文書処理について", classes: [ { name: "文書処理" },{ name: "(1)文書処理" }, 
+				{ name: "(2)文書処理" } ] },
+		      { name: "パワーポイントの使い方", classes: [ { name: "(1)パワーポイントの使い方" },
+								   { name: "(2)パワーポイントの使い方" } ] },
+		      { name: "エクセルの使い方", classes: [ { name: "(1)エクセル" }, { name: "(2)エクセル" }, 
+				{ name: "(3)エクセル" }, { name: "(4)エクセル" }, { name: "(5)エクセル" },
+				{ name: "(6)エクセル"}, { name: "(7)エクセル"} ] } ];
+var sgrp = JSON.stringify(group);
+console.log(sgrp);
+var grp = JSON.parse(sgrp);
+console.log(grp);
+console.log(grp[1].name);
+console.log(grp[2].classes);
+function duplicate(grp,num) {
+    num++;
+    var n = [];
+    for(var i=0; i<grp.length; i++) {
+	if(num>i) n[i]=grp[i];
+	else n[i+1]=grp[i];
+    }
+    n[num]=grp[num-1];
+    return n;
+}
+var arr = ["test","aho","foo"];
+console.log(duplicate(arr,1));
+console.log(grp);
+var dgrp = duplicate(grp,1);
+console.log(dgrp);
+
+

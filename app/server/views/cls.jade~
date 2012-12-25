@@ -68,6 +68,14 @@ block content
                                     div.subtitle#week_i18n #{i},#{j}
         - }
         hr
+        div(align='right')
+            table
+                tr
+                    td
+                        #author_name_i18n(style='font-size:2em;color:#0B3382;')
+                    td
+                        span(style='font-size:2em;color:#0B3382;') #{cls.author}
+        hr
         p
             div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
                 span(style='vertical-align:3pt;')

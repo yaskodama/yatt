@@ -131,7 +131,7 @@ block content
                                         div.modal-header
                                             button.close(data-dismiss='modal') x
                                             span #{l}
-                                        div.modal-body
+                                        div.modal-body(style='line-height:1.5em;font-size:1.2em;')
                                             p
                                             form.form-inline(method="GET",action='/lecture')
                                                 input.btn.btn-success(type='submit',name='lecCode',value='#{l}')
@@ -197,6 +197,14 @@ block content
         p
             .contents
                 table#lecture_list.table(align='center')
+                    thead
+                        tr
+                            th(style='width:30px') Icon
+                            th(style='width:100px') Code
+                            th(style='width:170px') Title
+                            th(style='width:70px') Author
+                            th(style='width:50px') Lang
+                            th Lecture Created
                     tbody
                         - leclist.forEach(function(f) {
                             tr
@@ -206,17 +214,18 @@ block content
                                  div.modal.hide.fade(id='#{f.lecCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                      div.modal-header
                                          button.close(data-dismiss='modal') x
-                                         span#confirm_i18n Confirm
+                                         | Delete
                                      div.modal-body
-                                         #{f.lecCode}
-                                             form.from-inline(mothod='POST',action='/edit')
+                                         scan #{f.title}(#{f.lecCode})
+                                             form.input-append(mothod='POST')
                                                  input(type='hidden',name='delete',value='list')
                                                  input(type='hidden',name='Code',value='#{f.lecCode}')
-                                                 input.btn.btn-success(type='submit',name='Del',value='CANCEL')
+                                                 input.btn.btn(type='submit',name='Del',value='CANCEL')
                                                  input.btn.btn-success(type='submit',name='Del',value='OK')
                                      div.modal-footer
                               td #{f.lecCode}
                               td #{f.title}
+                              td #{f.author}
                               td #{f.lang}
                               td #{f.date}
                         - });

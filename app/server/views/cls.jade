@@ -13,11 +13,11 @@ block content
             #welcome_i18n(align='center',style='font-family:Century,Lucida Sans Unicode,sans-serif;font-size:4.4em;line-height:1.1em;color:#47FFFC;') Welcome to YaTT
         #lectures_i18n.subtitle Lecture
         - if(cls.lecCode!="New") {
-                                div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
-                                    span #{cls.title}
-                                    span (#{cls.lecCode})
-                                p
-                                table#ltable(border='0',cellspacing='0',cellpadding='0',width='100%')
+            div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
+                span #{cls.title}
+                span (#{cls.lecCode})
+            p
+            table#ltable(border='0',cellspacing='0',cellpadding='0',width='100%')
                                     tbody
                                         tr
                                             td.leftside2
@@ -63,9 +63,9 @@ block content
                                                                     - });
                                                         - });
         - } else {
-                                div(align='center',style='font-size:4.5em;color:#0B3382;line-height:1.3em;')  #{cls.title}
-                                    textarea#Code(name='Code',height='12',cols='30') #{cls.lecCode}
-                                    div.subtitle#week_i18n #{i},#{j}
+            div(align='center',style='font-size:4.5em;color:#0B3382;line-height:1.3em;')  #{cls.title}
+                textarea#Code(name='Code',height='12',cols='30') #{cls.lecCode}
+                div.subtitle#week_i18n #{i},#{j}
         - }
         hr
         div(align='right')

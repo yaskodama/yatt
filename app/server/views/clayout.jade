@@ -35,7 +35,6 @@ block content
                                 button.close(data-dismiss='modal') x
                                 span#confirm_i18n(style='font-size:12pt;') Confirm
                             div.modal-body(style='line-height:1.3em;')
-                                - if(cls.lecCode!='New') {
                                     h4
                                         span#modal_title_i18n Title
                                     p
@@ -56,101 +55,81 @@ block content
                                         span#modal_advreferences_i18n Advanced Reference
                                     p
                                         #modal-advreference
-                                    form.form-inline(method='POST')
+                                    form.form-inline(method='GET',action='/clayout')
                                         #clayout_button_i18n
                                             input.btn.btn-success(type='submit',value='Update')
                                         input(type='hidden',name='lecCode',value='#{cls.lecCode}')
                                         input(type='hidden',name='update',value='true')
-                                        input(type='hidden',name='layout',value='true')
                                         input#input-title2(type='hidden',name='title')
                                         input#input-objective2(type='hidden',name='objective')
                                         input#input-textbook2(type='hidden',name='textbook')
                                         input#input-reference2(type='hidden',name='reference')
                                         input#input-advreference2(type='hidden',name='advreference')
-                                - }
-                                form.form-inline(method='POST')
-                                    #update_button_i18n
-                                        input.btn.btn-success(type='submit',value='Update')
-                                    input(type='hidden',name='lecCode',value='#{cls.lecCode}')
-                                    - if(cls.lecCode!='New') {
-                                        input(type='hidden',name='update',value='true')
-                                        input(type='hidden',name='layout',value='false')
-                                        input#input-title(type='hidden',name='title')
-                                        input#input-objective(type='hidden',name='objective')
-                                        input#input-textbook(type='hidden',name='textbook')
-                                        input#input-reference(type='hidden',name='reference')
-                                        input#input-advreference(type='hidden',name='advreference')
-                                    - } else {
-                                        input(type='hidden',name='update',value='create')
-                                        input(type='hidden',name='title',value='#{cls.title}')
-                                        input(type='hidden',name='objective',value='#{cls.objective}')
-                                        input(type='hidden',name='textbook',value='#{cls.textbook}')
-                                        input(type='hidden',name='reference',value='#{cls.reference}')
-                                        input(type='hidden',name='advreference',value='#{cls.advreference}')
-                                        input#input-leccode(type='hidden',name='Code')
-                                        input(type='hidden',name='i',value='#{i}')
-                                        input(type='hidden',name='j',value='#{j}')
-                                    - }
                                 form.form-inline(method='GET',action='/home')
                                     input(type='hidden',name='start',value='true')
                                     #cancel_and_edit_off_i18n
                                         input.btn.btn-success(type='submit',name='submit',value='CANCEL/Edit(OFF)')
                             div.modal-footer
-        - if(cls.lecCode!='New') {
             div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
-                textarea#title(name='title',height='30',cols='50') #{cls.title}
+                span #{cls.title}
                 span (#{cls.lecCode})
             p
             table#ltable(border='0',cellspacing='0',cellpadding='0',width='100%')
                 tbody
                    tr
-                       td.leftside
-                           p
-                               h2
-                                   font(color='#0B3382')
-                                       span#objective_i18n Objectives
-                           div(style='line-height:2em;')
-                               img((border='0',width='15',height='15',src='img/redtri.gif')
-                               textarea#objective(name='objective',height='12',cols='30') #{cls.objective}
-                           p
-                               h2
-                                   font(color='#0B3382')
-                                       span#textbooks_i18n Textbooks
-                           div(style='line-height:2em;')
-                               img((border='0',width='15',height='15',src='img/redtri.gif')
-                               textarea#textbook(name='textbook',height='12',cols='30') #{cls.textbook}
-                           p
-                               h2
-                                   font(color='#0B3382')
-                                       span#references_i18n Reference
-                           div(style='line-height:2em;')
-                               img((border='0',width='15',height='15',src='img/redtri.gif')
-                               textarea#reference(name='reference',height='12',cols='30') #{cls.reference}
-                           p
-                               h2
-                                   font(color='#0B3382')
-                                       span#advreferences_i18n Advanced References
-                           div(style='line-height:2em;')
-                               img((border='0',width='15',height='15',src='img/redtri.gif')
-                               textarea#advreference(name='advreference',height='12',cols='30') #{cls.advreference}
-                       td(width='100%',valign='top',style='padding-right:0pt;padding-top:0pt')
+                      td(width='100%',valign='top',style='padding-right:0pt;padding-top:0pt')
                            table(border='0',cellspacing='4',cellpadding='0',width='440',style='width:100.0%;')
                                tbody
-                                   - cls.group.forEach(function(h) {
+                                   - for(var i=0; i<cls.group.length; i++) {
                                        tr
-                                           td.righttitle2 #{h.name}
-                                       - h.classes.forEach(function(f) {
+                                           td.righttitle2 #{i+1} &nbsp
+                                               a.open-LayoutGroup.btn(href='#dgrp#{i}',role='button',data-toggle='modal')
+                                                   i.icon-trash
+                                               div.modal.hide.fade(id='dgrp#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                                   div.modal-header
+                                                       button.close(data-dismiss='modal') x
+                                                       | Delete
+                                                   div.modal-body(style='line-height:1.3em;')
+                                                       form.input-append(method='POST',action='/clayout')
+                                                           input(type='hidden',name='delete',value='line')
+                                                           input(type='hidden',name='lecCode',value='#{cls.lecCode}')
+                                                           - var strCls = JSON.stringify(cls);
+                                                           input(type='hidden',name='cls',value='#{strCls}')
+                                                           input(type='hidden',name='i',value='#{i}')
+                                                           input.btn(type='submit',name='submit',value='CANCEL')
+                                                           input.btn.btn-success(type='submit',name='submit',value='OK')
+                                                   div.modal-footer
+                                               span &nbsp
+                                               a.open-LayoutGroup.btn(href='#cgrp#{i}',role='button',data-toggle='modal')
+                                                   i.icon-hand-down
+                                               div.modal.hide.fade(id='cgrp#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                                   div.modal-header
+                                                       button.close(data-dismiss='modal') x
+                                                       | Copy
+                                                   div.modal-body(style='line-height:1.3em;')
+                                                       - for(var j=0; j<cls.group.length; j++) {
+                                                           h4
+                                                               span #{cls.group[j].name}
+                                                           p
+                                                       - }
+                                                       form.input-append(method='POST',action='/clayout')
+                                                           input(type='hidden',name='delete',value='cgroup')
+                                                           input(type='hidden',name='lecCode',value='#{cls.lecCode}')
+                                                           - var strCls = JSON.stringify(cls);
+                                                           input(type='hidden',name='cls',value='#{strCls}')
+                                                           input(type='hidden',name='i',value='#{i}')
+                                                           input.btn(type='submit',name='submit',value='CANCEL')
+                                                           input.btn.btn-success(type='submit',name='submit',value='OK')
+                                                   div.modal-footer
+                                               span &nbsp
+                                               textarea#group#{i}(name='title',height='20',cols='70') #{cls.group[i].name}
+                                       - cls.group[i].classes.forEach(function(f) {
                                            tr
                                                td.rightcontents2
                                                    img(border='0',width='10',height='10',src='img/redtri.gif')
                                                    a(href='intro/index.html') #{f.name}
                                        - });
-                                   - });
-        - } else {
-            div(align='center',style='font-size:4.5em;color:#0B3382;line-height:1.3em;')  #{cls.title}
-                textarea#Code(name='Code',height='12',cols='30') #{cls.lecCode}
-            div.subtitle#week_i18n #{i},#{j}
-        - }
+                                   - };
         hr
         div(align='right')
             table
@@ -161,13 +140,12 @@ block content
                         span(style='font-size:2em;color:#0B3382;') #{name}
                     td
                         span(style='font-size:2em;color:#0B3382;') [#{cls.lang}]
-
         hr
         p
-            div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
+            div(align='center') Last update: Sun Dec  9 11:44:59 PST 2012 by
                 span(style='vertical-align:3pt;')
-                    img(src="/img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
-                            
+                    img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
+
     include modals/alert
     include modals/lost-password
 

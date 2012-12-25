@@ -51,30 +51,40 @@ console.log(e);
     });
 
     loadBundles(null);
+    //    jQuery('.open-LayoutGroup').click(function() {
+    //    	for(var i=0; i<cls.group.length; i++) {
+    //    	    clss[i] = cls.group[i];
+    //    	}
+    //	});
     jQuery('.open-UpdateAndEnd').click(function() {
 	if(jQuery('#Code').is('*')) jQuery('#input-leccode').attr({value: jQuery('#Code')[0].value });
-	if(jQuery('#title').is('*')) jQuery('#input-title').attr({ value: jQuery('#title')[0].value });
-	if(jQuery('#objective').is('*')) jQuery('#input-objective').attr({ value: jQuery('#objective')[0].value });
-	if(jQuery('#textbook').is('*')) jQuery('#input-textbook').attr({ value: jQuery('#textbook')[0].value });
-	if(jQuery('#reference').is('*')) jQuery('#input-reference').attr({ value: jQuery('#reference')[0].value });
-	if(jQuery('#advreference').is('*')) jQuery('#input-advreference').attr({ value: jQuery('#advreference')[0].value });
-	jQuery('#modal-title').empty().append(jQuery('#title')[0].value);
-	jQuery('#modal-objective').empty().append(jQuery('#objective')[0].value);
-	jQuery('#modal-textbook').empty().append(jQuery('#textbook')[0].value);
-	jQuery('#modal-reference').empty().append(jQuery('#reference')[0].value);
-        jQuery('#modal-advreference').empty().append(jQuery('#advreference')[0].value);
+	if(jQuery('#title').is('*')) jQuery('#input-title').attr({value: jQuery('#title')[0].value });
+	if(jQuery('#objective').is('*')) jQuery('#input-objective').attr({value: jQuery('#objective')[0].value });
+	if(jQuery('#textbook').is('*')) jQuery('#input-textbook').attr({value: jQuery('#textbook')[0].value });
+	if(jQuery('#reference').is('*')) jQuery('#input-reference').attr({value: jQuery('#reference')[0].value });
+	if(jQuery('#advreference').is('*')) jQuery('#input-advreference').attr({value: jQuery('#advreference')[0].value });
+	if(jQuery('#title').is('*')) jQuery('#input-title2').attr({value: jQuery('#title')[0].value });
+	if(jQuery('#objective').is('*')) jQuery('#input-objective2').attr({ value: jQuery('#objective')[0].value });
+	if(jQuery('#textbook').is('*')) jQuery('#input-textbook2').attr({ value: jQuery('#textbook')[0].value });
+	if(jQuery('#reference').is('*')) jQuery('#input-reference2').attr({ value: jQuery('#reference')[0].value });
+	if(jQuery('#advreference').is('*')) jQuery('#input-advreference2').attr({ value: jQuery('#advreference')[0].value });
+	if(jQuery('#title').is('*')) jQuery('#modal-title').empty().append(jQuery('#title')[0].value);
+	if(jQuery('#objective').is('*')) jQuery('#modal-objective').empty().append(jQuery('#objective')[0].value);
+	if(jQuery('#textbook').is('*')) jQuery('#modal-textbook').empty().append(jQuery('#textbook')[0].value);
+	if(jQuery('#reference').is('*')) jQuery('#modal-reference').empty().append(jQuery('#reference')[0].value);
+	if(jQuery('#advreference').is('*')) jQuery('#modal-advreference').empty().append(jQuery('#advreference')[0].value);
         });
-        jQuery('select#lang').empty().append('<option value="browser">Indicated by the browser</option><option value="en">en</option><option value="ja">ja</option>');
-        jQuery('#langbrowser').text('('+jQuery.i18n.browserLang()+')');                                      
-        jQuery('#lang').change(function() {
-            var selection = jQuery('#lang option:selected').val();
-            jQuery('#langbrowser').append(selection);
-            loadBundles(selection != 'browser' ? selection : null);
-            jQuery('#langbrowser').empty();
-            if(selection == 'browser') {                                                                      
-                jQuery('#langbrowser').text('('+jQuery.i18n.browserLang()+')');                               
-            }                                                                                                
-        }); 
+    jQuery('select#lang').empty().append('<option value="browser">Indicated by the browser</option><option value="en">en</option><option value="ja">ja</option>');
+    jQuery('#langbrowser').text('('+jQuery.i18n.browserLang()+')');                                      
+    jQuery('#lang').change(function() {
+        var selection = jQuery('#lang option:selected').val();
+        jQuery('#langbrowser').append(selection);
+        loadBundles(selection != 'browser' ? selection : null);
+        jQuery('#langbrowser').empty();
+        if(selection == 'browser') {                                                                      
+            jQuery('#langbrowser').text('('+jQuery.i18n.browserLang()+')');                               
+        }                                                                                                
+        });
     });
     function loadBundles(lang) {
         jQuery.i18n.properties({
@@ -139,4 +149,5 @@ console.log(e);
 	jQuery('#author_name_i18n').empty().append(jQuery.i18n.prop('author_name_i18n'));
 	jQuery('#accounts_name_i18n').empty().append(jQuery.i18n.prop('accounts_name_i18n'));
 	jQuery('#log_title_i18n').empty().append(jQuery.i18n.prop('log_title_i18n'));
+	jQuery('#clayout_button_i18n').empty().append(jQuery.i18n.prop('clayout_button_i18n'));
     }
