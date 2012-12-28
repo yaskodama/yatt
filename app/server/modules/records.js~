@@ -181,7 +181,7 @@ REC.updateClasses = function(Classes,req,callback) {
 };
 */
 
-REC.getLectures = function(mongoose) {
+REC.getLectures = function() {
     var fixlecSchema = new mongoose.Schema( { week: { type: Number, required: true },
 				     time: { type: Number, required: true },
                                      lecCode: { type: String, required: true } } );

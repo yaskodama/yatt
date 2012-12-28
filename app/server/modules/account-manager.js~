@@ -8,7 +8,7 @@ var bcrypt = require('bcrypt')
 
 var mongoose = require('mongoose');
 /* heroku */
-// var db = mongoose.createConnection();
+//var db = mongoose.createConnection();
 /* heroku */
 var db = mongoose.createConnection('localhost', 'login-testing');
 var Schema = mongoose.Schema;

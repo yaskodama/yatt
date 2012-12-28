@@ -62,13 +62,6 @@ AM.autoLogin = function(user, pass, callback) {
     			callback(null);
     		}
         });
-    //	AM.accounts.findOne({user:user}, function(e, o) {
-    //		if (o){
-    //			o.pass == pass ? callback(o) : callback(null);
-    //		}	else{
-    //			callback(null);
-    //		}
-    //	});
 }
 
 AM.manualLogin = function(user, pass, callback) {
@@ -89,28 +82,11 @@ AM.manualLogin = function(user, pass, callback) {
 console.log('OK!');
 		    callback(null, o);
 		} else {
-console.log('invalid!');
-callback('invalid-password');
-	}
+		    callback('invalid-password');
+		}
 		});
         }
     	});
-    //    AM.accounts.findOne({user:user}, function(e, o) {
-    //	if (o == null){
-    //	    console.log('user-not-found');
-    //callback('user-not-found');
-    //	} else {
-    //	    bcrypt.compare(pass, o.pass, function(err, res) {
-    //		if (res){
-    //console.log('OK!');
-    //		    callback(null, o);
-    //		} else {
-    //console.log('invalid!');
-    //		    callback('invalid-password');
-    //		}
-    //		});
-    //	}
-    //	});
 }
 
 // record insertion, update & deletion methods //

@@ -33,7 +33,7 @@ block content
                                     div.modal.hide.fade(id='acc#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                         div.modal-header
                                             button.close(data-dismiss='modal') x
-                                            | Delete
+                                            span.confirm_i18n Confirm
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{accts[i].user}
                                             form.input-append(method='POST')
@@ -67,7 +67,7 @@ block content
                                     div.modal.hide.fade(id='tt#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                         div.modal-header
                                             button.close(data-dismiss='modal') x
-                                            | Delete
+                                            span.confirm_i18n Confirm
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{lecs[i].name}
                                             form.input-append(method='POST')
@@ -103,7 +103,7 @@ block content
                                  div.modal.hide.fade(id='#{f.lecCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                      div.modal-header
                                          button.close(data-dismiss='modal') x
-                                         | Delete
+                                         span.confirm_i18n Confirm
                                      div.modal-body(style='line-height:1.5em;')
                                          span #{f.lecCode}
                                              form.input-append(method='POST')
@@ -139,7 +139,7 @@ block content
                                     div.modal.hide.fade(id='log#{i}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
                                         div.modal-header(style='line-height:1.5em;')
                                             button.close(data-dismiss='modal') x
-                                            | Delete
+                                            span.confirm_i18n Confirm
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{logs[i].date}
                                             form.input-append(method='POST')

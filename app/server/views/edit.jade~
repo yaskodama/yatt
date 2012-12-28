@@ -138,7 +138,7 @@ block content
                                                 input(type='hidden',name='update',value='false')
                                                 input(type='hidden',name='i',value='#{i}')
                                                 input(type='hidden',name='j',value='#{j}')
-                                            form.form-inline(method="GET",action='/edit')
+                                            form.form-inline(method="POST")
                                                 button.btn.btn-success
                                                     i.icon-trash
                                                 input(type='hidden',name='delete',value='true')
@@ -172,12 +172,12 @@ block content
                                         span #{l}
                                     div.modal-body
                                         p
-                                        form.form-inline(method="GET",action='/lecture')
+                                        form.form-inline(method='GET',action='/lecture')
                                             input.btn.btn-success(type='submit',name='lecCode',value='#{l}')
                                             input(type='hidden',name='update',value='false')
                                             input(type='hidden',name='i',value='5')
                                             input(type='hidden',name='j',value='#{j}')
-                                        form.form-inline(method="GET",action='/edit')
+                                        form.form-inline(method='POST')
                                             button.btn.btn-success
                                                 i.icon-trash
                                             input(type='hidden',name='delete',value='true')
@@ -217,7 +217,7 @@ block content
                                          | Delete
                                      div.modal-body
                                          scan #{f.title}(#{f.lecCode})
-                                             form.input-append(mothod='POST')
+                                             form.input-append(method='POST')
                                                  input(type='hidden',name='delete',value='list')
                                                  input(type='hidden',name='Code',value='#{f.lecCode}')
                                                  input.btn.btn(type='submit',name='Del',value='CANCEL')

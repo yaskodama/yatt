@@ -119,9 +119,10 @@ block content
                                             span New
                                         div.modal-body
                                             p
-                                            form.form-inline(method="GET",action='/lecture')
+                                            form.form-inline(method="POST",action='/edit')
                                                 input.btn.btn-success(type='submit',name='lecCode',value='New')
                                                 input(type='hidden',name='update',value='false')
+                                                input(type='hidden',name='delete',value='false')
                                                 input(type='hidden',name='i',value='#{i}')
                                                 input(type='hidden',name='j',value='#{j}')
                                         div.modal-footer
@@ -133,9 +134,10 @@ block content
                                             span #{l}
                                         div.modal-body(style='line-height:1.5em;font-size:1.2em;')
                                             p
-                                            form.form-inline(method="GET",action='/lecture')
+                                            form.form-inline(method="POST",action='/edit')
                                                 input.btn.btn-success(type='submit',name='lecCode',value='#{l}')
                                                 input(type='hidden',name='update',value='false')
+                                                input(type='hidden',name='delete',value='false')
                                                 input(type='hidden',name='i',value='#{i}')
                                                 input(type='hidden',name='j',value='#{j}')
                                             form.form-inline(method="POST")
@@ -158,9 +160,10 @@ block content
                                         span New
                                     div.modal-body
                                         p
-                                        form.form-inline(method="GET",action='/lecture')
+                                        form.form-inline(method="POST",action='/edit')
                                             input.btn.btn-success(type='submit',name='lecCode',value='New')
                                             input(type='hidden',name='update',value='false')
+                                            input(type='hidden',name='delete',value='false')
                                             input(type='hidden',name='i',value='5')
                                             input(type='hidden',name='j',value='#{j}')
                                     div.modal-footer
@@ -172,9 +175,10 @@ block content
                                         span #{l}
                                     div.modal-body
                                         p
-                                        form.form-inline(method='GET',action='/lecture')
+                                        form.form-inline(method='POST',action='/edit')
                                             input.btn.btn-success(type='submit',name='lecCode',value='#{l}')
                                             input(type='hidden',name='update',value='false')
+                                            input(type='hidden',name='delete',value='false')
                                             input(type='hidden',name='i',value='5')
                                             input(type='hidden',name='j',value='#{j}')
                                         form.form-inline(method='POST')

@@ -181,7 +181,7 @@ REC.updateClasses = function(Classes,req,callback) {
 };
 */
 
-REC.getLectures = function(mongoose) {
+REC.getLectures = function() {
     var fixlecSchema = new mongoose.Schema( { week: { type: Number, required: true },
 				     time: { type: Number, required: true },
                                      lecCode: { type: String, required: true } } );
@@ -193,7 +193,7 @@ REC.getLectures = function(mongoose) {
     return Lectures;
 };
 
-REC.getClasses = function(mongoose) {
+REC.getClasses = function() {
     var fixcontentSchema = new mongoose.Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
     var fixgroupSchema = new mongoose.Schema({ name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new mongoose.Schema({lecCode: { type: String, required: true },title:{ type: String, required: true },

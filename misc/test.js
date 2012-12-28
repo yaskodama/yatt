@@ -62,3 +62,28 @@ function cdelete(grp,num) {
 }
 console.log(cdelete(arr,2));
 console.log(duplicate(arr,2));
+var j=6;
+console.log('test'+j);
+var group = [ { name: "はじめに", classes: [ { name: "はじめに" } ] },
+	      { name: "メールの使い方", classes: [ { name: "メールの使い方"} ] },
+              { name: "文書処理について", classes: [ { name: "文書処理" },{ name: "(1)文書処理" }, { name: "(2)文書処理" } ] },
+	      { name: "パワーポイントの使い方", classes: [ { name: "(1)パワーポイントの使い方" }, { name: "(2)パワーポイントの使い方" } ] },
+	      { name: "エクセルの使い方", classes: [ { name: "(1)エクセル" }, { name: "(2)エクセル" }, 
+				{ name: "(3)エクセル" }, { name: "(4)エクセル" }, { name: "(5)エクセル" },
+				{ name: "(6)エクセル"}, { name: "(7)エクセル"} ] } ];
+console.log(group[1].classes);
+function iduplicate(grp,inum,jnum) {
+    var classes = grp[inum].classes;
+    var cret = duplicate(classes,jnum);
+    grp[inum].classes = cret;
+    return grp;
+}
+console.log(group);
+console.log(iduplicate(group,2,0));
+function idelete(grp,inum,jnum) {
+    var classes = grp[inum].classes;
+    var cret = cdelete(classes,jnum);
+    grp[inum].classes = cret;
+    return grp;
+}
+console.log(idelete(group,2,0));

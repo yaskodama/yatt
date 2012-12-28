@@ -11,7 +11,6 @@ $(document).ready(function(){
 	    if (lv.validateForm() == false) {
 		return false;
 	    } else {
-console.log($("input:checkbox:checked"));
 	// append 'remember-me' option to formData to write local cookie //
 		formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
 		return true;
@@ -21,8 +20,6 @@ console.log($("input:checkbox:checked"));
 	    if (status == 'success') window.location.href = '/home';
 	},
 	error : function(e){
-console.log('error');
-console.log(e);
 	    	lv.showLoginError('Login Failure', 'Please check your username and/or password');
 	}
     }); 
@@ -51,23 +48,13 @@ console.log(e);
     });
 
     loadBundles(null);
-    //    jQuery('.open-LayoutGroup').click(function() {
-    //    	for(var i=0; i<cls.group.length; i++) {
-    //    	    clss[i] = cls.group[i];
-    //    	}
-    //	});
     jQuery('.open-UpdateAndEnd').click(function() {
 	if(jQuery('#Code').is('*')) jQuery('#input-leccode').attr({value: jQuery('#Code')[0].value });
-	if(jQuery('#title').is('*')) jQuery('#input-title').attr({value: jQuery('#title')[0].value });
-	if(jQuery('#objective').is('*')) jQuery('#input-objective').attr({value: jQuery('#objective')[0].value });
-	if(jQuery('#textbook').is('*')) jQuery('#input-textbook').attr({value: jQuery('#textbook')[0].value });
-	if(jQuery('#reference').is('*')) jQuery('#input-reference').attr({value: jQuery('#reference')[0].value });
-	if(jQuery('#advreference').is('*')) jQuery('#input-advreference').attr({value: jQuery('#advreference')[0].value });
-	if(jQuery('#title').is('*')) jQuery('#input-title2').attr({value: jQuery('#title')[0].value });
-	if(jQuery('#objective').is('*')) jQuery('#input-objective2').attr({ value: jQuery('#objective')[0].value });
-	if(jQuery('#textbook').is('*')) jQuery('#input-textbook2').attr({ value: jQuery('#textbook')[0].value });
-	if(jQuery('#reference').is('*')) jQuery('#input-reference2').attr({ value: jQuery('#reference')[0].value });
-	if(jQuery('#advreference').is('*')) jQuery('#input-advreference2').attr({ value: jQuery('#advreference')[0].value });
+	if(jQuery('#title').is('*')) jQuery('.input-title').attr({value: jQuery('#title')[0].value });
+	if(jQuery('#objective').is('*')) jQuery('.input-objective').attr({value: jQuery('#objective')[0].value });
+	if(jQuery('#textbook').is('*')) jQuery('.input-textbook').attr({value: jQuery('#textbook')[0].value });
+	if(jQuery('#reference').is('*')) jQuery('.input-reference').attr({value: jQuery('#reference')[0].value });
+	if(jQuery('#advreference').is('*')) jQuery('.input-advreference').attr({value: jQuery('#advreference')[0].value });
 	if(jQuery('#title').is('*')) jQuery('#modal-title').empty().append(jQuery('#title')[0].value);
 	if(jQuery('#objective').is('*')) jQuery('#modal-objective').empty().append(jQuery('#objective')[0].value);
 	if(jQuery('#textbook').is('*')) jQuery('#modal-textbook').empty().append(jQuery('#textbook')[0].value);
@@ -128,7 +115,7 @@ console.log(e);
 	jQuery('#signin_i18n').empty().append(jQuery.i18n.prop('signin_i18n'));
 	jQuery('#username_i18n').empty().append(jQuery.i18n.prop('username_i18n'));
 	jQuery('#edit2_name_2_i18n').empty().append(jQuery.i18n.prop('edit2_name_2_i18n'));
-	jQuery('#confirm_i18n').empty().append(jQuery.i18n.prop('confirm_i18n'));
+	jQuery('.confirm_i18n').empty().append(jQuery.i18n.prop('confirm_i18n'));
 	jQuery('#update_and_edit_i18n').empty().append(jQuery.i18n.prop('update_and_edit_i18n'));
 	jQuery('#objective_i18n').empty().append(jQuery.i18n.prop('objective_i18n'));
 	jQuery('#textbooks_i18n').empty().append(jQuery.i18n.prop('textbooks_i18n'));
@@ -150,4 +137,5 @@ console.log(e);
 	jQuery('#accounts_name_i18n').empty().append(jQuery.i18n.prop('accounts_name_i18n'));
 	jQuery('#log_title_i18n').empty().append(jQuery.i18n.prop('log_title_i18n'));
 	jQuery('#clayout_button_i18n').empty().append(jQuery.i18n.prop('clayout_button_i18n'));
+	jQuery('#edit_back_button_i18n').empty().append(jQuery.i18n.prop('edit_back_button_i18n'));
     }
