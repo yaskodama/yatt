@@ -193,7 +193,7 @@ REC.getLectures = function() {
     return Lectures;
 };
 
-REC.getClasses = function(mongoose) {
+REC.getClasses = function() {
     var fixcontentSchema = new mongoose.Schema({name:{type:String,required:true},date:{type:Date,default:Date.now}});
     var fixgroupSchema = new mongoose.Schema({ name: { type: String, required: true }, classes: [fixcontentSchema] } );
     var classSchema = new mongoose.Schema({lecCode: { type: String, required: true },title:{ type: String, required: true },
