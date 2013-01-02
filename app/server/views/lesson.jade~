@@ -75,6 +75,8 @@ block content
                         #author_name_i18n(style='font-size:2em;color:#0B3382;')
                     td
                         span(style='font-size:2em;color:#0B3382;') #{cls.author}
+                    td
+                        span(style='font-size:2em;color:#0B3382;') [#{cls.lang}]
         hr
         p
             div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by

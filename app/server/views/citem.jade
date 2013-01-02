@@ -1,0 +1,239 @@
+extends layout2
+
+block content
+    table
+        tr
+            td(width='600',align='left',style='color:red')
+                - if(message) {
+                    "#{message}"
+                - }
+            td(width='550',align='right') "#{name}"
+        tr
+            td(width='600',align='left')
+                #langbox
+                    span#language_i18n Language:
+                    select#lang
+                    span#langbrowser
+            td(align='right')
+                button#btn-logout2.btn.btn-primary
+                    i.icon-lock.icon-white
+                    span#signout_i18n Sign Out
+    #wrapper.ui-widget-content.ui-corner-all
+        p
+            #welcome_i18n(align='center',style='font-family:Century,Lucida Sans Unicode,sans-serif;font-size:4.4em;line-height:1.1em;color:#47FFFC;') Welcome to YaTT
+        #library_i18n.subtitle Lecture
+        p
+        div(align='right')
+            table
+                tr
+                    td
+                        p
+                        a.open-ContentsGroup.bbutton(href="#UpdateAndEnd",role="button",data-toggle='modal')
+                            span#update_and_edit_i18n Update/Edit(OFF)
+                        #UpdateAndEnd.modal.hide.fade(tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                            div.modal-header(style='line-height:1.5em;')
+                                button.close(data-dismiss='modal') x
+                                span.confirm_i18n(style='font-size:12pt;') Confirm
+                            div.modal-body(style='line-height:1.3em;')
+                                - if(contents.cntCode!='New') {
+                                    h4
+                                        span.title_i18n Title
+                                    p
+                                        #modal-title
+                                    p
+                                  - if(contents.sign==0) {
+                                    h4 URL
+                                    p
+                                        #modal-url
+                                    p
+                                  - }
+                                    h4
+                                        span.type_i18n Type
+                                    p
+                                        #modal-radio
+                                    form.form-inline(method='POST',action='/contents')
+                                        #edit_back_button_i18n
+                                           input.btn.btn-success(type='submit',name='submit',value='Update')
+                                        input(type='hidden',name='delete',value='update')
+                                        input(type='hidden',name='update',value='back')
+                                        - if(contents.sign==0) {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-url(type='hidden',name='url')
+                                            input.input-type(type='hidden',name='type')
+                                        - } else {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input(type='hidden',name='url',value='#{contents.url}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-type(type='hidden',name='type')
+                                        - }
+                                - }
+                                form.form-inline(method='POST',action='/contents')
+                                    #update_button_i18n
+                                        input.btn.btn-success(type='submit',name='submit',value='Update')
+                                    input(type='hidden',name='delete',value='update')
+                                    - if(contents.cntCode==='New') {
+                                        input(type='hidden',name='update',value='create')
+                                        input(type='hidden',name='title',value='#{contents.title}')
+                                        input(type='hidden',name='url',value='#{contents.url}')
+                                        input#input-cntcode(type='hidden',name='Code')
+                                        input(type='hidden',name='i',value='#{ii}')
+                                        input(type='hidden',name='j',value='#{jj}')
+                                        input(type='hidden',name='lecCode',value='#{cls.lecCode}')
+                                        - var strGrp = JSON.stringify(cls.group);
+                                        input(type='hidden',name='group',value='#{strGrp}')
+                                    - } else if(contents.sign==0) {
+                                        input(type='hidden',name='update',value='update')
+                                        input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                        input.input-title(type='hidden',name='title')
+                                        input.input-url(type='hidden',name='url')
+                                        input.input-type(type='hidden',name='type')
+                                    - } else {
+                                        input(type='hidden',name='update',value='update')
+                                        input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                        input(type='hidden',name='url',value='#{contents.url}')
+                                        input.input-title(type='hidden',name='title')
+                                        input.input-type(type='hidden',name='type')
+                                    - }
+                            div.modal-footer
+        - if(contents.cntCode === 'New') {
+            div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;") #{contents.title}
+                span (
+                    textarea#Code(name='Code',height='12',cols='30') #{contents.cntCode}
+                span )
+            div.subtitle#week_i18n #{ii},#{jj}
+        - } else {
+            div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
+                textarea#title(name='title',height='30',cols='50') #{contents.title}
+                span (#{contents.cntCode})
+            p
+            table#ltable(border='0',cellspacing='0',cellpadding='0',width='100%')
+                tbody
+                   tr
+                      td(width='100%',valign='top',style='padding-right:0pt;padding-top:0pt')
+                           table(border='0',cellspacing='4',cellpadding='0',width='440',style='width:100.0%;')
+                               tbody
+                                   - if(contents.sign==0) {
+                                       label.radio
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='0',checked)
+                                                   | &nbsp; URL
+                                           tr
+                                               td
+                                                   p
+                                                   p
+                                                     img(border='0',width='10',height='10',src='img/redtri.gif')
+                                                     textarea#url(name='url',height='30',cols='50') #{contents.url}
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios2(type='radio',name='optionsRadios',value='1')
+                                                   | &nbsp; Menu
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios3(type='radio',name='optionsRadios',value='2')
+                                                   | &nbsp; Pages
+                                   - } else if(contents.sign==1) {
+                                       label.radio
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='0')
+                                                   | &nbsp; URL
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios2(type='radio',name='optionsRadios',value='1',checked)
+                                                   | &nbsp; Menu
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios3(type='radio',name='optionsRadios',value='2')
+                                                   | &nbsp; Pages
+                                   - } else if(contents.sign==2) {
+                                       label.radio
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='0')
+                                                   | &nbsp; URL
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios2(type='radio',name='optionsRadios',value='1')
+                                                   | &nbsp; Menu
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios3(type='radio',name='optionsRadios',value='2',checked)
+                                                   | &nbsp; Pages
+                                   - } else {
+                                       - for(var i=0; i<7; i++) {
+                                           tr
+                                               td.righttitle2 #{i+1} &nbsp
+                                                   a.open-LayoutGroup.btn(href='#dgrp#{i}',role='button',data-toggle='modal')
+                                                       i.icon-trash
+                                                   div.modal.hide.fade(id='dgrp#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                                       div.modal-header
+                                                           button.close(data-dismiss='modal') x
+                                                           | Delete
+                                                       div.modal-body(style='line-height:1.3em;')
+                                                           - for(var j=0; j<6; j++) {
+                                                               div(class='modal-group'+j)
+                                                           - }
+                                                       div.modal-footer
+                                                           form.input-append(method='POST',action='/clayout')
+                                                               input(type='hidden',name='delete',value='dgroup')
+                                                               input(type='hidden',name='cntCode',value='#{contents.cntCode}')
+                                                               input(type='hidden',name='i',value='#{i}')
+                                                               input.btn(type='submit',name='submit',value='CANCEL')
+                                                               input.btn.btn-success(type='submit',name='submit',value='OK')
+                                           - for(var j=0; j<6; j++) {
+                                               tr
+                                                   td.rightcontents2
+                                                       img(border='0',width='10',height='10',src='img/redtri.gif')
+                                                       a.open-LayoutGroup.btn(href='#ditem#{i}#{j}',role='button',data-toggle='modal')
+                                                            i.icon-trash
+                                                       div.modal.hide.fade(id='ditem#{i}#{j}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                                           div.modal-header
+                                                               button.close(data-dismiss='modal') x
+                                                               | Delete
+                                                           div.modal-body(style='line-height:1.3em;')
+                                                               span Delete
+                                                           div.modal-footer
+                                                               form.input-append(method='POST',action='/clayout')
+                                                                   input(type='hidden',name='delete',value='ditem')
+                                                                   input(type='hidden',name='cntCode',value='#{contents.cntCode}')
+                                                                   input(type='hidden',name='i',value='#{i}')
+                                                                   input(type='hidden',name='j',value='#{j}')
+                                                                   input.btn(type='submit',name='submit',value='CANCEL')
+                                                                   input.btn.btn-success(type='submit',name='submit',value='OK')
+                                           - };
+                                       - };
+                                   - };
+        - }
+        hr
+        div(align='right')
+            table
+                tr
+                    td
+                        #author_name_i18n(style='font-size:2em;color:#0B3382;')
+                    td
+                        span(style='font-size:2em;color:#0B3382;') #{name}
+                    td
+                        span(style='font-size:2em;color:#0B3382;') [#{contents.lang}]
+
+        hr
+        p
+            div(align='center') Last update: Sun Dec  9 11:44:59 PST 2012 by
+                span(style='vertical-align:3pt;')
+                    img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
+
+    include modals/alert
+    include modals/lost-password
+
+block scripts
+    script(src='/vendor/jquery/jquery-1.8.1.min.js')
+    script(src='/vendor/jquery/jquery.i18n.properties-1.0.9.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/js/views/clayout.js')
+    script(src='/js/controllers/loginController.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/loginValidator.js')
+    script(src='/js/form-validators/emailValidator.js')

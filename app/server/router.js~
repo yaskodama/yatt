@@ -9,40 +9,16 @@ module.exports = function(app) {
         if (req.cookies.user == undefined || req.cookies.pass == undefined) {
 	    var name = 'Guest';
 	    var Access = REC.saveRecord(name,true,function(err){if(err){console.log(err);}});
-	    var Lectures = REC.getLectures();
-	    Lectures.find({name:"tyass"}, function(e,docs) {
-		if(e) {
-		    console.log(e);
-		    res.send(e,400);
-		} else {
-		    var lecs = [];
-		    REC.setLecCode(docs,lecs);
-		    res.render('login', { message: 'New User:'+name, name: 'tyass',
-			id: req.session.id, lecs:lecs, title: "Welcome to YaTT - Please Login To Your Account"
-			});
-		}
-		});
+	    REC.findLogin("tyass", req.session.id, res);
         } else {
     	    AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 	        if (o != null){
 		    req.session.user = o;
 		    res.redirect('/home');
 		} else {
-		    var name = 'tyass';
+		    var name = 'Guest';
 		    var Access = REC.saveRecord(name,true,function(err){if(err){console.log(err);}});
-		    var Lectures = REC.getLectures();
-		    Lectures.find({name:"tyass"}, function(err,docs) {
-			if(e) {
-			    console.log(e);
-			    res.send(e,400);
-		    	} else {
-			    var lecs = [];
-			    REC.setLecCode(docs,lecs);
-			    res.render('login', { message: 'New User:'+name, name: 'tyass', id: req.session.id,
-				lecs: lecs, title: "Welcome to YaTT - Please Login To Your Account"
-				});
-			}
-			});
+		    REC.findLogin("tyass", req.session.id, res);
 		}
 		});
 	}
@@ -121,6 +97,17 @@ module.exports = function(app) {
 	    }
             });
 	});
+    //    app.get('/citem', function(req, res) {    /* /citem + "GET" */
+    //	var Classes = REC.getClasses();
+    //	Contents.find({cntCode:req.query.p}, function(e,docs) {
+    //	    if(docs[0]==undefined) {
+    //		res.render('404', {title: 'Page Not Found'});
+    //	    } else {
+    //	        res.render('citem', { message: 'Contents mode!', name:seq.session.user.user,
+    //		    id: req.session.id, contents: docs[0], title: "Welcome to YaTT" });
+    //	    }
+    //            });
+    //	});
     app.post('/lecture', function(req, res) {
         if (req.session.user == null){
 	// if user is not logged-in redirect back to login page //
@@ -226,64 +213,15 @@ console.log(req.body.submit);
 			if(err) {
 			    res.send(err,400);
 			} else {
-			    Lectures.find({name:req.session.user.user}, function(err,docs) {
-				if(docs[0]==undefined) {
-				    res.render('404', {title: 'Page Not Found'});
-				} else {
-				    var lecs = [];
-				    for(var i=0; i<30; i++) lecs[i]={ name: "", lecCode: "" };
-				    Classes.find({author:req.session.user.user}, function(err,d) {
-					if(d[0]==undefined) {
-					    docs[0].lecs.forEach(function(f) {
-						lecs[f.week*5+f.time] = { name: 'None', lecCode: f.lecCode };
-						});
-					} else {
-					    docs[0].lecs.forEach(function(f) {
-						var n = 'None';
-						for(i=0;i<d.length;i++)
-						    if(d[i].lecCode==f.lecCode) {
-							n = d[i].title;
-						    }
-						    lecs[f.week*5+f.time] = { name:n, lecCode:f.lecCode };
-						});
-					}
-					res.render('home', { message: 'New User:'+req.session.user.user,
-					    name: req.session.user.user, id: req.session.id, lecs: lecs, 
-					    title: "Welcome to YaTT by "+ req.session.user.user });
-					});
-				}
-				});
+			    REC.findHome(req.session.user.user,req.session.id,res);
 			}
 			});
 		} else {
-		    var lecs = [];
-		    for(var i=0; i<30; i++) lecs[i]={ name: "", lecCode: "" };
-		    Classes.find({author:req.session.user.user}, function(err,d) {
-			if(d[0]==undefined) {
-			    docs[0].lecs.forEach(function(f) {
-				lecs[f.week*5+f.time] = { name: 'None', lecCode: f.lecCode };
-				});
-			} else {
-			    docs[0].lecs.forEach(function(f) {
-				var n = 'None';
-				for(i=0;i<d.length;i++)
-				    if(d[i].lecCode==f.lecCode) {
-					n = d[i].title;
-				    }
-				    lecs[f.week*5+f.time] = { name:n, lecCode:f.lecCode };
-				});
-
-			}
-			res.render('home', { message: 'New User:'+req.session.user.user,
-			    name: req.session.user.user, id: req.session.id, lecs: lecs, 
-			    title: "Welcome to YaTT by "+ req.session.user.user });
-
-			});
+		    REC.findHome(req.session.user.user,req.session.id,res);
 		}
 		});
 	}
 	});
-//				lecs = REC.setLecCode0(req.session.user.user,docs,lecs,res);
     app.post('/home', function(req, res){
         if (req.param('user') != undefined) {
     	    AM.update({

@@ -90,16 +90,47 @@ module.exports = function(app) {
 	var Classes = REC.getClasses();
 	Classes.find({lecCode:req.query.p}, function(e,docs) {
 	    if(docs[0]==undefined) {
-		res.render('404', {title: 'Page Not Found'});
+		res.render('404', {title:'Page Not Found'});
 	    } else {
-	        res.render('lesson', { message: 'Lecture mode!',
-		    id: req.session.id, cls: docs[0], title: "Welcome to YaTT" });
+		var Contents = REC.getContents();
+		var cnts = [];
+		Contents.find({}, function(e,d) {
+		    if(d[0]==undefined) {
+			res.render('404', {title: 'Page Not Found'});
+		    } else {
+			for(var i=0;i<50;i++) cnts[i]={ name:"", cntCode:"", sign:"", url:"" };
+			var ii=0;
+			docs[0].group.forEach(function(f) {
+			    f.classes.forEach(function(c) {
+				var n = 'None'; var s = 1; var u = "";
+				for(i=0;i<d.length;i++) {
+				    if(d[i].cntCode==c.name) {
+					n = d[i].title; s = d[i].sign; u = d[i].url;
+				    }
+				}
+				cnts[ii++]={ name: n, cntCode: c.name, sign: s, url: u };
+				});
+			    });
+		    }
+		    res.render('lesson', { message:'Lecture mode!',
+		        id:req.session.id, cnts:cnts, cls:docs[0], title:"Welcome to YaTT" });
+		    });
+	    }
+            });
+	});
+    app.get('/citem', function(req, res) {    /* /citem + "GET" */
+	var Contents = REC.getContents();
+	Contents.find({cntCode:req.query.p}, function(e,docs) {
+	    if(docs[0]==undefined) {
+		res.render('404', {title:'Page Not Found'});
+	    } else {
+	        res.render('citem', { message:'Contents mode!', name:'Guest',
+		    id: req.session.id, contents: docs[0], title: "Welcome to YaTT" });
 	    }
             });
 	});
     app.post('/lecture', function(req, res) {
         if (req.session.user == null){
-	// if user is not logged-in redirect back to login page //
             res.redirect('/');
         } else {
 console.log(req.body.update);
@@ -148,9 +179,30 @@ console.log(req.body.submit);
 							    name: req.session.user.user, cls: docs[0] } );
 						break;
 					    default:
-						res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
-				        	    id: req.session.id, cls: docs[0], 
-						    title: "Welcome to YaTT by "+ req.session.user.user });
+						var Contents = REC.getContents();
+						var cnts = [];
+						Contents.find({}, function(e,d) {
+						    if(d[0]==undefined) {
+							res.render('404', {title: 'Page Not Found'});
+						    } else {
+							for(var i=0;i<50;i++) cnts[i]={ name:"", cntCode:"", sign:"", url:"" };
+							var ii=0;
+							docs[0].group.forEach(function(f) {
+	       						    f.classes.forEach(function(c) {
+								var n = 'None'; var s = 1; var u = "";
+								for(i=0;i<d.length;i++) {
+								    if(d[i].cntCode==c.name) {
+									n = d[i].title; s = d[i].sign; u = d[i].url;
+								    }
+								}
+								cnts[ii++]={ name: n, cntCode: c.name, sign: s, url: u };
+								});
+							    });
+							res.render('lecture', { message:'Lecture mode!',name:req.session.user.user,
+								id:req.session.id, cnts:cnts, cls:docs[0],
+								    title:"Welcome to YaTT by "+req.session.user.user});
+						    }
+						    });
 					    }
 					}
 					});
@@ -172,15 +224,7 @@ console.log(req.body.submit);
 			            console.log(e);
 				    res.send(e,400);
 			    	} else {
-				    Classes.find({lecCode:req.body.Code}, function(e,docs) {
-				    	if(docs[0]==undefined) {
-					    res.render('404',{title:'Page Not Found'});
-				    	} else {
-					    res.render('lecture', { message: 'Lecture mode!', name:req.session.user.user,
-					        id:req.session.id, cls:docs[0],
-								title: "Welcome to YaTT by "+ req.session.user.user });
-				    	}
-					});
+				    REC.findLecture(req.body.Code,req.session.user.user,req.session.id,res);
 				}
 				});
 			}});

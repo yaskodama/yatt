@@ -4,17 +4,17 @@ var mongoUri = process.env.MONGOLAB_URI ||
 		process.env.MONGOHQ_URL ||
 	    'mongodb://localhost/login';
 /* heroku */
-var db = mongoose.createConnection();
+//var db = mongoose.createConnection();
 /* heroku */
-//var db = mongoose.createConnection('localhost', 'yatt');
+var db = mongoose.createConnection('localhost', 'yatt');
 var Schema = mongoose.Schema;
 /* heroku */
-db.open(mongoUri,function(err){
-	if(err){
-	    console.error(err);
-	    process.exit(1);
-	}
-    });
+//db.open(mongoUri,function(err){
+//	if(err){
+//	    console.error(err);
+//	    process.exit(1);
+//	}
+//    });
 /* heroku */
 
 /* Access */
@@ -268,31 +268,8 @@ REC.findLogin = function(user,id,res) {
 	});
 };
 
-REC.setLecCode0 = function(user,docs,l,res) {
-    for(var i=0; i<30; i++) l[i]={ name: "", lecCode: "" };
-    Classes.find({author:user}, function(err,d) {
-        if(d[0]==undefined) {
-	    res.render('404', {title: 'Page Not Found'});
-	    //	    docs[0].lecs.forEach(function(f) {
-	    //		    l[f.week*5+f.time] = { name: 'None', lecCode: f.lecCode };
-	    //		});
-	} else {
-	    docs[0].lecs.forEach(function(f) {
-	    	var n = 'None';
-		for(i=0;i<d.length;i++)
-		    if(d.lecCode==f.lecCode) {
-			n = f.title;
-			//			l[f.week*5+f.time] = { name: n, lecCode: f.lecCode };
-			l[f.week*5+f.time] = { name: 'kodama', lecCode: 'kodama' };
-		    }
-		});
-	}
-        return l;
-	});
-};
-
 REC.findEdit = function(user,id, res) {
-    Lectures.find({name:user}, function(err,docs) {
+    Lectures.find({name:user},function(err,docs) {
     var lecs = [];
     REC.setLecCode(docs,lecs);
     var Classes = REC.getClasses();
@@ -311,8 +288,31 @@ REC.findLecture = function(Code,user,id,res) {
 	if(docs[0]==undefined) {
 	    res.render('404', {title: 'Page Not Found'});
 	} else {
-	    res.render('lecture', { message: 'Lecture mode!', name: user,
-		id: id, cls: docs[0], title: "Welcome to YaTT by "+ user });
+		var Contents = REC.getContents();
+		var cnts = [];
+		Contents.find({}, function(e,d) {
+		    if(d[0]==undefined) {
+			res.render('404', {title: 'Page Not Found'});
+		    } else {
+			for(var i=0;i<50;i++) cnts[i]={ name:"", cntCode:"", sign:"", url:"" };
+			var ii=0;
+			docs[0].group.forEach(function(f) {
+			    f.classes.forEach(function(c) {
+				var n = 'None'; var s = 1; var u = "";
+				for(i=0;i<d.length;i++) {
+				    if(d[i].cntCode==c.name) {
+					n = d[i].title; s = d[i].sign; u = d[i].url;
+				    }
+				}
+				cnts[ii++]={ name: n, cntCode: c.name, sign: s, url: u };
+				});
+			    });
+      	    		res.render('lecture', { message:'Lecture mode!',name:user,
+			    id:id,cnts:cnts,cls:docs[0], title:"Welcome to YaTT" });
+		    }
+		    });
 	}
 	});
-}
+};
+
+

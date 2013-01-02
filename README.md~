@@ -2,9 +2,8 @@
 #[yatt](http://limitless-retreat-4631.herokuapp.com/)
 
 This software includes node-login as the following descriptions. Originally yatt is based on
-'Yet Another Time Table' which means a web service on which anyone can create lecture-notes by themselves and
-learn by one of those lecture notes. This is a open source software to distribute to anyone who would like to
-learn javascript programming.
+'Yet Another Time Table' which means a web service on which anyone can create lecture-notes by themselves or
+can learn by one of those lecture notes.
 
 #[Node-Login](http://node-login.braitsch.io)
 

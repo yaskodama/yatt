@@ -52,6 +52,7 @@ block content
                                             td(valign='top',style='padding-right:0pt;padding-top:0pt')
                                                 table(border='0',cellspacing='4',cellpadding='0',width='40',style='width:100.0%;')
                                                     tbody
+                                                        - var ii=0;
                                                         - cls.group.forEach(function(h) {
                                                             tr
                                                                 td.righttitle2 #{h.name}
@@ -59,7 +60,13 @@ block content
                                                                         tr
                                                                             td.rightcontents2
                                                                                 img(border='0',width='10',height='10',src='img/redtri.gif')
-                                                                                a(href='intro/index.html') #{f.name}
+                                                                                - var l=cnts[ii++];if(l.name=='None') {
+                                                                                    a(href='/citem?p=#{l.cntCode}') #{l.cntCode}
+                                                                                - } else if(l.sign==0) {
+                                                                                    a(href='#{l.url}') #{l.name}
+                                                                                - } else {
+                                                                                    a(href='/citem?p=#{l.cntCode}') #{l.name}
+                                                                                - }
                                                                     - });
                                                         - });
         - } else {
