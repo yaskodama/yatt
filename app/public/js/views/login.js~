@@ -137,4 +137,5 @@ $(document).ready(function(){
 	jQuery('#accounts_name_i18n').empty().append(jQuery.i18n.prop('accounts_name_i18n'));
 	jQuery('#log_title_i18n').empty().append(jQuery.i18n.prop('log_title_i18n'));
 	jQuery('#clayout_button_i18n').empty().append(jQuery.i18n.prop('clayout_button_i18n'));
+	jQuery('#edit_back_button_i18n').empty().append(jQuery.i18n.prop('edit_back_button_i18n'));
     }

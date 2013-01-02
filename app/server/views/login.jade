@@ -42,27 +42,27 @@ block content
                         td
                             img(src='img/sched02.gif',height='40')
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
-                            div#monday_i18n(style='font-size:20pt;') Mon
+                            div#monday_i18n(style='font-size:20pt;width:70px') Mon
                         td
                             img(src='img/sched02.gif',height='40')
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
-                            div#tuesday_i18n(style='font-size:20pt;') Tue
+                            div#tuesday_i18n(style='font-size:20pt;width:70px') Tue
                         td
                             img(src='img/sched02.gif',height='40')
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
-                            div#wednesday_i18n(style='font-size:20pt;') Wed
+                            div#wednesday_i18n(style='font-size:20pt;width:70px') Wed
                         td
                             img(src='img/sched02.gif',height='40')
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
-                            div#thursday_i18n(style='font-size:20pt;') Thu
+                            div#thursday_i18n(style='font-size:20pt;width:70px') Thu
                         td
                             img(src='img/sched02.gif',height='40')
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
-                            div#friday_i18n(style='font-size:20pt;') Fri
+                            div#friday_i18n(style='font-size:20pt;width:70px') Fri
                         td
                             img(src='img/sched02.gif',height='40')
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
-                            div#saturday_i18n(style='font-size:20pt;') Sat
+                            div#saturday_i18n(style='font-size:20pt;width:70px') Sat
                         td
                             img(src='img/sched04.gif',height='40')
                 tbody
@@ -116,17 +116,23 @@ block content
                             img(src='img/sched07.gif',width='20',height='40')
                         - for(var i=0; i<5; i++) {
                             td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
-                                - var l=lecs[i*5+j];if(l!="") {
-                                    a(href="/lesson?p=#{l}")
-                                        span(style='font-size:11pt;line-height:1.3em;') #{l}
+                                - var l=lecs[i*5+j];if(l.name=='None') {
+                                    a(href="/lesson?p=#{l.lecCode}")
+                                        span(style='font-size:11pt;line-height:1.3em;') #{l.lecCode}
+                                - } else if(l.name!="") {
+                                    a(href="/lesson?p=#{l.lecCode}")
+                                        span(style='font-size:11pt;line-height:1.3em;') #{l.name}
                                 - }
                             td
                                 img(src='img/sched07.gif',width='20',height='40')
                         - }
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
-                            - var l=lecs[25+j]; if(l!="") {
-                                a(href='#')
-                                    span(style='font-size:11pt;line-height:1.3em;') #{l}
+                            - var l=lecs[25+j]; if(l.name=='None') {
+                                a(href='/lesson?p=#{l.lecCode}')
+                                    span(style='font-size:11pt;line-height:1.3em;') #{l.lecCode}
+                            - } else {
+                                a(href='/lesson?p=#{l.lecCode}')
+                                    span(style='font-size:11pt;line-height:1.3em;') #{l.name}
                             - }
                         - if(j==4) {
                             td

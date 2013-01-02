@@ -38,6 +38,8 @@ references_i18n=参考文献
 advreferences_i18n=発展的文献
 signin_i18n=サインイン
 confirm_i18n=確認
+delete_i18n=削除
+copy_i18n=複製
 update_and_edit_i18n=更新/編集(OFF)
 modal_title_i18n=タイトル
 modal_textbooks_i18n=教科書
@@ -53,6 +55,7 @@ page_not_found_i18n=お探しのページが見つかりません。
 author_name_i18n=著者:
 accounts_name_i18n=アカウント
 clayout_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"更新/レイアウト"'>
+edit_back_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"更新/戻る"'>
 #
 #
 #

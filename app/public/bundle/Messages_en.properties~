@@ -38,6 +38,8 @@ references_i18n=References
 advreferences_i18n=Advanced<br>References
 signin_i18n=Sign In
 confirm_i18n=Confirm
+delete_i18n=Delete
+copy_i18n=Copy
 update_and_edit_i18n=Update/Edit(OFF)
 modal_title_i18n=Title
 modal_textbooks_i18n=Textbooks
@@ -53,6 +55,7 @@ page_not_found_i18n=I am sorry, the page or resource you are searching for is cu
 author_name_i18n=Author:
 accounts_name_i18n=Accounts
 clayout_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"Update/Layout"'>
+edit_back_button_i18n=<input class='"btn btn-success"' type='"submit"' value='"Update/Retrun"'>
 #
 #
 #

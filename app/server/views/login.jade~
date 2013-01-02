@@ -15,7 +15,7 @@ block content
         #signin_i18n.subtitle Sign in
         div(style='padding:30px 50px 320px 300px;')
             #login-container2
-                form( method="post")#login-form.well.span4
+                form(method="post")#login-form.well.span4
                     label
                         span#username_i18n Username:
                     input(type="text", name="user", id='user-tf').span4.required
@@ -117,7 +117,7 @@ block content
                         - for(var i=0; i<5; i++) {
                             td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
                                 - var l=lecs[i*5+j];if(l!="") {
-                                    a(href="/lesson?p=#{l}")
+                                    a(href='/lesson?p=#{l}')
                                         span(style='font-size:11pt;line-height:1.3em;') #{l}
                                 - }
                             td
@@ -125,7 +125,7 @@ block content
                         - }
                         td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
                             - var l=lecs[25+j]; if(l!="") {
-                                a(href='#')
+                                a(href='/lesson?p=#{l}')
                                     span(style='font-size:11pt;line-height:1.3em;') #{l}
                             - }
                         - if(j==4) {

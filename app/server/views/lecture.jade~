@@ -58,7 +58,7 @@ block content
                                         #modal-advreference
                                     form.form-inline(method='POST',action='/lecture')
                                         #clayout_button_i18n
-                                            input.btn.btn-success(type='submit',value='Update')
+                                            input.btn.btn-success(type='submit',name='submit',value='layout')
                                         input(type='hidden',name='lecCode',value='#{cls.lecCode}')
                                         input(type='hidden',name='update',value='true')
                                         input(type='hidden',name='layout',value='true')
@@ -69,7 +69,7 @@ block content
                                         input.input-advreference(type='hidden',name='advreference')
                                     form.form-inline(method='POST',action='/lecture')
                                         #edit_back_button_i18n
-                                            input.btn.btn-success(type='submit',value='Update')
+                                            input.btn.btn-success(type='submit',name='submit',value='back')
                                         input(type='hidden',name='lecCode',value='#{cls.lecCode}')
                                         input(type='hidden',name='update',value='true')
                                         input(type='hidden',name='layout',value='back')
@@ -81,7 +81,7 @@ block content
                                 - }
                                 form.form-inline(method='POST',action='/lecture')
                                     #update_button_i18n
-                                        input.btn.btn-success(type='submit',value='Update')
+                                        input.btn.btn-success(type='submit',name='submit',value='false')
                                     input(type='hidden',name='lecCode',value='#{cls.lecCode}')
                                     - if(cls.lecCode!='New') {
                                         input(type='hidden',name='update',value='true')
@@ -158,8 +158,10 @@ block content
                                        - });
                                    - });
         - } else {
-            div(align='center',style='font-size:4.5em;color:#0B3382;line-height:1.3em;')  #{cls.title}
-                textarea#Code(name='Code',height='12',cols='30') #{cls.lecCode}
+            div(align='center',style='font-size:4.5em;color:#0B3382;line-height:1.3em;') #{cls.title}
+                span (
+                    textarea#Code(name='Code',height='12',cols='30') #{cls.lecCode}
+                span )
             div.subtitle#week_i18n #{i},#{j}
         - }
         hr

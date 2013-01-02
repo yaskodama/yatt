@@ -49,13 +49,23 @@ block content
                                     - }
                                     - var strCls = JSON.stringify(cls);
                                     input(type='hidden',name='cls',value='#{strCls}')
+                                form.form-inline(method='POST',action='/clayout')
+                                    #edit_back_button_i18n
+                                        input.btn.btn-success(type='submit',value='Update')
+                                    input(type='hidden',name='delete',value='back')
+                                    input(type='hidden',name='lecCode',value='#{cls.lecCode}')
+                                    input.glength(type='hidden',name='glength',value='#{cls.group.length}')
+                                    - for(var j=0; j<cls.group.length; j++) {
+                                        input(class='input-group#{j}',type='hidden',name='mgroup#{j}');
+                                    - }
+                                    - var strCls = JSON.stringify(cls);
+                                    input(type='hidden',name='cls',value='#{strCls}')
                                 form.form-inline(method='GET',action='/home')
                                     input(type='hidden',name='start',value='true')
                                     #cancel_and_edit_off_i18n
                                         input.btn.btn-success(type='submit',name='submit',value='CANCEL/Edit(OFF)')
                             div.modal-footer
-            div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
-                span #{cls.title}
+            div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;") #{cls.title}
                 span (#{cls.lecCode})
             p
             table#ltable(border='0',cellspacing='0',cellpadding='0',width='100%')
@@ -72,11 +82,12 @@ block content
                                                div.modal.hide.fade(id='dgrp#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                                    div.modal-header
                                                        button.close(data-dismiss='modal') x
-                                                       | Delete
+                                                       span.delete_i18n Delete
                                                    div.modal-body(style='line-height:1.3em;')
                                                        - for(var j=0; j<cls.group.length; j++) {
                                                            div(class='modal-group'+j)
                                                        - }
+                                                   div.modal-footer
                                                        form.input-append(method='POST',action='/clayout')
                                                            input(type='hidden',name='delete',value='dgroup')
                                                            input(type='hidden',name='lecCode',value='#{cls.lecCode}')
@@ -88,7 +99,6 @@ block content
                                                            input(type='hidden',name='i',value='#{i}')
                                                            input.btn(type='submit',name='submit',value='CANCEL')
                                                            input.btn.btn-success(type='submit',name='submit',value='OK')
-                                                   div.modal-footer
                                                span &nbsp
                                                a.open-LayoutGroup.btn(href='#cgrp#{i}',role='button',data-toggle='modal')
                                                    i.icon-hand-down
@@ -100,6 +110,7 @@ block content
                                                        - for(var j=0; j<cls.group.length; j++) {
                                                            div(class='modal-group'+j);
                                                        - }
+                                                   div.modal-footer
                                                        form.input-append(method='POST',action='/clayout')
                                                            input(type='hidden',name='delete',value='cgroup')
                                                            input(type='hidden',name='lecCode',value='#{cls.lecCode}')
@@ -112,7 +123,6 @@ block content
                                                            input(type='hidden',name='i',value='#{i}')
                                                            input.btn(type='submit',name='submit',value='CANCEL')
                                                            input.btn.btn-success(type='submit',name='submit',value='OK')
-                                                   div.modal-footer
                                                span &nbsp
                                                textarea(id='group#{i}',name='title',height='20',cols='70') #{cls.group[i].name}
                                        - for(var j=0; j<cls.group[i].classes.length; j++) {
@@ -124,12 +134,13 @@ block content
                                                    div.modal.hide.fade(id='ditem#{i}#{j}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                                        div.modal-header
                                                            button.close(data-dismiss='modal') x
-                                                           | Delete
+                                                           span.delete_i18n Delete
                                                        div.modal-body(style='line-height:1.3em;')
                                                            - for(var k=0; k<cls.group.length; k++) {
                                                                div(class='modal-group'+k);
                                                            - }
                                                            span #{cls.group[i].classes[j].name}
+                                                       div.modal-footer
                                                            form.input-append(method='POST',action='/clayout')
                                                                input(type='hidden',name='delete',value='ditem')
                                                                input(type='hidden',name='lecCode',value='#{cls.lecCode}')
@@ -143,7 +154,6 @@ block content
                                                                input(type='hidden',name='j',value='#{j}')
                                                                input.btn(type='submit',name='submit',value='CANCEL')
                                                                input.btn.btn-success(type='submit',name='submit',value='OK')
-                                                       div.modal-footer
                                                    span &nbsp
                                                    a.open-LayoutGroup.btn(href='#citem#{i}#{j}',role='button',data-toggle='modal')
                                                        i.icon-hand-down
@@ -156,6 +166,7 @@ block content
                                                                div(class='modal-group'+k);
                                                            - }
                                                            span #{cls.group[i].classes[j].name}
+                                                       div.modal-footer
                                                            form.input-append(method='POST',action='/clayout')
                                                                input(type='hidden',name='delete',value='citem')
                                                                input(type='hidden',name='lecCode',value='#{cls.lecCode}')
@@ -169,21 +180,56 @@ block content
                                                                input(type='hidden',name='j',value='#{j}')
                                                                input.btn(type='submit',name='submit',value='CANCEL')
                                                                input.btn.btn-success(type='submit',name='submit',value='OK')
-                                                       div.modal-footer
                                                    span &nbsp
-                                                   a.btn(href="#None#{i}",role='button',data-toggle='modal') #{cls.group[i].classes[j].name}
-                                                   .modal.hide.fade(id='None#{i}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
-                                                       div.modal-header
-                                                           button.close(data-dismiss='modal') x
-                                                           span #{cls.group[i].classes[j].name}
-                                                       div.modal-body
-                                                           p
-                                                           form.form-inline(method="GET",action='/lecture')
-                                                               input.btn.btn-success(type='submit',name='lecCode',value='New')
-                                                               input(type='hidden',name='update',value='false')
-                                                               input(type='hidden',name='i',value='#{i}')
-                                                               input(type='hidden',name='j',value='#{j}')
-                                                       div.modal-footer
+                                                   - var n=cls.group[i].classes[j].name; if(n!=="None") {
+                                                       a.open-LayoutGroup.btn(href="#conts#{i}#{j}",role='button',data-toggle='modal') #{n}
+                                                       .modal.hide.fade(id='conts#{i}#{j}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                                           div.modal-header
+                                                               button.close(data-dismiss='modal') x
+                                                               span #{n}
+                                                           div.modal-body
+                                                               - for(var k=0; k<cls.group.length; k++) {
+                                                                   div(class='modal-group'+k);
+                                                               - }
+                                                           div.modal-footer
+                                                               form.input-append(method="POST",action='/clayout')
+                                                                   input(type='hidden',name='delete',value='contents')
+                                                                   input(type='hidden',name='Code',value='#{n}')
+                                                                   input.glength(type='hidden',name='glength',value='#{cls.group.length}')
+                                                                   - for(var k=0; k<cls.group.length; k++) {
+                                                                       input(class='input-group#{k}',type='hidden',name='mgroup#{k}');
+                                                                   - }
+                                                                   - var strCls = JSON.stringify(cls);
+                                                                   input(type='hidden',name='cls',value='#{strCls}')
+                                                                   input(type='hidden',name='i',value='#{i}')
+                                                                   input(type='hidden',name='j',value='#{j}')
+                                                                   input.btn(type='submit',name='submit',value='CANCEL')
+                                                                   input.btn.btn-success(type='submit',name='submit',value='OK')
+                                                   - } else {
+                                                       a.open-LayoutGroup.btn(href="#none#{i}#{j}",role='button',data-toggle='modal') #{n}
+                                                       .modal.hide.fade(id='none#{i}#{j}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                                           div.modal-header
+                                                               button.close(data-dismiss='modal') x
+                                                               span #{n}
+                                                           div.modal-body
+                                                               - for(var k=0; k<cls.group.length; k++) {
+                                                                   div(class='modal-group'+k);
+                                                               - }
+                                                           div.modal-footer
+                                                               form.input-append(method="POST",action='/clayout')
+                                                                   input(type='hidden',name='delete',value='ncontents')
+                                                                   input(type='hidden',name='lecCode',value='#{cls.lecCode}')
+                                                                   input.glength(type='hidden',name='glength',value='#{cls.group.length}')
+                                                                   - for(var k=0; k<cls.group.length; k++) {
+                                                                       input(class='input-group#{k}',type='hidden',name='mgroup#{k}');
+                                                                   - }
+                                                                   - var strCls = JSON.stringify(cls);
+                                                                   input(type='hidden',name='cls',value='#{strCls}')
+                                                                   input(type='hidden',name='i',value='#{i}')
+                                                                   input(type='hidden',name='j',value='#{j}')
+                                                                   input.btn(type='submit',name='submit',value='CANCEL')
+                                                                   input.btn.btn-success(type='submit',name='submit',value='OK')
+                                                   - }
                                        - };
                                    - };
         hr

@@ -33,15 +33,15 @@ block content
                                     div.modal.hide.fade(id='acc#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                         div.modal-header
                                             button.close(data-dismiss='modal') x
-                                            span.confirm_i18n Confirm
+                                            span.delete_i18n Delete
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{accts[i].user}
+                                        div.modal-footer
                                             form.input-append(method='POST')
                                                 input(type='hidden',name='delete',value='accts')
                                                 input(type='hidden',name='user',value='#{accts[i].user}')
                                                 input.btn(type='submit',name='submit',value='CANCEL')
                                                 input.btn.btn-success(type='submit',name='submit',value='OK')
-                                        div.modal-footer
                                 td #{accts[i].name}
                                 td #{accts[i].country}
                                 td #{accts[i].user}
@@ -67,15 +67,15 @@ block content
                                     div.modal.hide.fade(id='tt#{i}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                         div.modal-header
                                             button.close(data-dismiss='modal') x
-                                            span.confirm_i18n Confirm
+                                            span.delete_i18n Delete
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{lecs[i].name}
+                                        div.modal-footer
                                             form.input-append(method='POST')
                                                 input(type='hidden',name='delete',value='lecs')
                                                 input(type='hidden',name='user',value='#{lecs[i].name}')
                                                 input.btn(type='submit',name='submit',value='CANCEL')
                                                 input.btn.btn-success(type='submit',name='submit',value='OK')
-                                        div.modal-footer
                                 td #{lecs[i].name}
                                 - for(var j=0; j<lecs[i].lecs.length; j++) {
                                 - var l = lecs[i].lecs[j];
@@ -103,20 +103,58 @@ block content
                                  div.modal.hide.fade(id='#{f.lecCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                      div.modal-header
                                          button.close(data-dismiss='modal') x
-                                         span.confirm_i18n Confirm
+                                         span.delete_i18n Delete
                                      div.modal-body(style='line-height:1.5em;')
                                          span #{f.lecCode}
-                                             form.input-append(method='POST')
-                                                 input(type='hidden',name='delete',value='list')
-                                                 input(type='hidden',name='Code',value='#{f.lecCode}')
-                                                 input.btn(type='submit',name='submit',value='CANCEL')
-                                                 input.btn.btn-success(type='submit',name='submit',value='OK')
                                      div.modal-footer
+                                         form.input-append(method='POST')
+                                             input(type='hidden',name='delete',value='list')
+                                             input(type='hidden',name='Code',value='#{f.lecCode}')
+                                             input.btn(type='submit',name='submit',value='CANCEL')
+                                             input.btn.btn-success(type='submit',name='submit',value='OK')
                               td #{f.lecCode}
                               td #{f.title}
                               td #{f.author}
                               td #{f.lang}
                               td #{f.date}
+                        - });
+        #library_i18n.subtitle Lectures
+        p
+            .contents
+                table#lecture_list.table(align='center')
+                    thead
+                        tr
+                            th(style='width:30px') Icon
+                            th(style='width:100px') Code
+                            th(style='width:150px') Title
+                            th(style='width:70px') Author
+                            th(style='width:30px') Sign
+                            th(style='width:30px') Lang
+                            th Url
+                    tbody
+                        - cnts.forEach(function(f) {
+                            tr
+                              td
+                                 a.btn(href='##{f.cntCode}',role='button',data-toggle='modal')
+                                     i.icon-trash
+                                 div.modal.hide.fade(id='#{f.cntCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                     div.modal-header
+                                         button.close(data-dismiss='modal') x
+                                         span.delete_i18n Delete
+                                     div.modal-body(style='line-height:1.5em;')
+                                         span #{f.cntCode}
+                                     div.modal-footer
+                                         form.input-append(method='POST')
+                                             input(type='hidden',name='delete',value='contents')
+                                             input(type='hidden',name='Code',value='#{f.cntCode}')
+                                             input.btn(type='submit',name='submit',value='CANCEL')
+                                             input.btn.btn-success(type='submit',name='submit',value='OK')
+                              td #{f.cntCode}
+                              td #{f.title}
+                              td #{f.author}
+                              td #{f.sign}
+                              td #{f.lang}
+                              td #{f.url}
                         - });
         #log_title_i18n.subtitle Log
         p
@@ -139,16 +177,16 @@ block content
                                     div.modal.hide.fade(id='log#{i}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
                                         div.modal-header(style='line-height:1.5em;')
                                             button.close(data-dismiss='modal') x
-                                            span.confirm_i18n Confirm
+                                            span.delete_i18n Delete
                                         div.modal-body(style='line-height:1.5em;')
                                             span #{logs[i].date}
+                                        div.modal-footer
                                             form.input-append(method='POST')
                                                 input(type='hidden',name='delete',value='true')
                                                 input(type='hidden',name='id',value='#{logs[i]._id}')
                                                 input(type='hidden',name='date',value='#{logs[i].date}')
                                                 input.btn(type='submit',name='submit',value='CANCEL')
                                                 input.btn.btn-success(type='submit',name='submit',value='OK')
-                                        div.modal-footer
                                 td #{logs[i].name}
                                 td #{logs[i].login}
                                 td #{logs[i].date}

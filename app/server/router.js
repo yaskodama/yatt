@@ -8,41 +8,17 @@ module.exports = function(app) {
     app.get('/', function(req, res){
         if (req.cookies.user == undefined || req.cookies.pass == undefined) {
 	    var name = 'Guest';
-	    var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
-	    var Lectures = REC.getLectures();
-	    Lectures.find({name:"tyass"}, function(e,docs) {
-		if(e) {
-		    console.log(e);
-		    res.send(e,400);
-		} else {
-		    var lecs = [];
-		    REC.setLecCode(docs,lecs);
-		    res.render('login', { message: 'New User:'+name, name: 'tyass',
-			id: req.session.id, lecs:lecs, title: "Welcome to YaTT - Please Login To Your Account"
-			});
-		}
-		});
+	    var Access = REC.saveRecord(name,true,function(err){if(err){console.log(err);}});
+	    REC.findLogin("tyass", req.session.id, res);
         } else {
     	    AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 	        if (o != null){
 		    req.session.user = o;
 		    res.redirect('/home');
 		} else {
-		    var name = 'tyass';
-		    var Access = REC.saveRecord(mongoose,name,true,function(err){if(err){console.log(err);}});
-		    var Lectures = REC.getLectures();
-		    Lectures.find({name:"tyass"}, function(err,docs) {
-			if(e) {
-			    console.log(e);
-			    res.send(e,400);
-		    	} else {
-			    var lecs = [];
-			    REC.setLecCode(docs,lecs);
-			    res.render('login', { message: 'New User:'+name, name: 'tyass', id: req.session.id,
-				lecs: lecs, title: "Welcome to YaTT - Please Login To Your Account"
-				});
-			}
-			});
+		    var name = 'Guest';
+		    var Access = REC.saveRecord(name,true,function(err){if(err){console.log(err);}});
+		    REC.findLogin("tyass", req.session.id, res);
 		}
 		});
 	}
@@ -65,28 +41,17 @@ module.exports = function(app) {
         if (req.session.user == null){
 	    res.redirect('/');
 	} else {
-	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
-	    var Lectures = REC.getLectures();
-	    Lectures.find({name:req.session.user.user}, function(err,docs) {
-		var lecs = [];
-		REC.setLecCode(docs,lecs);
-		var Classes = REC.getClasses();
-		Classes.find({}, function(err,docs) {
-		    var leclist = [];
-		    REC.setLecList(docs,leclist);
-		    res.render('edit', { message: 'Edit mode!', name: req.session.user.user,
-			id: req.session.id, lecs: lecs, leclist: leclist,
-			title: "Welcome to YaTT by "+ req.session.user.user });
-		    });
-	    });
+            var Access = REC.saveRecord(req.session.user.user,true,function(err){if(err){console.log(err);}});
+	    REC.findEdit(req.session.user.user, req.session.id, res);
 	}
         });
     app.post('/edit', function(req, res) {
         if (req.session.user == null){
 	    res.redirect('/');
 	} else {
-	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
+	    var Access = REC.saveRecord(req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    var Lectures = REC.getLectures();
+	    var Classes = REC.getClasses();
 	    if(req.body.delete === "true") {
 		Lectures.update({name:req.session.user.user}, { $pull: { lecs: {week: req.body.i, time: req.body.j}}},
 				{ upsert:false,multi:true}, function(err) {
@@ -94,22 +59,10 @@ module.exports = function(app) {
 			console.log(err);
 			res.send(err,400);
 		    } else {
-			Lectures.find({name:req.session.user.user}, function(err,docs) {
-			    var lecs = [];
-			    REC.setLecCode(docs,lecs);
-			    var Classes = REC.getClasses();
-			    Classes.find({}, function(err,docs) {
-			    	var leclist = [];
-			    	REC.setLecList(docs,leclist);
-			    	res.render('edit', { message: 'Edit mode!', name: req.session.user.user,
-				    id: req.session.id, lecs: lecs, leclist: leclist,
-				    title: "Welcome to YaTT by "+ req.session.user.user });
-				});
-			    });
+			REC.findEdit(req.session.user.user, req.session.id, res);
 		    }
 		    });
 	    } else if(req.body.delete === "list"&&req.body.Del === "OK") {
-		var Classes = REC.getClasses();
 		Classes.remove({lecCode:req.body.Code}, {safe:true}, function(err){
 		    if(err) {
 			alert(err);
@@ -119,29 +72,9 @@ module.exports = function(app) {
 			;
 		    }
 		    });
-		Lectures.find({name:req.session.user.user}, function(err,docs) {
-		    var lecs = [];
-		    REC.setLecCode(docs,lecs);
-		    var Classes = REC.getClasses();
-		    Classes.find({}, function(err,docs) {
-			var leclist = [];
-			REC.setLecList(docs,leclist);
-			res.render('edit', { message: 'Edit mode!', name: req.session.user.user,
-			    id: req.session.id, lecs: lecs, leclist: leclist,
-			    title: "Welcome to YaTT by "+ req.session.user.user });
-			});
-		    });
+		REC.findEdit(req.session.user.user, req.session.id, res);
 	    } else if(req.body.delete == 'false' && req.body.lecCode != 'New') {
-		var Classes = REC.getClasses();
-	        Classes.find({lecCode:req.body.lecCode}, function(err,docs) {
-		    if(docs[0]==undefined) {
-			res.render('404', {title: 'Page Not Found'});
-		    } else {
-		        res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
-			    id: req.session.id, cls: docs[0],
-			    title: "Welcome to YaTT by "+ req.session.user.user });
-		    }
-		    });
+                REC.findLecture(req.body.lecCode,req.session.user.user,req.session.id,res);
 	    } else if(req.body.delete == 'false' && req.body.lecCode == 'New') {
 		var cls = { title: "New", lecCode: "New", lang: "en", objective: "New", reference: "Selecting...",
 			    advreference: "Selecting...", textbook: "Selecting...", group: [], date: Date.Now };
@@ -149,18 +82,7 @@ module.exports = function(app) {
 			    id: req.session.id, cls: cls, i: req.body.i, j: req.body.j,
 			    title: "Welcome to YaTT by "+ req.session.user.user });
 	    } else {
-		Lectures.find({name:req.session.user.user}, function(err,docs) {
-		    var lecs = [];
-		    REC.setLecCode(docs,lecs);
-		    var Classes = REC.getClasses();
-		    Classes.find({}, function(err,docs) {
-			var leclist = [];
-			REC.setLecList(docs,leclist);
-			res.render('edit', { message: 'Edit mode!', name: req.session.user.user,
-			    id: req.session.id, lecs: lecs, leclist: leclist,
-			    title: "Welcome to YaTT by "+ req.session.user.user });
-			});
-		    });
+		REC.findEdit(req.session.user.user, req.session.id, res);
 	    }
 	}
 	});
@@ -190,7 +112,7 @@ console.log(req.body.advreference);
 console.log(req.body.layout);
 console.log(req.body.submit);
 	    var Classes = REC.getClasses();
-	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
+	    var Access = REC.saveRecord(req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    if(req.body.update === "true") {
 		Classes.update({lecCode:req.body.lecCode},
 		    { $set: { title:req.body.title,objective:req.body.objective,
@@ -200,7 +122,6 @@ console.log(req.body.submit);
 			    console.log(err);
 			    res.send(err,400);
 			} else {
-			    if(req.body.lecCode != 'New') {
 			        if(req.body.layout=='back') {
 				    var Lectures = REC.getLectures();
 				    Lectures.find({name:req.session.user.user}, function(err,docs) {
@@ -234,7 +155,6 @@ console.log(req.body.submit);
 					}
 					});
 				}
-			    }
 			}
 		    });
             } else if(req.body.update === "create") {
@@ -247,7 +167,7 @@ console.log(req.body.submit);
 			    console.log(err);
 			    res.send(err,400);
 			} else {
-			    var Classes = REC.newClasses(mongoose,req.body.Code,req.session.user.user,function(e){
+			    var Classes = REC.newClasses(req.body.Code,req.session.user.user,function(e) {
 				if(e){
 			            console.log(e);
 				    res.send(e,400);
@@ -273,36 +193,24 @@ console.log(req.body.submit);
 	    // if user is not logged-in redirect back to login page //
 	    res.redirect('/');
 	} else {
-	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
+	    var Access = REC.saveRecord(req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    var Lectures = REC.getLectures();
+	    var Classes = REC.getClasses();
 	    Lectures.find({name:req.session.user.user}, function(err,docs) {
 		if(docs[0]==undefined) {
-		    var Lectures = REC.saveLectures(mongoose,req.session.user.user,function(err){
+		    var Lectures = REC.saveLectures(req.session.user.user,function(err){
 			if(err) {
 			    res.send(err,400);
 			} else {
-			    Lectures.find({name:req.session.user.user}, function(err,docs) {
-				var lecs = [];
-				REC.setLecCode(docs,lecs);
-				if(docs[0]==undefined) {
-				    res.render('404', {title: 'Page Not Found'});
-				} else {
-				    res.render('home', { message: 'New User:'+req.session.user.user,
-					name: req.session.user.user, id: req.session.id, lecs: lecs, 
-							 title: "Welcome to YaTT by "+ req.session.user.user });
-			   	}
-				});
+			    REC.findHome(req.session.user.user,req.session.id,res);
 			}
 			});
 		} else {
-		    var lecs = [];
-		    REC.setLecCode(docs,lecs);
-			res.render('home', { message: 'New User:'+req.session.user.user, name: req.session.user.user,
-			id: req.session.id, lecs: lecs, title: "Welcome to YaTT by "+ req.session.user.user });
+		    REC.findHome(req.session.user.user,req.session.id,res);
 		}
 		});
-        }
-        });
+	}
+	});
     app.post('/home', function(req, res){
         if (req.param('user') != undefined) {
     	    AM.update({
@@ -458,7 +366,7 @@ for(i=0;i<req.body.glength;i++) {
     console.log(req.body['mgroup'+i]);
 }
 	    var Classes = REC.getClasses();
-	    var Access = REC.saveRecord(mongoose,req.session.user.user,true,function(err){if(err){console.log(err);}});
+	    var Access = REC.saveRecord(req.session.user.user,true,function(err){if(err){console.log(err);}});
 	    var newCls = JSON.parse(req.body.cls);
 	    var flag = false;
 	    for(var i=0; i<req.body.glength; i++) {
@@ -479,24 +387,18 @@ for(i=0;i<req.body.glength;i++) {
 	    } else if(req.body.delete === "update" || req.body.delete === "back" ) {
 		var grp = newCls.group;
 		flag = true;
+	    } else if(req.body.delete === "ncontents" || req.body.delete === "contents" ) {
+		var grp = newCls.group;
 	    }
 	    if(flag) {
 		    Classes.update( {lecCode:req.body.lecCode},
-			{ $set: { group: grp } }, { upsert:false,multi:true}, function(err) {
+			{ $set: {group:grp} }, {upsert:false,multi:true}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
 			} else {
 			    if(req.body.delete==='back') {
-				Classes.find({lecCode:req.body.lecCode}, function(err,docs) {
-				    if(docs[0]==undefined) {
-					res.render('404', {title: 'Page Not Found'});
-				    } else {
-					res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
-					    id: req.session.id, cls: docs[0],
-					    title: "Welcome to YaTT by "+ req.session.user.user });
-				    }
-				    });
+				REC.findLecture(req.body.lecCode,req.session.user.user,req.session.id,res);
 			    } else {
 				Classes.find({lecCode:req.body.lecCode}, function(e,docs) {
 				    if(docs[0]==undefined) {
@@ -511,36 +413,156 @@ for(i=0;i<req.body.glength;i++) {
 			}
 			});
 	    } else {
-		Classes.find( {lecCode:req.body.lecCode}, function(e,docs) {
-		    if(docs[0]==undefined) {
-			res.render('404',{title:'Page Not Found'});
-		    } else {
-			res.render('clayout', { title : 'Contents Layout',
-			    message: 'Edit Contents Layout:'+req.session.user.user,
-			    name: req.session.user.user, cls: docs[0] } );
-		    }
-		    });
+		if(req.body.delete==='contents') {
+		    var Contents = REC.getContents();
+		    Contents.find({cntCode:req.body.Code}, function(e,docs) {
+			if(docs[0]==undefined) {
+			    res.render('404',{title:'Page Not Found'});
+			} else {
+			    res.render('contents', { message: 'Contents mode!', name:req.session.user.user,
+				id:req.session.id, contents:docs[0],
+				title: 'Welcome to YaTT by '+ req.session.user.user });
+			}
+			});
+		} else if(req.body.delete==='ncontents') {
+		    Classes.find({lecCode:req.body.lecCode}, function(err,docs) {
+			if(docs[0]==undefined) {
+			   res.render('404', {title: 'Page Not Found'});
+			} else {
+			    var Contents = REC.getContents();
+			    var contents = new Contents();
+			    contents.title = 'New';
+			    contents.cntCode = 'New';
+			    contents.sign = 0;
+			    contents.lang = 'ja';
+			    contents.url = "http://yahoo.co.jp/";
+			    res.render('contents', { message: 'Contents mode!', name: req.session.user.user,
+				id: req.session.id, contents: contents, ii: req.body.i, jj: req.body.j, cls: docs[0],
+				title: "Welcome to YaTT by "+ req.session.user.user });
+			}
+			});
+		} else {
+		    Classes.find( {lecCode:req.body.lecCode}, function(e,docs) {
+		    	if(docs[0]==undefined) {
+			    res.render('404',{title:'Page Not Found'});
+		    	} else {
+			    res.render('clayout', { title : 'Contents Layout',
+			    	message: 'Edit Contents Layout:'+req.session.user.user,
+			    	name: req.session.user.user, cls: docs[0] } );
+		    	}
+			});
+		}
 	    }
 	}
 	});
-    app.get('/admin', function(req, res) {
-	var Access = REC.getAccess();
-        var Lectures = REC.getLectures();
-	Lectures.find({}, function(err,lecs) {
+    app.post('/contents', function(req, res) {
+        if (req.session.user == null){
+            res.redirect('/');
+        } else {
+console.log('contents - post');
+console.log(req.body.update);
+console.log(req.body.title);
+console.log(req.body.url);
+console.log(req.body.Code);
+console.log(req.body.i);
+console.log(req.body.j);
+console.log(req.body.lecCode);
+console.log(req.body.group);
+console.log(req.body.type);
+	    var Contents = REC.getContents();
 	    var Classes = REC.getClasses();
-	    Classes.find({}, function(err,docs) {
-		var leclist = [];
-		REC.setLecList(docs,leclist);
-		Access.find({}, function(err,docs) {
-	    	    AM.getAllRecords( function(e, accounts) {
-		    	res.render('admin', { title : 'Administration', accts:accounts,
-			    logs: docs, lecs: lecs, leclist: leclist } );
-			})
-		    })
-	        })
-	    })
+	    var flag = false;
+	    if(req.body.update === 'create') {
+	        var newGrp = JSON.parse(req.body.group);
+console.log(newGrp);
+		if(req.body.Code!='New') {
+		    newGrp[req.body.i].classes[req.body.j] = { name: req.body.Code };
+		    Classes.update( {lecCode:req.body.lecCode},
+			{ $set: {group:newGrp} }, {upsert:false,multi:true}, function(err) {
+			if(err) {
+			    console.log(err);
+			    res.send(err,400);
+			} else {
+			    var Contents = REC.newContents(req.body.Code,req.session.user.user,req.body.url,function(e) {
+				if(e) {
+				    console.log(e);
+				    res.send(e,400);
+				} else {
+				    Contents.find({cntCode:req.body.Code}, function(e,docs) {
+					if(docs[0]==undefined) {
+					    res.render('404',{title:'Page Not Found'});
+					} else {
+					    res.render('contents', { message: 'Contents mode!', name:req.session.user.user,
+						id:req.session.id, contents:docs[0],
+						title: 'Welcome to YaTT by '+ req.session.user.user });
+			    		}
+					});
+				}
+				});
+			}
+			});
+		}
+	    } else if(req.body.update === 'update') {
+		Contents.update({cntCode:req.body.Code},
+		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
+		    {upsert:false,multi:true}, function(err) {
+		    if(err) {
+			console.log(err);
+			res.send(err,400);
+		    } else {
+			Contents.find({cntCode:req.body.Code}, function(e,docs) {
+			    if(docs[0]==undefined) {
+				res.render('404',{title:'Page Not Found'});
+			    } else {
+				res.render('contents', { message: 'Contents mode!', name:req.session.user.user,
+				    id:req.session.id, contents:docs[0],
+				    title: 'Welcome to YaTT by '+ req.session.user.user });
+			    }
+			    });
+		    }
+		    });
+	    } else if(req.body.update === 'back') {
+		Contents.update({cntCode:req.body.Code},
+		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
+		    {upsert:false,multi:true}, function(err) {
+		    if(err) {
+			console.log(err);
+			res.send(err,400);
+		    } else {
+			REC.findEdit(req.session.user.user, req.session.id, res);
+		    }
+		    });
+            } else {
+		if(flag) {
+		    ;
+	    	} else {
+		    ;
+		}
+            }
+	}
+	});
+    app.get('/admin', function(req, res) {
+	var Contents = REC.getContents();
+	Contents.find({}, function(err,cnts) {
+	    var Lectures = REC.getLectures();        
+	    Lectures.find({}, function(err,lecs) {
+	    	var Classes = REC.getClasses();
+	    	Classes.find({}, function(err,docs) {
+		    var leclist = [];
+		    REC.setLecList(docs,leclist);
+		    var Access = REC.getAccess();
+		    Access.find({}, function(err,docs) {
+	    	    	AM.getAllRecords( function(e, accounts) {
+			    res.render('admin', { title : 'Administration', cnts:cnts, accts:accounts,
+			    	logs: docs, lecs: lecs, leclist: leclist } );
+			    });
+			});
+		    });
+		});
+	    });
 	});
     app.post('/admin', function(req, res) {
+	var Contents = REC.getContents();
 	var Accounts = AM.getAccounts();
 	var Access = REC.getAccess();
         var Lectures = REC.getLectures();
@@ -553,24 +575,29 @@ for(i=0;i<req.body.glength;i++) {
             Classes.remove({lecCode:req.body.Code}, {safe:true}, function(err){if(err){cosole.log(err);}});
         } else if(req.body.delete === "accts" && req.body.submit === "OK") {
             Accounts.remove({user:req.body.user}, {safe:true}, function(err){if(err){cosole.log(err);}});
+	} else if(req.body.delete === "contents" && req.body.submit === "OK") {
+            Contents.remove({cntCode:req.body.Code}, {safe:true}, function(err){if(err){cosole.log(err);}});
 	}
-	Lectures.find({}, function(err,lecs) {
-	    Classes.find({}, function(err,docs) {
-		var leclist = [];
-		REC.setLecList(docs,leclist);
-		Access.find({}, function(err,docs) {
-		    AM.getAllRecords( function(e, accounts) {
-			if(!e) {
-			    res.render('admin', { title : 'Administration', accts:accounts,
-			        logs: docs, lecs: lecs, leclist: leclist } );
-			} else {
-			    res.send('accounts not found', 400);
-			}
-			})
-			})
-		    })
+	var Contents = REC.getContents();
+	Contents.find({}, function(err,cnts) {
+	    Lectures.find({}, function(err,lecs) {
+	    	Classes.find({}, function(err,docs) {
+		    var leclist = [];
+		    REC.setLecList(docs,leclist);
+		    Access.find({}, function(err,docs) {
+		    	AM.getAllRecords( function(e, accounts) {
+			    if(!e) {
+			    	res.render('admin', { title : 'Administration', cnts:cnts, accts:accounts,
+			            logs: docs, lecs: lecs, leclist: leclist } );
+			    } else {
+			    	res.send('accounts not found', 400);
+			    }
+			    });
+			});
+		    });
 		});
-        });
+	    });
+	});
     app.post('/delete', function(req, res){
         AM.delete(req.body.id, function(e, obj){
 	    if (!e){

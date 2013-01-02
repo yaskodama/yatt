@@ -87,3 +87,9 @@ function idelete(grp,inum,jnum) {
     return grp;
 }
 console.log(idelete(group,2,0));
+console.log(group);
+function insert(grp,str,inum,jnum) {
+    grp[inum].classes[jnum] = { name: str };
+    return grp;
+}
+console.log(insert(group,"test",2,0));
