@@ -403,7 +403,9 @@ console.log(req.body.submit);
         } else {
 console.log('clayout - post');
 console.log(req.body.delete);
+console.log('--- lecCode ----');
 console.log(req.body.lecCode);
+console.log('--- lecCode ----');
 console.log(req.body.i);
 console.log(req.body.j);
 for(i=0;i<req.body.glength;i++) {
@@ -449,7 +451,8 @@ for(i=0;i<req.body.glength;i++) {
 				    	res.render('404',{title:'Page Not Found'});
 				    } else {
 				    	res.render('clayout', { title : 'Contents Layout',
-					    message: 'Edit Contents Layout:'+req.session.user.user, name: req.session.user.user,
+					    message: 'Edit Contents Layout:'+req.session.user.user,
+					    name: req.session.user.user,
 					    cls: docs[0] } );
 				    }
 				    });
@@ -464,8 +467,9 @@ for(i=0;i<req.body.glength;i++) {
 			    res.render('404',{title:'Page Not Found'});
 			} else {
 			    res.render('contents', { message: 'Contents mode!', name:req.session.user.user,
-				id:req.session.id, contents:docs[0],
-				title: 'Welcome to YaTT by '+ req.session.user.user });
+			    id:req.session.id, contents:docs[0],
+			    lecCode: newCls.lecCode,
+			    title: 'Welcome to YaTT by '+ req.session.user.user });
 			}
 			});
 		} else if(req.body.delete==='ncontents') {
@@ -510,7 +514,9 @@ console.log(req.body.url);
 console.log(req.body.Code);
 console.log(req.body.i);
 console.log(req.body.j);
+console.log('--- lecCode ----');
 console.log(req.body.lecCode);
+console.log('--- lecCode ----');
 console.log(req.body.group);
 console.log(req.body.type);
 	    var Contents = REC.getContents();
@@ -518,7 +524,6 @@ console.log(req.body.type);
 	    var flag = false;
 	    if(req.body.update === 'create') {
 	        var newGrp = JSON.parse(req.body.group);
-console.log(newGrp);
 		if(req.body.Code!='New') {
 		    newGrp[req.body.i].classes[req.body.j] = { name: req.body.Code };
 		    Classes.update( {lecCode:req.body.lecCode},
@@ -536,7 +541,8 @@ console.log(newGrp);
 					if(docs[0]==undefined) {
 					    res.render('404',{title:'Page Not Found'});
 					} else {
-					    res.render('contents', { message: 'Contents mode!', name:req.session.user.user,
+					    res.render('contents', { message: 'Contents mode!',
+							name:req.session.user.user, lecCode: req.body.lecCode,
 						id:req.session.id, contents:docs[0],
 						title: 'Welcome to YaTT by '+ req.session.user.user });
 			    		}
@@ -576,12 +582,25 @@ console.log(newGrp);
 			REC.findEdit(req.session.user.user, req.session.id, res);
 		    }
 		    });
-            } else {
-		if(flag) {
-		    ;
-	    	} else {
-		    ;
-		}
+	    } else if(req.body.update === 'layback') {
+		Contents.update({cntCode:req.body.Code},
+		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
+		    {upsert:false,multi:false}, function(err) {
+		    if(err) {
+			console.log(err);
+			res.send(err,400);
+		    } else {
+			Classes.find( {lecCode:req.body.lecCode}, function(e,docs) {
+		    	    if(docs[0]==undefined) {
+			    	res.render('404',{title:'Page Not Found'});
+			    } else {
+			    	res.render('clayout', { title : 'Contents Layout',
+			    	    message: 'Edit Contents Layout:'+req.session.user.user,
+			    	    name: req.session.user.user, cls: docs[0] } );
+			    }
+			    });
+		    }
+		    });
             }
 	}
 	});

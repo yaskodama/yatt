@@ -51,6 +51,25 @@ block content
                                         span.type_i18n Type
                                     p
                                         #modal-radio
+                                  - if(lecCode!=undefined) {
+                                    form.form-inline(method='POST',action='/contents')
+                                        #clayout_button_i18n
+                                           input.btn.btn-success(type='submit',name='submit',value='Update')
+                                        input(type='hidden',name='delete',value='update')
+                                        input(type='hidden',name='update',value='layback')
+                                        input(type='hidden',name='lecCode',value='#{lecCode}')
+                                        - if(contents.sign==0) {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-url(type='hidden',name='url')
+                                            input.input-type(type='hidden',name='type')
+                                        - } else {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input(type='hidden',name='url',value='#{contents.url}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-type(type='hidden',name='type')
+                                        - }
+                                  - }
                                     form.form-inline(method='POST',action='/contents')
                                         #edit_back_button_i18n
                                            input.btn.btn-success(type='submit',name='submit',value='Update')

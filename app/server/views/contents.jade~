@@ -33,16 +33,59 @@ block content
                         #UpdateAndEnd.modal.hide.fade(tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
                             div.modal-header(style='line-height:1.5em;')
                                 button.close(data-dismiss='modal') x
-                                span#confirm_i18n(style='font-size:12pt;') Confirm
+                                span.confirm_i18n(style='font-size:12pt;') Confirm
                             div.modal-body(style='line-height:1.3em;')
                                 - if(contents.cntCode!='New') {
                                     h4
-                                        span#modal_title_i18n Title
+                                        span.title_i18n Title
                                     p
                                         #modal-title
+                                    p
+                                  - if(contents.sign==0) {
                                     h4 URL
                                     p
                                         #modal-url
+                                    p
+                                  - }
+                                    h4
+                                        span.type_i18n Type
+                                    p
+                                        #modal-radio
+                                  - if("lecCode" in global) {
+                                    form.form-inline(method='POST',action='/contents')
+                                        #clayout_button_i18n
+                                           input.btn.btn-success(type='submit',name='submit',value='Update')
+                                        input(type='hidden',name='delete',value='update')
+                                        input(type='hidden',name='update',value='layback')
+                                        input(type='hidden',name='lecCode',value='#{lecCode}')
+                                        - if(contents.sign==0) {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-url(type='hidden',name='url')
+                                            input.input-type(type='hidden',name='type')
+                                        - } else {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input(type='hidden',name='url',value='#{contents.url}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-type(type='hidden',name='type')
+                                        - }
+                                  - }
+                                    form.form-inline(method='POST',action='/contents')
+                                        #edit_back_button_i18n
+                                           input.btn.btn-success(type='submit',name='submit',value='Update')
+                                        input(type='hidden',name='delete',value='update')
+                                        input(type='hidden',name='update',value='back')
+                                        - if(contents.sign==0) {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-url(type='hidden',name='url')
+                                            input.input-type(type='hidden',name='type')
+                                        - } else {
+                                            input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                            input(type='hidden',name='url',value='#{contents.url}')
+                                            input.input-title(type='hidden',name='title')
+                                            input.input-type(type='hidden',name='type')
+                                        - }
                                 - }
                                 form.form-inline(method='POST',action='/contents')
                                     #update_button_i18n
@@ -58,11 +101,18 @@ block content
                                         input(type='hidden',name='lecCode',value='#{cls.lecCode}')
                                         - var strGrp = JSON.stringify(cls.group);
                                         input(type='hidden',name='group',value='#{strGrp}')
-                                    - } else {
+                                    - } else if(contents.sign==0) {
                                         input(type='hidden',name='update',value='update')
                                         input(type='hidden',name='Code',value='#{contents.cntCode}')
                                         input.input-title(type='hidden',name='title')
-                                        input#input-url(type='hidden',name='url')
+                                        input.input-url(type='hidden',name='url')
+                                        input.input-type(type='hidden',name='type')
+                                    - } else {
+                                        input(type='hidden',name='update',value='update')
+                                        input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                        input(type='hidden',name='url',value='#{contents.url}')
+                                        input.input-title(type='hidden',name='title')
+                                        input.input-type(type='hidden',name='type')
                                     - }
                             div.modal-footer
         - if(contents.cntCode === 'New') {
@@ -73,7 +123,7 @@ block content
             div.subtitle#week_i18n #{ii},#{jj}
         - } else {
             div(align="center",style="font-size:4.5em;color:#0B3382;line-height:1.3em;")
-                textarea#title(name='title',height='30',cols='50')  #{contents.title}
+                textarea#title(name='title',height='30',cols='50') #{contents.title}
                 span (#{contents.cntCode})
             p
             table#ltable(border='0',cellspacing='0',cellpadding='0',width='100%')
@@ -86,7 +136,7 @@ block content
                                        label.radio
                                            tr
                                                td.righttitle2
-                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='option1',checked)
+                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='0',checked)
                                                    | &nbsp; URL
                                            tr
                                                td
@@ -96,11 +146,39 @@ block content
                                                      textarea#url(name='url',height='30',cols='50') #{contents.url}
                                            tr
                                                td.righttitle2
-                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='option1')
+                                                   input#optionsRadios2(type='radio',name='optionsRadios',value='1')
                                                    | &nbsp; Menu
                                            tr
                                                td.righttitle2
-                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='option1')
+                                                   input#optionsRadios3(type='radio',name='optionsRadios',value='2')
+                                                   | &nbsp; Pages
+                                   - } else if(contents.sign==1) {
+                                       label.radio
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='0')
+                                                   | &nbsp; URL
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios2(type='radio',name='optionsRadios',value='1',checked)
+                                                   | &nbsp; Menu
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios3(type='radio',name='optionsRadios',value='2')
+                                                   | &nbsp; Pages
+                                   - } else if(contents.sign==2) {
+                                       label.radio
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios1(type='radio',name='optionsRadios',value='0')
+                                                   | &nbsp; URL
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios2(type='radio',name='optionsRadios',value='1')
+                                                   | &nbsp; Menu
+                                           tr
+                                               td.righttitle2
+                                                   input#optionsRadios3(type='radio',name='optionsRadios',value='2',checked)
                                                    | &nbsp; Pages
                                    - } else {
                                        - for(var i=0; i<7; i++) {

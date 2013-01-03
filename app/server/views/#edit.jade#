@@ -1,0 +1,254 @@
+extends layout2
+
+block content
+    table
+        tr
+            td(width='600',align='left',style='color:red')
+                - if(message) {
+                    "#{message}"
+                - }
+            td(width='550',align='right') "#{name}"
+        tr
+            td(width='600',align='left')
+                #langbox
+                    span#language_i18n Language:
+                    select#lang
+                    span#langbrowser
+            td(align='right')
+                button#btn-logout2.btn.btn-primary
+                    i.icon-lock.icon-white
+                    span#signout_i18n Sign Out
+    #wrapper.ui-widget-content.ui-corner-all
+        p
+            #welcome_i18n(align='center',style='font-family:Century,Lucida Sans Unicode,sans-serif;font-size:4.4em;line-height:1.1em;color:#47FFFC;') Welcome to YaTT
+        #timetable_i18n.subtitle Time Table
+        p
+        div(align='right')
+            form.form-inline(mothod='GET',action='/home')
+                button.bbutton(type='submit')
+                    span#edit2_name_2_i18n
+        div(style='padding:0px 50px 30px 30px;')
+            table.table#lecture_table(align='center')
+                thead
+                    tr
+                        td
+                            img(src='img/sched00.gif',height='40')
+                        td(style='background-color:#CCFFFF;',width='90',height='40',border='0')
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#monday_i18n(style='font-size:20pt;') Mon
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#tuesday_i18n(style='font-size:20pt;') Tue
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#wednesday_i18n(style='font-size:20pt;') Wed
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#thursday_i18n(style='font-size:20pt;') Thu
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#friday_i18n(style='font-size:20pt;') Fri
+                        td
+                            img(src='img/sched02.gif',height='40')
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:0',width='90',height='40',border='0')
+                            div#saturday_i18n(style='font-size:20pt;') Sat
+                        td
+                            img(src='img/sched04.gif',height='40')
+                tbody
+                    - for(var j=0; j<5; j++) {
+                    tr
+                        - if(j==4) {
+                            td
+                                img(src='img/sched13.gif',height='40')
+                        - } else {
+                            td
+                                img(src='img/sched05.gif',height='40')
+                        - }
+                        td(style='background-color:#CCFFFF;font-size:9pt;text-align:center;vertical-align:middle;line-height:1.3em',width='90',height='40',border='0')
+                            - switch(j) { case 0:
+                                i
+                                    span#first_lec_i18n 1st
+                                    br
+                                    span 9:30-11:00
+                            - break; case 1:
+                                i
+                                    span#second_lec_i18n 2nd
+                                    br
+                                    span 11:10-12:40
+                            - break; case 2:
+                                i
+                                    span#third_lec_i18n 3rd
+                                    br
+                                    span 13:30-15:00
+                            - break; case 3:
+                                i
+                                    span#fourth_lec_i18n 4th
+                                    br
+                                    span 15:10-16:40
+                            - break; case 4:
+                                i
+                                    span#fifth_lec_i18n 5th
+                                    br
+                                    span 16:50-18:20
+                            - break; case 5:
+                                i
+                                    span#six_lec_i18n 6th
+                                    br
+                                    span 18:30-20:00
+                            - break; case 6:
+                                i
+                                    span#seventh_lec_i18n 7th
+                                    br
+                                    span 20:10-21:40
+                            - }
+                        td
+                            img(src='img/sched07.gif',width='20',height='40')
+                        - for(var i=0; i<5; i++) {
+                            td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
+                                - var l=lecs[i*5+j];if(l=="") {
+                                    a.btn(href="#New#{i}#{j}",role='button',data-toggle='modal') None
+                                    .modal.hide.fade(id='New#{i}#{j}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                        div.modal-header
+                                            button.close(data-dismiss='modal') x
+                                            span New
+                                        div.modal-body
+                                            p
+                                            form.form-inline(method="POST",action='/edit')
+                                                input.btn.btn-success(type='submit',name='lecCode',value='New')
+                                                input(type='hidden',name='update',value='false')
+                                                input(type='hidden',name='delete',value='false')
+                                                input(type='hidden',name='i',value='#{i}')
+                                                input(type='hidden',name='j',value='#{j}')
+                                        div.modal-footer
+                                - } else {
+                                    a.btn(href="#Update#{i}#{j}",role='button',data-toggle='modal') #{l}
+                                    .modal.hide.fade(id='Update#{i}#{j}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                        div.modal-header
+                                            button.close(data-dismiss='modal') x
+                                            span #{l}
+                                        div.modal-body(style='line-height:1.5em;font-size:1.2em;')
+                                            p
+                                            form.form-inline(method="POST",action='/edit')
+                                                input.btn.btn-success(type='submit',name='lecCode',value='#{l}')
+                                                input(type='hidden',name='update',value='false')
+                                                input(type='hidden',name='delete',value='false')
+                                                input(type='hidden',name='i',value='#{i}')
+                                                input(type='hidden',name='j',value='#{j}')
+                                            form.form-inline(method="POST",action='/edit')
+                                                button.btn.btn-success
+                                                    i.icon-trash
+                                                input(type='hidden',name='delete',value='true')
+                                                input(type='hidden',name='i',value='#{i}')
+                                                input(type='hidden',name='j',value='#{j}')
+                                        div.modal-footer
+                                - }
+                            td
+                                img(src='img/sched07.gif',width='20',height='40')
+                        - }
+                        td(style='background-color:#CCFFFF;text-align:center;vertical-align:middle;color:#1717FF',width='90',height='40',border='0')
+                            - var l=lecs[25+j];if(l=="") {
+                                a.btn(href="#New5#{j}",role='button',data-toggle='modal') None
+                                .modal.hide.fade(id='New5#{j}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                    div.modal-header
+                                        button.close(data-dismiss='modal') x
+                                        span New
+                                    div.modal-body
+                                        p
+                                        form.form-inline(method="POST",action='/edit')
+                                            input.btn.btn-success(type='submit',name='lecCode',value='New')
+                                            input(type='hidden',name='update',value='false')
+                                            input(type='hidden',name='delete',value='false')
+                                            input(type='hidden',name='i',value='5')
+                                            input(type='hidden',name='j',value='#{j}')
+                                    div.modal-footer
+                            - } else {
+                                a.btn(href="#Update5#{j}",role='button',data-toggle='modal') #{l}
+                                .modal.hide.fade(id='Update5#{j}',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+                                    div.modal-header
+                                        button.close(data-dismiss='modal') x
+                                        span #{l}
+                                    div.modal-body
+                                        p
+                                        form.form-inline(method='POST',action='/edit')
+                                            input.btn.btn-success(type='submit',name='lecCode',value='#{l}')
+                                            input(type='hidden',name='update',value='false')
+                                            input(type='hidden',name='delete',value='false')
+                                            input(type='hidden',name='i',value='5')
+                                            input(type='hidden',name='j',value='#{j}')
+                                        form.form-inline(method='POST',action='edit')
+                                            button.btn.btn-success
+                                                i.icon-trash
+                                            input(type='hidden',name='delete',value='true')
+                                            input(type='hidden',name='i',value='5')
+                                            input(type='hidden',name='j',value='#{j}')
+                                    div.modal-footer
+                            - }
+                        - if(j==4) {
+                            td
+                                img(src='img/sched16.gif',width='40',height='40')
+                        - } else {
+                            td
+                                img(src='img/sched08.gif',width='40',height='40')
+                        - }
+                    - }
+        #lectures_i18n.subtitle Lectures
+        p
+            .contents
+                table#lecture_list.table(align='center')
+                    thead
+                        tr
+                            th(style='width:30px') Icon
+                            th(style='width:100px') Code
+                            th(style='width:170px') Title
+                            th(style='width:70px') Author
+                            th(style='width:50px') Lang
+                            th Lecture Created
+                    tbody
+                        - leclist.forEach(function(f) {
+                            tr
+                              td
+                                 a.btn(href='##{f.lecCode}',role='button',data-toggle='modal')
+                                     i.icon-trash
+                                 div.modal.hide.fade(id='#{f.lecCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                     div.modal-header
+                                         button.close(data-dismiss='modal') x
+                                         span.delete_i18n Delete
+                                     div.modal-body
+                                         scan #{f.title}(#{f.lecCode})
+                                     div.modal-footer
+                                         form.input-append(method='POST',action='/edit')
+                                             input(type='hidden',name='delete',value='list')
+                                             input(type='hidden',name='Code',value='#{f.lecCode}')
+                                             input.btn.btn(type='submit',name='Del',value='CANCEL')
+                                             input.btn.btn-success(type='submit',name='Del',value='OK')
+                              td #{f.lecCode}
+                              td #{f.title}
+                              td #{f.author}
+                              td #{f.lang}
+                              td #{f.date}
+                        - });
+            hr
+            div(align='center') Last update: Mon Nov 26 21:01:16 PST 2012 by
+                span(style='vertical-align:3pt;')
+                    img(src="img/logo231.gif",width="87",height="27",alt="yass@hosei.ac.jp")
+
+    include modals/alert
+    include modals/lost-password
+
+block scripts
+    script(src='/vendor/jquery/jquery-1.8.1.min.js')
+    script(src='/vendor/jquery/jquery.i18n.properties-1.0.9.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/js/views/login.js')
+    script(src='/js/controllers/loginController.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/loginValidator.js')
+    script(src='/js/form-validators/emailValidator.js')
