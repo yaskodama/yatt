@@ -565,7 +565,7 @@ console.log(req.body.type);
 				res.render('404',{title:'Page Not Found'});
 			    } else {
 				res.render('contents', { message: 'Contents mode!', name:req.session.user.user,
-				    id:req.session.id, contents:docs[0],
+				    id:req.session.id, contents:docs[0], lecCode: req.body.lecCode,
 				    title: 'Welcome to YaTT by '+ req.session.user.user });
 			    }
 			    });

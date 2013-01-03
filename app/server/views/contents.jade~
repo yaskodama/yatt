@@ -51,7 +51,7 @@ block content
                                         span.type_i18n Type
                                     p
                                         #modal-radio
-                                  - if("lecCode" in global) {
+                                  - if(lecCode!=undefined) {
                                     form.form-inline(method='POST',action='/contents')
                                         #clayout_button_i18n
                                            input.btn.btn-success(type='submit',name='submit',value='Update')

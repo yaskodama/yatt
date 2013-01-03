@@ -524,7 +524,6 @@ console.log(req.body.type);
 	    var flag = false;
 	    if(req.body.update === 'create') {
 	        var newGrp = JSON.parse(req.body.group);
-console.log(newGrp);
 		if(req.body.Code!='New') {
 		    newGrp[req.body.i].classes[req.body.j] = { name: req.body.Code };
 		    Classes.update( {lecCode:req.body.lecCode},
@@ -583,7 +582,7 @@ console.log(newGrp);
 			REC.findEdit(req.session.user.user, req.session.id, res);
 		    }
 		    });
-	    } else if(req.body.update === 'lback') {
+	    } else if(req.body.update === 'layback') {
 		Contents.update({cntCode:req.body.Code},
 		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
 		    {upsert:false,multi:false}, function(err) {
@@ -602,12 +601,6 @@ console.log(newGrp);
 			    });
 		    }
 		    });
-            } else {
-		if(flag) {
-		    ;
-	    	} else {
-		    ;
-		}
             }
 	}
 	});

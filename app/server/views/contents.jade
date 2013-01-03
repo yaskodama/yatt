@@ -104,12 +104,14 @@ block content
                                     - } else if(contents.sign==0) {
                                         input(type='hidden',name='update',value='update')
                                         input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                        input(type='hidden',name='lecCode',value='#{lecCode}')
                                         input.input-title(type='hidden',name='title')
                                         input.input-url(type='hidden',name='url')
                                         input.input-type(type='hidden',name='type')
                                     - } else {
                                         input(type='hidden',name='update',value='update')
                                         input(type='hidden',name='Code',value='#{contents.cntCode}')
+                                        input(type='hidden',name='lecCode',value='#{lecCode}')
                                         input(type='hidden',name='url',value='#{contents.url}')
                                         input.input-title(type='hidden',name='title')
                                         input.input-type(type='hidden',name='type')
