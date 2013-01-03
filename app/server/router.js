@@ -54,7 +54,7 @@ module.exports = function(app) {
 	    var Classes = REC.getClasses();
 	    if(req.body.delete === "true") {
 		Lectures.update({name:req.session.user.user}, { $pull: { lecs: {week: req.body.i, time: req.body.j}}},
-				{ upsert:false,multi:true}, function(err) {
+				{ upsert:false,multi:false}, function(err) {
 		    if(err) {
 			console.log(err);
 			res.send(err,400);
@@ -148,7 +148,7 @@ console.log(req.body.submit);
 		Classes.update({lecCode:req.body.lecCode},
 		    { $set: { title:req.body.title,objective:req.body.objective,
 			reference:req.body.reference,advreference:req.body.advreference,
-		    	textbook: req.body.textbook }}, {upsert:false,multi:true}, function(err){
+		    	textbook: req.body.textbook }}, {upsert:false,multi:false}, function(err){
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -214,7 +214,7 @@ console.log(req.body.submit);
 		    var Lectures = REC.getLectures();
 		    Lectures.update({name:req.session.user.user},
 			{ $push: { lecs: {week: req.body.i, time: req.body.j, lecCode: req.body.Code} } },
-			{ upsert:false,multi:true}, function(err) {
+			{ upsert:false,multi:false}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -436,7 +436,7 @@ for(i=0;i<req.body.glength;i++) {
 	    }
 	    if(flag) {
 		    Classes.update( {lecCode:req.body.lecCode},
-			{ $set: {group:grp} }, {upsert:false,multi:true}, function(err) {
+			{ $set: {group:grp} }, {upsert:false,multi:false}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -522,12 +522,12 @@ console.log(newGrp);
 		if(req.body.Code!='New') {
 		    newGrp[req.body.i].classes[req.body.j] = { name: req.body.Code };
 		    Classes.update( {lecCode:req.body.lecCode},
-			{ $set: {group:newGrp} }, {upsert:false,multi:true}, function(err) {
+			{ $set: {group:newGrp} }, {upsert:false,multi:false}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
 			} else {
-			    var Contents = REC.newContents(req.body.Code,req.session.user.user,req.body.url,function(e) {
+			    REC.newContents(req.body.Code,req.session.user.user,req.body.url,function(e) {
 				if(e) {
 				    console.log(e);
 				    res.send(e,400);
@@ -549,7 +549,7 @@ console.log(newGrp);
 	    } else if(req.body.update === 'update') {
 		Contents.update({cntCode:req.body.Code},
 		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
-		    {upsert:false,multi:true}, function(err) {
+		    {upsert:false,multi:false}, function(err) {
 		    if(err) {
 			console.log(err);
 			res.send(err,400);
@@ -568,7 +568,7 @@ console.log(newGrp);
 	    } else if(req.body.update === 'back') {
 		Contents.update({cntCode:req.body.Code},
 		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
-		    {upsert:false,multi:true}, function(err) {
+		    {upsert:false,multi:false}, function(err) {
 		    if(err) {
 			console.log(err);
 			res.send(err,400);

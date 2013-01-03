@@ -54,7 +54,7 @@ module.exports = function(app) {
 	    var Classes = REC.getClasses();
 	    if(req.body.delete === "true") {
 		Lectures.update({name:req.session.user.user}, { $pull: { lecs: {week: req.body.i, time: req.body.j}}},
-				{ upsert:false,multi:true}, function(err) {
+				{ upsert:false,multi:false}, function(err) {
 		    if(err) {
 			console.log(err);
 			res.send(err,400);
@@ -90,27 +90,47 @@ module.exports = function(app) {
 	var Classes = REC.getClasses();
 	Classes.find({lecCode:req.query.p}, function(e,docs) {
 	    if(docs[0]==undefined) {
-		res.render('404', {title: 'Page Not Found'});
+		res.render('404', {title:'Page Not Found'});
 	    } else {
-	        res.render('lesson', { message: 'Lecture mode!',
-		    id: req.session.id, cls: docs[0], title: "Welcome to YaTT" });
+		var Contents = REC.getContents();
+		var cnts = [];
+		Contents.find({}, function(e,d) {
+		    if(d[0]==undefined) {
+			res.render('404', {title: 'Page Not Found'});
+		    } else {
+			for(var i=0;i<50;i++) cnts[i]={ name:"", cntCode:"", sign:"", url:"" };
+			var ii=0;
+			docs[0].group.forEach(function(f) {
+			    f.classes.forEach(function(c) {
+				var n = 'None'; var s = 1; var u = "";
+				for(i=0;i<d.length;i++) {
+				    if(d[i].cntCode==c.name) {
+					n = d[i].title; s = d[i].sign; u = d[i].url;
+				    }
+				}
+				cnts[ii++]={ name: n, cntCode: c.name, sign: s, url: u };
+				});
+			    });
+		    }
+		    res.render('lesson', { message:'Lecture mode!',
+		        id:req.session.id, cnts:cnts, cls:docs[0], title:"Welcome to YaTT" });
+		    });
 	    }
             });
 	});
-    //    app.get('/citem', function(req, res) {    /* /citem + "GET" */
-    //	var Classes = REC.getClasses();
-    //	Contents.find({cntCode:req.query.p}, function(e,docs) {
-    //	    if(docs[0]==undefined) {
-    //		res.render('404', {title: 'Page Not Found'});
-    //	    } else {
-    //	        res.render('citem', { message: 'Contents mode!', name:seq.session.user.user,
-    //		    id: req.session.id, contents: docs[0], title: "Welcome to YaTT" });
-    //	    }
-    //            });
-    //	});
+    app.get('/citem', function(req, res) {    /* /citem + "GET" */
+	var Contents = REC.getContents();
+	Contents.find({cntCode:req.query.p}, function(e,docs) {
+	    if(docs[0]==undefined) {
+		res.render('404', {title:'Page Not Found'});
+	    } else {
+	        res.render('citem', { message:'Contents mode!', name:'Guest',
+		    id: req.session.id, contents: docs[0], title: "Welcome to YaTT" });
+	    }
+            });
+	});
     app.post('/lecture', function(req, res) {
         if (req.session.user == null){
-	// if user is not logged-in redirect back to login page //
             res.redirect('/');
         } else {
 console.log(req.body.update);
@@ -128,7 +148,7 @@ console.log(req.body.submit);
 		Classes.update({lecCode:req.body.lecCode},
 		    { $set: { title:req.body.title,objective:req.body.objective,
 			reference:req.body.reference,advreference:req.body.advreference,
-		    	textbook: req.body.textbook }}, {upsert:false,multi:true}, function(err){
+		    	textbook: req.body.textbook }}, {upsert:false,multi:false}, function(err){
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -159,9 +179,30 @@ console.log(req.body.submit);
 							    name: req.session.user.user, cls: docs[0] } );
 						break;
 					    default:
-						res.render('lecture', { message: 'Lecture mode!', name: req.session.user.user,
-				        	    id: req.session.id, cls: docs[0], 
-						    title: "Welcome to YaTT by "+ req.session.user.user });
+						var Contents = REC.getContents();
+						var cnts = [];
+						Contents.find({}, function(e,d) {
+						    if(d[0]==undefined) {
+							res.render('404', {title: 'Page Not Found'});
+						    } else {
+							for(var i=0;i<50;i++) cnts[i]={ name:"", cntCode:"", sign:"", url:"" };
+							var ii=0;
+							docs[0].group.forEach(function(f) {
+	       						    f.classes.forEach(function(c) {
+								var n = 'None'; var s = 1; var u = "";
+								for(i=0;i<d.length;i++) {
+								    if(d[i].cntCode==c.name) {
+									n = d[i].title; s = d[i].sign; u = d[i].url;
+								    }
+								}
+								cnts[ii++]={ name: n, cntCode: c.name, sign: s, url: u };
+								});
+							    });
+							res.render('lecture', { message:'Lecture mode!',name:req.session.user.user,
+								id:req.session.id, cnts:cnts, cls:docs[0],
+								    title:"Welcome to YaTT by "+req.session.user.user});
+						    }
+						    });
 					    }
 					}
 					});
@@ -173,7 +214,7 @@ console.log(req.body.submit);
 		    var Lectures = REC.getLectures();
 		    Lectures.update({name:req.session.user.user},
 			{ $push: { lecs: {week: req.body.i, time: req.body.j, lecCode: req.body.Code} } },
-			{ upsert:false,multi:true}, function(err) {
+			{ upsert:false,multi:false}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -183,15 +224,7 @@ console.log(req.body.submit);
 			            console.log(e);
 				    res.send(e,400);
 			    	} else {
-				    Classes.find({lecCode:req.body.Code}, function(e,docs) {
-				    	if(docs[0]==undefined) {
-					    res.render('404',{title:'Page Not Found'});
-				    	} else {
-					    res.render('lecture', { message: 'Lecture mode!', name:req.session.user.user,
-					        id:req.session.id, cls:docs[0],
-								title: "Welcome to YaTT by "+ req.session.user.user });
-				    	}
-					});
+				    REC.findLecture(req.body.Code,req.session.user.user,req.session.id,res);
 				}
 				});
 			}});
@@ -403,7 +436,7 @@ for(i=0;i<req.body.glength;i++) {
 	    }
 	    if(flag) {
 		    Classes.update( {lecCode:req.body.lecCode},
-			{ $set: {group:grp} }, {upsert:false,multi:true}, function(err) {
+			{ $set: {group:grp} }, {upsert:false,multi:false}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -489,7 +522,7 @@ console.log(newGrp);
 		if(req.body.Code!='New') {
 		    newGrp[req.body.i].classes[req.body.j] = { name: req.body.Code };
 		    Classes.update( {lecCode:req.body.lecCode},
-			{ $set: {group:newGrp} }, {upsert:false,multi:true}, function(err) {
+			{ $set: {group:newGrp} }, {upsert:false,multi:false}, function(err) {
 			if(err) {
 			    console.log(err);
 			    res.send(err,400);
@@ -516,7 +549,7 @@ console.log(newGrp);
 	    } else if(req.body.update === 'update') {
 		Contents.update({cntCode:req.body.Code},
 		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
-		    {upsert:false,multi:true}, function(err) {
+		    {upsert:false,multi:false}, function(err) {
 		    if(err) {
 			console.log(err);
 			res.send(err,400);
@@ -535,7 +568,7 @@ console.log(newGrp);
 	    } else if(req.body.update === 'back') {
 		Contents.update({cntCode:req.body.Code},
 		    { $set: {url:req.body.url,title:req.body.title,sign:req.body.type} },
-		    {upsert:false,multi:true}, function(err) {
+		    {upsert:false,multi:false}, function(err) {
 		    if(err) {
 			console.log(err);
 			res.send(err,400);

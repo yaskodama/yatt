@@ -118,7 +118,7 @@ block content
                               td #{f.lang}
                               td #{f.date}
                         - });
-        #library_i18n.subtitle Lectures
+        #library_i18n.subtitle Library
         p
             .contents
                 table#lecture_list.table(align='center')
@@ -135,9 +135,9 @@ block content
                         - cnts.forEach(function(f) {
                             tr
                               td
-                                 a.btn(href='##{f.cntCode}',role='button',data-toggle='modal')
+                                 a.btn(href='##{f._id}',role='button',data-toggle='modal')
                                      i.icon-trash
-                                 div.modal.hide.fade(id='#{f.cntCode}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
+                                 div.modal.hide.fade(id='#{f._id}',tabindex='-1',role='dialog',aria-labelledy='myModalLabel',aria-hidden='true')
                                      div.modal-header
                                          button.close(data-dismiss='modal') x
                                          span.delete_i18n Delete

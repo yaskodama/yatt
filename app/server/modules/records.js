@@ -152,35 +152,46 @@ REC.saveClasses = function(mongoose,name,callback) {
   };
 
 REC.newClasses = function(lecCode,name,callback) {
-    var classes = new Classes();
-    classes.lecCode = lecCode;
-    classes.author = name;
-    classes.group = [ { name: "はじめに", classes: [ { name: "はじめに" } ] },
-		      { name: "メールの使い方", classes: [ { name: "メールの使い方"} ] },
-                      { name: "文書処理について", classes: [ { name: "文書処理" },{ name: "(1)文書処理" }, 
-		      { name: "(2)文書処理" } ] } ];
-    classes.title = "New";
-    classes.lang = "ja";
-    classes.objective = "この講義では簡単なPCの使い方を説明する。";
-    classes.reference = "検討中";
-    classes.advreference = "検討中";
-    classes.textbook = "検討中";
-    classes.save(callback);
-    return Classes;
+    Classes.find({lecCode:lecCode}, function(e,docs) {
+        if(docs[0]==undefined) {
+	    var classes = new Classes();
+	    classes.lecCode = lecCode;
+	    classes.author = name;
+	    classes.group = [ { name: "Intro", classes: [ { name: "None" } ] },
+		      	      { name: "Background", classes: [ { name: "None"} ] },
+			      { name: "Background2", classes: [ { name: "None"} ] } ];
+	    classes.title = "New";
+	    classes.lang = "ja";
+	    classes.objective = "Nothing...";
+	    classes.reference =  "Searching...";
+	    classes.advreference = "Searching...";
+	    classes.textbook = "Searching...";
+	    classes.save(callback);
+	} else {
+	    docs[0].save(callback);
+	}
+        return Classes;
+	});
   };
 
 REC.newContents = function(cntCode,name,url,callback) {
-    var contents = new Contents();
-    contents.cntCode = cntCode;
-    contents.author = name;
-    contents.title = 'New';
-    contents.url = url;
-    contents.menu = [];
-    contents.pages = [];
-    contents.sign = 0;
-    contents.lang = 'ja';
-    contents.save(callback);
-    return Contents;
+    Contents.find({cntCode:cntCode}, function(e,docs) {
+        if(docs[0]==undefined) {
+	    var contents = new Contents();
+	    contents.cntCode = cntCode;
+	    contents.author = name;
+	    contents.title = 'New';
+	    contents.url = url;
+	    contents.menu = [];
+	    contents.pages = [];
+	    contents.sign = 0;
+	    contents.lang = 'ja';
+	    contents.save(callback);
+	} else {
+	    docs[0].save(callback);
+	}
+        return Contents;
+	});
   };
 
 REC.getLectures = function() {
